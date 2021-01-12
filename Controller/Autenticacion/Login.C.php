@@ -1,9 +1,6 @@
 <?php
 include_once("../../Model/Autenticacion/Login.D.php");
 include_once("../../Model/Autenticacion/Login.M.php");
-if(!isset($_SESSION)) {
-  session_start();
-}
 
 $loginM = new LoginM();
 $loginD = new LoginD();
@@ -18,7 +15,7 @@ if (isset($_POST['password'])) {
   $data = $loginM->login($loginD);
 
 } else {
-  $data = $loginM->estado($documento);
+  $data = $loginM->limiteIntento($documento);
 }
 
 print json_encode($data);

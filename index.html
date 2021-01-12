@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title>Login </title>
+    <title>Inicio al sistema</title>
 
     <!-- Custom fonts for this template-->
     <link rel="stylesheet" type="text/css" href="Library/fonts/iconic/css/material-design-iconic-font.min.css">
@@ -16,21 +16,19 @@
     <link rel="stylesheet" href="Css/estilos.css">
     <link rel="stylesheet" href="Library/sweetalert2/sweetalert2.min.css">
 
-
-
   </head>
   <body>
     <div class="container-login">
-      <div class="wrap-login">
+      <div class="wrap-login position-relative">
         <form class="login-form validate-form" id="formLogin" action="" method="post">
           <span class="login-form-title">LOGIN</span>
 
-          <div class="wrap-input100" data-validate = "Usuario incorrecto">
+          <div class="wrap-input100">
             <input class="input100" type="text" id="usuario" name="usuario" placeholder="Usuario" autofocus>
             <span class="focus-efecto"></span>
           </div>
 
-          <div class="wrap-input100" data-validate="Password incorrecto">
+          <div class="wrap-input100">
             <input class="input100" type="password" id="password" name="password" placeholder="Password">
             <span class="focus-efecto"></span>
           </div>
@@ -42,6 +40,10 @@
             </div>
           </div>
         </form>
+        <br>
+        <div class="d-flex justify-content-center">
+          <a class="position-absolute" href="Views/Autenticacion/RecuperarPass.V.html">Recuperar contraseña</a>
+        </div>
       </div>
     </div>
 

@@ -4,11 +4,18 @@ class LoginD{
     private $documento;
     private $pass;
 
-    public function __construct(){}
+    public function __construct(){
+
+    }
 
     public function ingresar($documento, $pass){
       $this->documento = $documento;
       $this->pass = $pass;
+    }
+
+    public function restablecerClave($documento){
+      $this->documento = $documento;
+      $this->pass = password_hash($documento, PASSWORD_DEFAULT);
     }
 
     public function __set($nombre, $valor){

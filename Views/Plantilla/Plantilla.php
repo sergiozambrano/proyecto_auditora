@@ -4,7 +4,7 @@ $sesion = new Sesion();
 $sesion->autenticacion();
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
 
   <meta charset="utf-8">
@@ -131,21 +131,21 @@ $sesion->autenticacion();
               <!-- Dropdown - User Information -->
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                  <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Cerrar Sesión
-                </a>
-                <a class="dropdown-item" href="###" target='main' data-toggle="modal" data-target="#logoutModal">
-                  <i class="fas fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Configuraciones
-                </a>
+                  <a class="dropdown-item" href="Setting.php" target='main'>
+                    <i class="fas fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                    Configuraciones
+                  </a>
+                  <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                    Cerrar Sesión
+                  </a>
               </div>
             </li>
           </ul>
         </nav>
 
         <main>
-          <iframe name="main" id="iframe" src="" frameborder="0" scrolling="no"></iframe>
+          <iframe name="main" id="iframe" src="" frameborder="0"></iframe>
         </main>
 
       </div>
@@ -193,7 +193,7 @@ $sesion->autenticacion();
   <script src="../../Library/vendor/datatables/datatables.min.js"></script>
 
   <!-- código propio JS -->
-  <script src="../../Js/Autenticacion/Roles.js"></script>
+  <script src="../../Js/Usuario/Roles.js"></script>
 
 </body>
 </html>
