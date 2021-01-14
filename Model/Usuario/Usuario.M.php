@@ -1,5 +1,5 @@
 <?php
-include_once '../../Enviroment/Conexion.php';
+include_once('../../Enviroment/Conexion.php');
 
 class UsuarioM extends Conexion{
   private $sql;
