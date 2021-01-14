@@ -1,8 +1,8 @@
 <?php
-include_once("../../Model/Usuario/Usuario.M.php");
+include_once "../../Model/Usuario/Usuario.M.php";
 
 if(!isset($_SESSION)) {
-    session_start();
+  session_start();
 }
 
 $usuarioM = new UsuarioM();
