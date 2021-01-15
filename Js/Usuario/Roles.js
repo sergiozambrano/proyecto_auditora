@@ -40,8 +40,8 @@ $(document).ready(function(){
           break;
 
         case 'Auditor':
-          accion  = "<a class='nav-link' href='../Auditoria/Hallazgo.html' target='main'><span>Hallazgo</span></a>"+
-                    "<a class='nav-link' href='../Auditoria/Auditoria.html' target='main'><span>Mis auditorias</span></a>";
+          accion  = "<a class='nav-link' href='../Auditoria/Hallazgo.php' target='main'><span>Hallazgo</span></a>"+
+                    "<a class='nav-link' href='../Auditoria/ProgramaAuditoria.php' target='main'><span>Mis auditorias</span></a>";
           break;
 
         case 'Coordinador de auditoría':

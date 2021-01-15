@@ -19,13 +19,13 @@ $(document).ready(function(){
                     "<td>";
 
         if (data[i]['fecha'] != mesActual && data[i]['estado_auditoria'] == 'Programada') {
-          conts += "<a class='btn btn-secondary' href=''>Inicializar</a>";
+          conts += "<button class='btn btn-secondary' value='' type='button' disabled>Iniciar</button>";
 
         }else if(data[i]['fecha'] == mesActual && data[i]['estado_auditoria'] == 'Programada'){
-          conts += "<a class='btn btn-success' href='Auditoria.html?"+data[i]['id_auditoria']+"'>Inicializar</a>";
+          conts += "<button class='btn btn-success' type='button' onclick='btn("+data[i]['estado_auditoria']+","+data[i]['id_auditoria']+");'>Iniciar</button>";
 
         }else if(data[i]['fecha'] == mesActual && data[i]['estado_auditoria'] == 'En proceso'){
-          conts += "<a class='btn btn-primary' href='Auditoria.html?"+data[i]['id_auditoria']+"'>seguir</a>";
+          conts += "<button class='btn btn-primary' type='button' onclick='btn("+data[i]['estado_auditoria']+","+data[i]['id_auditoria']+");'>Seguir</button>";
         }
 
         conts +=    "</td>"+
@@ -44,3 +44,8 @@ $(document).ready(function(){
     return meses[num-1];
   }
 });
+
+function btn(estado, id){
+  console.log(estado);
+  console.log(id);
+}

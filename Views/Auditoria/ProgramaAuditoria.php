@@ -1,3 +1,8 @@
+<?php
+include_once('../../Enviroment/Autenticacion.php');
+$sesion = new Sesion();
+$sesion->autenticacion();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
