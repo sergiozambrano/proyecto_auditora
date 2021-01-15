@@ -34,9 +34,10 @@ $(document).ready(function(){
       //Mostrar los accesos dependiento el rol
       switch (data) {
         case 'Administrador':
-          accion  = "<a class='nav-link' href='' target='main'><span>Areás</span></a>"+
+          accion  = "<a class='nav-link' href='../Area/Area.php' target='main'><span>Areás</span></a>"+
                     "<a class='nav-link' href='' target='main'><span>Usuarios</span></a>"+
-                    "<a class='nav-link' href='' target='main'><span>Roles</span></a>";
+                    "<a class='nav-link' href='' target='main'><span>Roles</span></a>"+
+                    "<a class='nav-link' href='' target='main'><span>Backup</span></a>";
           break;
 
         case 'Auditor':
@@ -49,7 +50,8 @@ $(document).ready(function(){
           break;
 
         case 'Coordinador de área':
-          accion  = "<a class='nav-link' href='' target='main'><span>Coordinador de area</span></a>";
+          accion  = "<a class='nav-link' href='../PlanMejoramiento/PlanMejoramiento.php' target='main'><span>Plan de mejoramiento</span></a>"+
+                    "<a class='nav-link' href='' target='main'><span>Anexos</span></a>";
           break;
       }
 
