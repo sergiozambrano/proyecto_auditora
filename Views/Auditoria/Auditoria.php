@@ -19,10 +19,48 @@ $sesion->autenticacion();
 
 </head>
 <body>
-  <section>
-    <div>
-      <a class='btn btn-primary' href="ProgramaAuditoria.html">Volver</a>
-    </div>
+  <section class="container-fluid">
+    <article class="row align-items-start">
+      <div class="col my-2">
+        <a class='btn btn-primary' href="ProgramaAuditoria.php">Volver</a>
+      </div>
+      <div class="d-flex justify-content-end">
+        <div class="d-inline p-2 col">
+          <button type="button" class="btn btn-primary">Subir</button>
+        </div>
+        <form class="form-inline my-2 my-lg-0">
+          <div class="">
+            <select class="form-control" id="selecBuscador">
+              <option value="0">Documento</option>
+              <option value="1">Estado</option>
+              <option value=""></option>
+            </select>
+          </div>
+          <div class="">
+            <input class="form-control" id="valorBuscador">
+          </div>
+        </form>
+      </div>
+    </article>
+    <article>
+      <table class="table">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Documento</th>
+            <th scope="col">Estado</th>
+            <th scope="col">Validación</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+    </article>
   </section>
 
   <!-- Código JavaScript-->

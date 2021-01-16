@@ -34,7 +34,7 @@ $(document).ready(function(){
       //Mostrar los accesos dependiento el rol
       switch (data) {
         case 'Administrador':
-          accion  = "<a class='nav-link' href='' target='main'><span>Areás</span></a>"+
+          accion  = "<a class='nav-link' href='../Area/Area.php' target='main'><span>Areás</span></a>"+
                     "<a class='nav-link' href='' target='main'><span>Usuarios</span></a>"+
                     "<a class='nav-link' href='' target='main'><span>Roles</span></a>";
           break;

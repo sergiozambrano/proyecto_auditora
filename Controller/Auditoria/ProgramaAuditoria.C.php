@@ -8,7 +8,12 @@ if(!isset($_SESSION)) {
 $ProgrmaM = new ProgramaM();
 $data;
 
-$data = $ProgrmaM->auditorias($_SESSION['id']);
+if(!isset($_POST['id'])){
+  $data = $ProgrmaM->auditorias($_SESSION['id']);
+
+}else{
+  $data = $ProgrmaM->inicioAuditoria($_POST['id'], $_SESSION['id']);
+}
 
 print json_encode($data);
 
