@@ -16,7 +16,7 @@ $(document).ready(function (e){
                 fechaMayor = data[data.length-1]; //Cojer la fecha mayor del arreglo traido de la base de datos
 
                 for (let index = 0; index < data.length; index++) {
-            
+
                     string += "<button type='button' class='list-group-item list-group-item-action' onclick='Redireccionar("+data[index]+");'>"+data[index]+"</button>";
 
                 }
@@ -39,5 +39,5 @@ $(document).ready(function (e){
 });
 
 function Redireccionar(fecha){
-    window.location="Programaciones.html?fecha="+fecha;
+    window.location="Programaciones.php?fecha="+fecha;
 }

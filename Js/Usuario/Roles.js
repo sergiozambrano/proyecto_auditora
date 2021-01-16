@@ -46,7 +46,7 @@ $(document).ready(function(){
           break;
 
         case 'Coordinador de auditoría':
-          accion  = "<a class='nav-link' href='' target='main'><span>Coordinador de auditoria</span></a>";
+          accion  = "<a class='nav-link' href='../ProgramacionAuditoria/ProgramacionAnual.php' target='main'><span>Plan anual</span></a>";
           break;
 
         case 'Coordinador de área':

@@ -1,4 +1,4 @@
-
+var cont = 0; /*Contador para que que se envien la peticion con datos y los guarde al mismo tiempo y que no se envie dos peticiones al mismo tiempo*/
 //funciones al cargarse la pagina
 
 $(document).ready(function (e){
@@ -11,61 +11,66 @@ $(document).ready(function (e){
 
     BloquearFechas();/*Ejecutar la funcion de bloquear un determinado rango de meses segun el año*/
 
-    //Funcion onclick para guardar nuevos registros de programacion de auditoria
+    //Funcion para guardar nuevos registros de programacion de auditoria
 
     $('#form').submit(function(e){
-        e.preventDefault();
+      e.preventDefault();
 
+      cont += 1;
+
+      //condicional para que solo se realize la operacion cuando el contador global es 1
+      if(cont==1){
         if($('#id_area').val() != "" && $('#id_auditor').val() != "" && $('#tipo_auditoria').val() != "" && $('#fecha_pro_au').val() != ""){
-            
-            var observacion;
 
-            //Condicional para saber si no envia nada de observacion y enviar el dato como null
-            if ($('#observacion').val() != "") {
-                observacion = $.trim($('#observacion').val());
-            } else {
-                observacion = null;
-            }
+          var observacion;
 
-            //Arreglo a enviar
-            let data = {
-                'area':$.trim($('#id_area').val()),
-                'auditor':$.trim($('#id_auditor').val()),
-                'tipo_auditoria':$.trim($('#tipo_auditoria').val()),
-                'fecha_programada':$.trim($('#fecha_pro_au').val()+"-01"),
-                'observacion':observacion,
-                'accion': "insertar"
-            }
-            //Enviar los datos al php para ejecutar la operacion
-            $.ajax({
-                url:"../../Controller/ProgramacionAuditoria/ProgramacionAuditoria.C.php",
-                type:"POST",
-                datatype:"json",
-                data:data,
-                success:function(data){
-                    //Respuesta de la operacion 1 = se guardo correctamente, 2 = error al guardar.  
-                    if (data == 1) {
-                        $('#modalAgregar').modal('hide');
-                        Swal.fire({
-                            type:'success',
-                            title:'Datos ingresados correctamente!!',
-                        });
-                        Seleccionar(null);
-                        Limpiar("Create");
-                    }else if(data == 2){
-                        Swal.fire({
-                            type:'warning',
-                            title:'Error al enviar los datos!!',
-                        });
-                    }
-                    else{
-                        Swal.fire({
-                            type:'error',
-                            title:'Error del sistema!!\nContactese con el administrador',
-                        });
-                    }
+          //Condicional para saber si no envia nada de observacion y enviar el dato como null
+          if ($('#observacion').val() != "") {
+              observacion = $.trim($('#observacion').val());
+          } else {
+              observacion = null;
+          }
+
+          //Arreglo a enviar
+          let data = {
+              'area':$.trim($('#id_area').val()),
+              'auditor':$.trim($('#id_auditor').val()),
+              'tipo_auditoria':$.trim($('#tipo_auditoria').val()),
+              'fecha_programada':$.trim($('#fecha_pro_au').val()+"-01"),
+              'observacion':observacion,
+              'accion': "insertar"
+          }
+          //Enviar los datos al php para ejecutar la operacion
+          $.ajax({
+              url:"../../Controller/ProgramacionAuditoria/ProgramacionAuditoria.C.php",
+              type:"POST",
+              datatype:"json",
+              data:data,
+              success:function(data){
+                cont = 0; /*Volver a 0 el contador global*/
+                //Respuesta de la operacion 1 = se guardo correctamente, 2 = error al guardar.
+                if (data == 1) {
+                    $('#modalAgregar').modal('hide');
+                    Swal.fire({
+                        type:'success',
+                        title:'Datos ingresados correctamente!!',
+                    });
+                    Seleccionar(null);
+                    Limpiar("Create");
+                }else if(data == 2){
+                    Swal.fire({
+                        type:'warning',
+                        title:'Error al enviar los datos!!',
+                    });
                 }
-            });
+                else{
+                    Swal.fire({
+                        type:'error',
+                        title:'Error del sistema!!\nContactese con el administrador',
+                    });
+                }
+              }
+          });
 
         } else{
 
@@ -75,16 +80,25 @@ $(document).ready(function (e){
             });
             return false;
         }
+      }
+      else{
+        $("#btn_agregar").attr("disabled", true);
+      }
     });
 
-    //Funcion onclick para editar registros de programacion de auditoria
+    //Funcion para editar registros de programacion de auditoria
 
     $('#form_edit').submit(function(e){
-        e.preventDefault();
+      e.preventDefault();
 
-        //Verificar si los datos importantes estan 
+      cont += 1;
+
+      //condicional para que solo se realize la operacion cuando el contador global es 1
+      if(cont==1){
+
+        //Verificar si los datos importantes estan
         if($('#id_area_edit').val() != "" && $('#id_auditor_edit').val() != "" && $('#tipo_auditoria_edit').val() != "" && $('#fecha_pro_au_edit').val() != ""){
-            
+
             var observacion;
 
             //Condicional para saber si no envia nada de observacion y enviar el dato como null
@@ -111,27 +125,28 @@ $(document).ready(function (e){
                 datatype:"json",
                 data:data,
                 success:function(data){
-                    //Respuesta de la operacion 1 = se modifico correctamente, 2 = error al modificar.  
-                    if (data == 1) {
-                        $('#modalEditar').modal('hide');
-                        Swal.fire({
-                            type:'success',
-                            title:'Datos modificados correctamente!!',
-                        });
-                        Seleccionar(null);
-                        Limpiar("Edit");
-                    }else if(data == 2){
-                        Swal.fire({
-                            type:'warning',
-                            title:'Error al modificar los datos los datos!!',
-                        });
-                    }
-                    else{
-                        Swal.fire({
-                            type:'error',
-                            title:'Error del sistema!!\nContactese con el administrador',
-                        });
-                    }
+                  cont = 0; /*Volver a 0 el contador global*/
+                  //Respuesta de la operacion 1 = se modifico correctamente, 2 = error al modificar.
+                  if (data == 1) {
+                      $('#modalEditar').modal('hide');
+                      Swal.fire({
+                          type:'success',
+                          title:'Datos modificados correctamente!!',
+                      });
+                      Seleccionar(null);
+                      Limpiar("Edit");
+                  }else if(data == 2){
+                      Swal.fire({
+                          type:'warning',
+                          title:'Error al modificar los datos los datos!!',
+                      });
+                  }
+                  else{
+                      Swal.fire({
+                          type:'error',
+                          title:'Error del sistema!!\nContactese con el administrador',
+                      });
+                  }
                 }
             });
 
@@ -143,9 +158,11 @@ $(document).ready(function (e){
             });
             return false;
         }
-
+      }
+      else{
+        $("#btn_editar").attr("disabled", true);
+      }
     });
-    
 
     /*
     *Funciones de jQuery
@@ -153,10 +170,10 @@ $(document).ready(function (e){
     *Consultar meses disponibles del auditor y del area
     */
 
-    //Validacion del formulario Agregar, 
+    //Validacion del formulario Agregar,
     $('#id_area, #id_auditor, #fecha_pro_au').change(function () {
 
-        //Obtener arreglo 
+        //Obtener arreglo
         let validacion = ObternerValidacion("Agregar");
 
         //Validar si el arreglo viene como false
@@ -170,7 +187,7 @@ $(document).ready(function (e){
     //Validacion del formulario Editar
     $('#id_area_edit, #id_auditor_edit, #fecha_pro_au_edit').change(function () {
 
-        //Obtener arreglo 
+        //Obtener arreglo
         let validacion = ObternerValidacion("Editar");
 
         //Validar si el arreglo viene como false
@@ -204,7 +221,7 @@ $(document).ready(function (e){
 
             //Enviar arreglo a la funcion de imprimir registro
             Seleccionar(buscar);
-            
+
         }
         else{
             Seleccionar(null);
@@ -213,6 +230,7 @@ $(document).ready(function (e){
     });
 
     $('#agregar').click(function() {
+        $("#btn_agregar").removeAttr("disabled");
         ConsultarUsuarioArea("Create");/*Ejecutar la funcion de imprimir los datos de las tablas usuario y areas, mandando como parametro el formulario*/
         $("#alert").alert("close");/*Ocultar el alert de validacion de ocupacion de area y auditor*/
     });
@@ -238,7 +256,7 @@ function Seleccionar(buscar){
     else{
         data = {'accion': "seleccionar",'where': FechaValidar()}
     }
-    
+
     //Enviar los datos al php para ejecutar la operacion
     $.ajax({
         url:"../../Controller/ProgramacionAuditoria/ProgramacionAuditoria.C.php",
@@ -248,7 +266,7 @@ function Seleccionar(buscar){
         success:function(data){
             data = JSON.parse(data);
             if (data.length >= 1) {
-            
+
                 for (let index = 0; index < data.length; index++) {
 
                     fecha = FechaProgramacion(data[index][6]); /*Funcion par separarme los años-meses de los dias de dotos tipo date*/
@@ -308,7 +326,7 @@ function ObternerValidacion(operacion){
                     'accion': "disponibilidad",
                     'operacion': "Create"
                 }
-                
+
                 break;
             case "Editar":
 
@@ -322,7 +340,7 @@ function ObternerValidacion(operacion){
                     'estado':$.trim($('#estado_auditoria').val()),
                     'operacion': "Edit"
                 }
-                
+
                     break;
             default:
                 break;
@@ -336,7 +354,9 @@ function ObternerValidacion(operacion){
 }
 
 function ObtenerEditar(idProgramacioAuditoria){
-    
+
+    $("#btn_editar").removeAttr("disabled");
+
     $("#alert").alert("close");/*Ocultar el alert de validacion de ocupacion de area y auditor*/
 
     $("#div_estado").css("display", "none"); /*Vuelve invisible el input de estados de auditoria en el formulario de editar*/
@@ -344,7 +364,7 @@ function ObtenerEditar(idProgramacioAuditoria){
     $("#modalEditar").modal("show");/*Muestra el modal solicitado*/
 
     ConsultarUsuarioArea("Edit");/*Ejecutar la funcion de imprimir los datos de las tablas usuario y areas, mandando como parametro el formulario*/
-    
+
     //Enviar los datos al php para ejecutar la operacion
     $.ajax({
         url:"../../Controller/ProgramacionAuditoria/ProgramacionAuditoria.C.php",
@@ -354,7 +374,7 @@ function ObtenerEditar(idProgramacioAuditoria){
         success: function(data){
             data = JSON.parse(data);
             if (data.length >= 1) {
-            
+
                 for (let index = 0; index < data.length; index++) {
 
                     //Condicional para que solo envie los datos al modal de editar teniendo en cuenta el id recibido desde la funcion onclick de los botones de editar
@@ -372,7 +392,7 @@ function ObtenerEditar(idProgramacioAuditoria){
                         $('#observacion_edit').val(data[index][8]);
 
                         BloquearInputs(data[index][7]); /*Funcion que recibe como parametro el estado de la auditoria y segun eso bloquea algunos inputs del formulario editar */
-                    
+
                     }
 
                 }
@@ -383,7 +403,7 @@ function ObtenerEditar(idProgramacioAuditoria){
             }
 
         }
-    });  
+    });
 
 }
 
@@ -417,7 +437,7 @@ function Disponibilidad(validacion) {
                     mensaje += "</button>";
                     mensaje += "</div>";
 
-                    break;    
+                    break;
                 case 2:
                     mensaje += "<div id='alert' class='alert alert-warning alert-dismissible fade show' role='alert'>";
                     mensaje += "El area ya esta programada para auditoria en esta fecha!!\nPorfavor escoja otra area y/o fecha";
@@ -425,7 +445,7 @@ function Disponibilidad(validacion) {
                     mensaje += "<span aria-hidden='true'>&times;</span>";
                     mensaje += "</button>";
                     mensaje += "</div>";
-                    
+
                     break;
                 case 3:
 
@@ -435,12 +455,12 @@ function Disponibilidad(validacion) {
                     mensaje += "<span aria-hidden='true'>&times;</span>";
                     mensaje += "</button>";
                     mensaje += "</div>";
-                
+
                     break;
                 default:
 
                     mensaje = null;
-                    
+
                     break;
             }
 
@@ -464,7 +484,7 @@ function Disponibilidad(validacion) {
                         $("#alert").alert("close");
                     });
                 }, 5000);
-                
+
             }
         }
 
@@ -547,7 +567,7 @@ function ConsultarUsuarioArea(formulario){
     });
 }
 
-//Funcion para obtener la variable tipo GET año del registro 
+//Funcion para obtener la variable tipo GET año del registro
 
 function FechaValidar(){
     //Condicional que verifica si la variable tipo GET existe y si no, utiliza el año actual

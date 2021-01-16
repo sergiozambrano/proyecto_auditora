@@ -17,7 +17,7 @@ $sesion->autenticacion();
         <div class="row">
           <div class="col-md-12">
             <h2>
-              <a href="ProgramacionAnual.html" class="text-decoration-none">
+              <a href="ProgramacionAnual.php" class="text-decoration-none">
                 <svg xmlns="../../img/volver.svg" width="40" height="40" class="bi bi-arrow-left-square-fill" viewBox="0 0 18 18">
                   <path d="M16 14a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12zm-4.5-6.5H5.707l2.147-2.146a.5.5 0 1 0-.708-.708l-3 3a.5.5 0 0 0 0 .708l3 3a.5.5 0 0 0 .708-.708L5.707 8.5H11.5a.5.5 0 0 0 0-1z"/>
                 </svg>
@@ -112,7 +112,7 @@ $sesion->autenticacion();
               </div>
               <div class="form-row">
                 <div class="col-md-12 mb-3">
-                  <button class="btn btn-primary" type="submit">Enviar</button>
+                  <button class="btn btn-primary" id="btn_agregar" type="submit">Enviar</button>
                 </div>
               </div>
             </form>
@@ -176,7 +176,7 @@ $sesion->autenticacion();
               </div>
               <div class="form-row">
                 <div class="col-md-12 mb-3">
-                  <button class="btn btn-primary" type="submit">Enviar</button>
+                  <button class="btn btn-primary" id="btn_editar" type="submit">Enviar</button>
                 </div>
               </div>
             </form>

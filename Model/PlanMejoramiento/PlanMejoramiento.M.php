@@ -115,7 +115,7 @@
     }
     public function vProrroga(){
        try {
-         $this->sql="SELECT prorroga_mejoramiento.id_prorroga_mejoramiento,plan_mejoramiento.aspecto_mejora,prorroga_mejoramiento.fecha_adicional,prorroga_mejoramiento.observacion 
+         $this->sql="SELECT prorroga_mejoramiento.id_prorroga_mejoramiento,plan_mejoramiento.aspecto_mejora,prorroga_mejoramiento.fecha_adicional,prorroga_mejoramiento.observacion,prorroga_mejoramiento.estado_prorroga 
                       FROM plan_mejoramiento 
                       INNER JOIN prorroga_mejoramiento 
                       ON plan_mejoramiento.id_plan_mejoramiento=prorroga_mejoramiento.id_plan_mejoramiento";
@@ -168,6 +168,40 @@
         return $this->resultset = $this->statement->fetchAll(PDO::FETCH_NUM);
 
     }
+    public function leer(){
+        try {
+            $this->sql="SELECT hallazgo.id_hallazgo,plan_mejoramiento.id_plan_mejoramiento,hallazgo.tema_hallazgo,plan_mejoramiento.aspecto_mejora,plan_mejoramiento.acciones_planteadas,plan_mejoramiento.ruta_evidencia,plan_mejoramiento.fecha_evidencia,plan_mejoramiento.estado_plaMejor
+            FROM hallazgo 
+            INNER JOIN plan_mejoramiento
+            ON plan_mejoramiento.id_hallazgo=hallazgo.id_hallazgo";
+            $this->statement = $this->conexion->prepare($this->sql);
+            $this->statement->execute();
+  
+            return $this->resultset = $this->statement->fetchAll(PDO::FETCH_NUM);
+        } catch (Exception $e) {
+          return  $e;
+        } 
+    }
+    public function vAuditoria($id){
+        try {
+          $this->sql="SELECT auditoria_programacion.id_auditoria 
+                      FROM auditoria_programacion 
+                      INNER JOIN ejecucion_auditoria 
+                      ON auditoria_programacion.id_auditoria=ejecucion_auditoria.id_auditoria_programada 
+                      INNER JOIN hallazgo 
+                      ON ejecucion_auditoria.id_ejecucion_auditoria=hallazgo.id_ejecucion_auditoria 
+                      INNER JOIN plan_mejoramiento 
+                      ON hallazgo.id_hallazgo=plan_mejoramiento.id_hallazgo
+                      WHERE plan_mejoramiento.id_plan_mejoramiento= ?";
+          $this->statement = $this->conexion->prepare($this->sql);
+          $this->statement->execute(array($id));
+
+          return $this->resultset = $this->statement->fetchAll(PDO::FETCH_NUM);
+        } catch (Exception $e) {
+          return $e;
+        }
+    }
   }
+    
 
 ?>

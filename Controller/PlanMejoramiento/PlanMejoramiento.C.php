@@ -35,7 +35,7 @@
 
             break;
         case 'prorroga':
-            $estado="Valido";
+            $estado="No valido";
             $fechaImplementacion=$_POST['fechaProrroga'];
             $fechaActual = date("y-m-d");
             $fecha= strtotime($fechaActual."+ 6 month");
@@ -54,7 +54,8 @@
             $data =$planMejoramientom->vProrroga();
             break;
         case 'Evidencia':
-            $directorio = "../../Evidencias/";
+            $idAuditoria = $_POST['idAuditoria'];
+            $directorio = "../File/".$idAuditoria."/evidencia-planMejoramiento/";
             $archivo = $directorio.basename($_FILES['entregable_edit']['name']);
             $tipoArchivo = strtolower(pathinfo($archivo,PATHINFO_EXTENSION));
             $tamanoArchivo = isset($_FILES['entregable_edit']['tmp_name']);
@@ -64,9 +65,16 @@
             $idPlanMejoramiento=$_POST['id'];
             $data=$planMejoramientom->evidencia($archivo,$tipoArchivo,$tamanoArchivo,$valida,$size,$idPlanMejoramiento);
             break;
+        case 'validarAuditoria':
+            $id=$_POST['id'];
+            $data=$planMejoramientom->vAuditoria($id);
+            break;
         case 'hallazgo':
             $idHallazgo=$_POST['id'];
             $data=$planMejoramientom->hallazgo($idHallazgo);
+            break;
+        case 'leer':
+            $data=$planMejoramientom->leer();
             break;
     }
     

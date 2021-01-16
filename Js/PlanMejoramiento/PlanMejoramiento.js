@@ -41,7 +41,6 @@ function seleccionar(id){
                 data = JSON.parse(data);
                 $('#tbody').empty();
                 console.log(data);
-                
                 for (let index = 0; index < data.length; index++) {
                     
                     
@@ -57,20 +56,55 @@ function seleccionar(id){
                                     "<button type='button' class='btn btn-primary btn-sm' data-toggle='modal' data-target='#staticBackdrop1' onclick='ValidarEditar("+data[index][0]+");'>Editar</button>"+
                                     "<button type='button' class='btn btn-info   btn-sm' data-toggle='modal' data-target='#staticBackdrop2' onclick='validarProrroga("+data[index][0]+");'>Crear Prorroga</button>"+
                                     "</tr>");
+                                    
                 }        
             }          
         });
     });
 }
+function validarEvidencia(id){
+        let data={
+            'id':id,
+            'accion':"validarAuditoria"
+
+        }
+        
+    $.ajax({
+        url:"../../Controller/PlanMejoramiento/PlanMejoramiento.C.php",
+        type:"POST",
+        datatype:"json",
+        data:data,
+        success: function(data){
+            data = JSON.parse(data);
+            console.log(data);
+            if (data.length >= 1) {
+            
+                for (let index = 0; index < data.length; index++) {
+
+                    if(data[index][0]==id){
+                        $('#idAuditoria').val(data[index][0]);
+                        
+                    }
+
+                }
+
+            } else {
+                $('#staticBackdrop1').modal('hide');
+            }
+
+        }
+    });  
+}
 function evidencia(){
     $('#formEdit').submit(function(e){
         e.preventDefault();
-            
+            var idA = $("#idAuditoria").val();
             var id = $("#id").val();
             var accion = "Evidencia";
             var formData = new FormData();
             var archivo = $("#entregable_edit")[0].files[0];
             formData.append('entregable_edit',archivo);
+            formData.append('idAuditoria',idA);
             formData.append('id',id);
             formData.append('accion',accion);
 
@@ -215,7 +249,7 @@ function validarProrroga(id){
 
                     if(data[index][0]==id){
                         $('#idProrroga').val(data[index][0]);
-                    
+                        
                     }
 
                 }
@@ -290,7 +324,8 @@ function vProrroga(){
             console.log(data);
             
             for (let index = 0; index < data.length; index++) {
-                
+                debugger
+                if(data[index][4]=="Valido"){
                 
                 $('#tpro').append("<tr>"+
                                 "<td>"+(index+1)+"</td>"+
@@ -298,7 +333,8 @@ function vProrroga(){
                                 "<td>"+data[index][2]+"</td>"+
                                 "<td>"+data[index][3]+"</td>"+
                                 "</tr>");
-            }        
+                }   
+            }     
         }          
     });    
 }
@@ -314,6 +350,7 @@ function hallazgo(id){
         datatype:"json",
         data:data,
         success:function(data){
+            
             data = JSON.parse(data);
             for (let index = 0; index < data.length; index++) {
                 $('#tHallazgo').append("<tr>"+
@@ -327,5 +364,36 @@ function hallazgo(id){
         }
     });
 }
+$(document).ready(function(){
+    $.ajax({
+        url:"../../Controller/PlanMejoramiento/PlanMejoramiento.C.php",
+        type:"POST",
+        datatype:"json",
+        data:{'accion':"leer"},
+        success:function(data){
+           
+            data = JSON.parse(data);
+            console.log(data);
+            for (let index = 0; index < data.length; index++) {
+                    
+                    
+                $('#tbody').append("<tr>"+
+                                "<td>"+(index+1)+"</td>"+
+                                "<td><a data-toggle='modal' data-target='#staticBackdrop4' onclick='hallazgo("+data[index][0]+")'>"+data[index][2]+"</a></td>"+
+                                "<td>"+data[index][3]+"</td>"+
+                                "<td>"+data[index][4]+"</td>"+
+                                "<td>"+data[index][5]+"</td>"+
+                                "<td>"+data[index][6]+"</td>"+
+                                "<td>"+data[index][7]+"</td>"+
+                                "<td>"+
+                                "<button type='button' class='btn btn-primary btn-sm' data-toggle='modal' data-target='#staticBackdrop1' onclick='ValidarEditar("+data[index][1]+");validarEvidencia("+data[index][1]+")'>Editar</button>"+
+                                "<button type='button' class='btn btn-info   btn-sm' data-toggle='modal' data-target='#staticBackdrop2' onclick='validarProrroga("+data[index][1]+");'>Crear Prorroga</button>"+
+                                "</tr>");
+            }
+            
+        }
+    });    
+});
+
 
 

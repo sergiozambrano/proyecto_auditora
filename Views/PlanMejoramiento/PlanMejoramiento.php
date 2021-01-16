@@ -24,6 +24,7 @@ $sesion->autenticacion();
   <!--Css propios-->
   <link href="../../Css/estiloP.css" rel="stylesheet">
   <link rel="stylesheet" href="../../Library/sweetalert2/sweetalert2.min.css">
+  <link rel="stylesheet" href="../../Css/style.css">
 
     <title>Plan de Mejoramiento</title>
 </head>
@@ -36,11 +37,27 @@ $sesion->autenticacion();
       </div>
     </div>
     <br>
-    <form id="form">
-          <label for='validationDefault01'>Hallazgo</label>
-          <select class='form-select'  id='hallazgo' name='hallazgo'>
-          </select>
-    </form>
+    <div class="row">
+      <div class="col-md-1">
+        <form id="form" class="form-inline my-2 my-lg-0">
+            <label for='validationDefault01'>Hallazgo</label>
+            <select class='form-select'  id='hallazgo' name='hallazgo'>
+            </select>
+        </form>
+      </div>
+      <div class="col-md-11">
+        <form class="form-inline my-2 my-lg-0" id="buscador">
+            <select class="form-control" id="criterio">
+              <option value="hallazgo.tema_hallazgo">Hallazgo</option>
+              <option value="plan_mejoramiento.aspecto_mejora">Aspecto a Mejorar</option>
+              <option value="plan_mejoramiento.acciones_planteadas">Acciones Planteadas</option>
+              <option value="plan_mejoramiento.estado_plaMejor">Estado</option>
+            </select>
+            <input class="form-control mr-sm-2 " type="search"  placeholder="Search" id="texto" aria-label="Search">
+        </form>
+      </div>
+    </div>
+    
     <div class="modal fade" id="staticBackdrop1" tabindex="-1" aria-labelledby="exampleModalLabel1" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -82,6 +99,7 @@ $sesion->autenticacion();
                       <div class="col-md-6 mb-3">
                         <label for="validationDefault02">Fecha Entregable</label>
                         <input type="date" class="form-control" id="fecha_edit" name="fecha_edit" disabled>
+                        <input type="hidden" id="idAuditoria">
                       </div>
                     </div>
                     <div class="col-md-12 mb-3">
@@ -151,7 +169,7 @@ $sesion->autenticacion();
       </tbody>
     </table>
     <div class="modal fade" id="staticBackdrop3" tabindex="-1" aria-labelledby="exampleModalLabel3" aria-hidden="true">
-      <div class="modal-dialog modal-lg">
+      <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="staticBackdropLabel1">Prorrogas</h5>
@@ -181,6 +199,7 @@ $sesion->autenticacion();
         </div>
       </div>
   </div>
+  
   <div class="modal fade" id="staticBackdrop4" tabindex="-1" aria-labelledby="exampleModalLabel4" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -229,5 +248,6 @@ $sesion->autenticacion();
 
   <!-- código propio JS -->
     <script src="../../Js/PlanMejoramiento/PlanMejoramiento.js"></script>
+    <script src="../../Js/PlanMejoramiento/BuscadorPlan.js"></script>
 </body>
 </html>
