@@ -15,9 +15,6 @@ $('#buscador').keyup(function (e) {
             tabla += `<tr>
                 <td>${i+1}</td>
                 <td><a data-toggle='modal' data-target='#staticBackdrop4' onclick='hallazgo(${dato.id_hallazgo})'>${dato.tema_hallazgo}</a></td>
-                <td>${dato.aspecto_mejora}</td>
-                <td>${dato.acciones_planteadas}</td>
-                <td>${dato.ruta_evidencia}</td>
                 <td>${dato.fecha_evidencia}</td>
                 <td>${dato.estado_plaMejor}</td>
                 <td>
