@@ -25,18 +25,18 @@ $sesion->autenticacion();
         <a class='btn btn-primary' href="ProgramaAuditoria.php">Volver</a>
       </div>
       <div class="d-flex justify-content-end">
-        <div class="d-inline p-2 col">
-          <button type="button" class="btn btn-primary">Subir</button>
+        <div class="d-inline py-2">
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Subir</button>
         </div>
-        <form class="form-inline my-2 my-lg-0">
-          <div class="">
+        <form class="form-inline my-2 mx-3">
+          <div>
             <select class="form-control" id="selecBuscador">
               <option value="0">Documento</option>
-              <option value="1">Estado</option>
-              <option value=""></option>
+              <option value="1">Coordinador</option>
+              <option value="2">Estado</option>
             </select>
           </div>
-          <div class="">
+          <div>
             <input class="form-control" id="valorBuscador">
           </div>
         </form>
@@ -50,6 +50,7 @@ $sesion->autenticacion();
             <th scope="col">Documento</th>
             <th scope="col">Estado</th>
             <th scope="col">Validación</th>
+            <th scope="col">Observación</th>
           </tr>
         </thead>
         <tbody>
@@ -62,6 +63,29 @@ $sesion->autenticacion();
       </table>
     </article>
   </section>
+
+  <!-- Modal subir anexos -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Subir documento</h5>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div>
+            <label clas="form-label" for="subirArchivo"></label>
+            <input class="form-control" type="text" id="subirArchivo">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
 
   <!-- Código JavaScript-->
   <script src="../../Library/jquery-3.3.1.min.js"></script>

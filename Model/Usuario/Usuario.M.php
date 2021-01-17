@@ -55,7 +55,7 @@ class UsuarioM extends Conexion{
 
       if (password_verify($usuarioD->claveActual, $this->resulSet['pass_usu'])) {
 
-        if($usuarioD->claveActual =! $usuarioD->claveNueva){
+        if($usuarioD->claveActual != $usuarioD->claveNueva){
           $this->sql = "UPDATE usuario SET pass_usu=? WHERE id_usuario=?";
 
           $this->statement = $this->conexion->prepare($this->sql);

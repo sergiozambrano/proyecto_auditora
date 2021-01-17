@@ -35,8 +35,9 @@ $(document).ready(function(){
       switch (data) {
         case 'Administrador':
           accion  = "<a class='nav-link' href='../Area/Area.php' target='main'><span>Areás</span></a>"+
-                    "<a class='nav-link' href='' target='main'><span>Usuarios</span></a>"+
-                    "<a class='nav-link' href='' target='main'><span>Roles</span></a>"+
+                    "<a class='nav-link' href='../UsuarioRol/UsuarioRol.php' target='main'><span>Usuarios</span></a>"+
+                    "<a class='nav-link' href='../Persona/Persona.php' target='main'><span>Personas</span></a>"+
+                    "<a class='nav-link' href='../Rol/Rol.php' target='main'><span>Roles</span></a>"+
                     "<a class='nav-link' href='' target='main'><span>Backup</span></a>";
           break;
 
@@ -51,7 +52,7 @@ $(document).ready(function(){
 
         case 'Coordinador de área':
           accion  = "<a class='nav-link' href='../PlanMejoramiento/PlanMejoramiento.php' target='main'><span>Plan de mejoramiento</span></a>"+
-                    "<a class='nav-link' href='' target='main'><span>Anexos</span></a>";
+                    "<a class='nav-link' href='../PlanMejoramiento/Anexo/Anexos.php' target='main'><span>Anexos</span></a>";
           break;
       }
 
