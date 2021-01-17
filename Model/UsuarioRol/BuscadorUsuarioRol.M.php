@@ -5,8 +5,8 @@ class  BuscarM extends Conexion{
     private $sql;
     private $statement;
     private $resultSet;
-
-
+    
+   
     public function __construct(){
         parent::__construct();
     }
@@ -15,12 +15,8 @@ class  BuscarM extends Conexion{
 
         $c = $obj->criterio;
         $t = $obj->texto;
-
-        $this->sql = "SELECT hallazgo.id_hallazgo,plan_mejoramiento.id_plan_mejoramiento,hallazgo.tema_hallazgo,plan_mejoramiento.ruta_evidencia,plan_mejoramiento.fecha_evidencia,plan_mejoramiento.estado_plaMejor
-        FROM hallazgo 
-        INNER JOIN plan_mejoramiento
-        ON plan_mejoramiento.id_hallazgo=hallazgo.id_hallazgo 
-        WHERE $c LIKE '%$t%'";
+       
+        $this->sql = "SELECT persona.id_persona,persona.nombre_pri_per, persona.apellido_pri_per, persona.num_documento FROM persona left join usuario on persona.id_persona =usuario.id_persona where usuario.id_persona is null AND  $c LIKE '%$t%'";
         $this->statement = $this->conexion->prepare($this->sql);
         $this->statement->execute(
             array(

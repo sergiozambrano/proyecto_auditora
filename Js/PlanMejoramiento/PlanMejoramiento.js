@@ -44,20 +44,19 @@ function seleccionar(id){
                 for (let index = 0; index < data.length; index++) {
                     
                     
-                    $('#tbody').append("<tr>"+
-                                    "<td>"+(index+1)+"</td>"+
-                                    "<td><a data-toggle='modal' data-target='#staticBackdrop4' onclick='hallazgo("+data[index][0]+")'>"+data[index][1]+"</a></td>"+
-                                    "<td>"+data[index][2]+"</td>"+
-                                    "<td>"+data[index][3]+"</td>"+
-                                    "<td>"+data[index][4]+"</td>"+
-                                    "<td>"+data[index][5]+"</td>"+
-                                    "<td>"+data[index][6]+"</td>"+
-                                    "<td>"+
-                                    "<button type='button' class='btn btn-primary btn-sm' data-toggle='modal' data-target='#staticBackdrop1' onclick='ValidarEditar("+data[index][0]+");'>Editar</button>"+
-                                    "<button type='button' class='btn btn-info   btn-sm' data-toggle='modal' data-target='#staticBackdrop2' onclick='validarProrroga("+data[index][0]+");'>Crear Prorroga</button>"+
-                                    "</tr>");
+                    text="<tr>"+
+                    "<td>"+(index+1)+"</td>"+
+                    "<td><a data-toggle='modal' data-target='#staticBackdrop4' onclick='hallazgo("+data[index][0]+")'>"+data[index][2]+"</a></td>"+
+                    "<td>"+data[index][4]+"</td>"+
+                    "<td>"+data[index][5]+"</td>"+
+                    "<td>"+
+                    "<button type='button' class='btn btn-primary btn-sm' data-toggle='modal' data-target='#staticBackdrop1' onclick='ValidarEditar("+data[index][0]+");validarEvidencia("+data[index][0]+")'>Editar</button>"+
+                    "<button type='button' class='btn btn-info   btn-sm' data-toggle='modal' data-target='#staticBackdrop2' onclick='validarProrroga("+data[index][0]+");'>Crear Prorroga</button>"+
+                    "</tr>";
                                     
-                }        
+                }
+                
+                $('#tbody').append(text);        
             }          
         });
     });
@@ -80,8 +79,9 @@ function validarEvidencia(id){
             if (data.length >= 1) {
             
                 for (let index = 0; index < data.length; index++) {
-
-                    if(data[index][0]==id){
+                    
+                    if(data[index][0]){
+                        $('#idEjecucion').val(data[index][1]);
                         $('#idAuditoria').val(data[index][0]);
                         
                     }
@@ -98,15 +98,19 @@ function validarEvidencia(id){
 function evidencia(){
     $('#formEdit').submit(function(e){
         e.preventDefault();
+            var idE = $("#idEjecucion").val();
             var idA = $("#idAuditoria").val();
             var id = $("#id").val();
             var accion = "Evidencia";
             var formData = new FormData();
             var archivo = $("#entregable_edit")[0].files[0];
             formData.append('entregable_edit',archivo);
+            formData.append('idEjecucion',idE);
             formData.append('idAuditoria',idA);
             formData.append('id',id);
             formData.append('accion',accion);
+            
+            
 
     $.ajax({
         url:"../../Controller/PlanMejoramiento/PlanMejoramiento.C.php",
@@ -126,13 +130,16 @@ function evidencia(){
                     title:'Los datos fueron actualizados',
                   });
                 $('#staticBackdrop1').modal('hide');
-                $("#hallazgo").change();
+                
             }else if(data===0){
                 Swal.fire({
                     type:'error',
                     title:'No Hay ningun archivo',
                   });
+                  
                   $('#staticBackdrop1').modal('hide');
+
+                  
                     }else if(data===1){
                         
                         Swal.fire({
@@ -140,20 +147,25 @@ function evidencia(){
                             title:'El archivo es muy pesado',
                           });
                           $('#staticBackdrop1').modal('hide');
+                          
                     }else if(data===2){
                         Swal.fire({
                             type:'error',
                             title:'Archivo no valido',
                           });
                           $('#staticBackdrop1').modal('hide');
+                          
                     }else if(data===3){
                         Swal.fire({
                             type:'error',
                             title:'Ya hay un archivo subido',
                           });
                           $('#staticBackdrop1').modal('hide');
+                          
                     } 
+                    leer();
             }
+            
         
         
     });
@@ -176,10 +188,9 @@ function ValidarEditar(id){
 
                     if(data[index][0]==id){
 
-                        $('#aspecto_edit').val(data[index][2]);
-                        $('#accionesPlan_edit').val(data[index][3]);
-                        $('#fecha_edit').val(data[index][4]);
-                        $('#estado_edit').val(data[index][8]);
+                        
+                        tiempo(data[index][0],$('#fecha_edit').val(data[index][2]));
+                        $('#estado_edit').val(data[index][6]);
                         $('#id').val(data[index][0]);
                     
                     }
@@ -219,7 +230,7 @@ function editar(){
                     title:'Los datos fueron actualizados',
                   });
                 $('#staticBackdrop1').modal('hide');
-                $("#hallazgo").change();
+                
             }else{
                 Swal.fire({
                     type:'error',
@@ -227,6 +238,7 @@ function editar(){
                   });
                 
             }
+            leer();
         }
         
         
@@ -280,14 +292,14 @@ function prorroga(){
                 success: function(data){
                     console.log(data);
                     data = JSON.parse(data);
-                        debugger
+                        
                         if (data===true) {
                             Swal.fire({
                                 type:'success',
                                 title:'Prorroga actualizada',
                             });
                             $('#staticBackdrop2').modal('hide');
-                            $("#hallazgo").change();
+                            
 
                         }else if(data===2){
                            
@@ -297,6 +309,7 @@ function prorroga(){
                             });
                             $('#staticBackdrop2').modal('hide');
                             
+                            
                         }else if(data===-0){
                             Swal.fire({
                                 type:'error',
@@ -305,7 +318,7 @@ function prorroga(){
                         }
                         
                         $('#staticBackdrop2').modal('hide');
-                        $("#hallazgo").change();
+                        
                     }
                 
             });
@@ -324,7 +337,7 @@ function vProrroga(){
             console.log(data);
             
             for (let index = 0; index < data.length; index++) {
-                debugger
+                
                 if(data[index][4]=="Valido"){
                 
                 $('#tpro').append("<tr>"+
@@ -352,19 +365,24 @@ function hallazgo(id){
         success:function(data){
             
             data = JSON.parse(data);
+            console.log(data);
             for (let index = 0; index < data.length; index++) {
                 $('#tHallazgo').append("<tr>"+
                                     "<td>"+(index+1)+"</td>"+
                                     "<td>"+data[index][2]+"</td>"+
-                                    "<td>"+data[index][1]+"</td>"+
                                     "<td>"+data[index][3]+"</td>"+
+                                    "<td>"+data[index][4]+"</td>"+
+                                    "<td>"+data[index][1]+"</td>"+
+                                    "<td>"+data[index][5]+"</td>"+
                                     "<td>"+
                                     "</tr>");
             }
         }
     });
 }
-$(document).ready(function(){
+function leer(){
+
+    $('#tbody').empty();
     $.ajax({
         url:"../../Controller/PlanMejoramiento/PlanMejoramiento.C.php",
         type:"POST",
@@ -377,23 +395,73 @@ $(document).ready(function(){
             for (let index = 0; index < data.length; index++) {
                     
                     
-                $('#tbody').append("<tr>"+
+                                text="<tr>"+
                                 "<td>"+(index+1)+"</td>"+
                                 "<td><a data-toggle='modal' data-target='#staticBackdrop4' onclick='hallazgo("+data[index][0]+")'>"+data[index][2]+"</a></td>"+
-                                "<td>"+data[index][3]+"</td>"+
                                 "<td>"+data[index][4]+"</td>"+
                                 "<td>"+data[index][5]+"</td>"+
-                                "<td>"+data[index][6]+"</td>"+
-                                "<td>"+data[index][7]+"</td>"+
                                 "<td>"+
                                 "<button type='button' class='btn btn-primary btn-sm' data-toggle='modal' data-target='#staticBackdrop1' onclick='ValidarEditar("+data[index][1]+");validarEvidencia("+data[index][1]+")'>Editar</button>"+
                                 "<button type='button' class='btn btn-info   btn-sm' data-toggle='modal' data-target='#staticBackdrop2' onclick='validarProrroga("+data[index][1]+");'>Crear Prorroga</button>"+
-                                "</tr>");
+                                "</tr>";
             }
             
-        }
+            $('#tbody').append(text);
+        }   
     });    
-});
+}
+function validarTiempo(){
+    $.ajax({
+        url:"../../Controller/PlanMejoramiento/PlanMejoramiento.C.php",
+        type:"POST",
+        datatype:"json",
+        data:{'accion': "validarEditar"},
+        success: function(data){
+            data = JSON.parse(data);
+            console.log(data);
+                for (let index = 0; index < data.length; index++) {
+                    if(data[index][6]=="Abierto"){
+                    tiempo(data[index][0],data[index][2]);
+                    }
+                }
+        }
+    });  
+}
+function tiempo(id,fecha){
+    var fechaActual = new Date();
+    fechaActual=(fechaActual.getFullYear()+"-"+ (fechaActual.getMonth() +1) +"-"+fechaActual.getDate());
+    
+    if (fechaActual>fecha) {
+        let data={
+            'id':id,
+            'accion':"fecha"
+        }
+        $.ajax({
+            url:"../../Controller/PlanMejoramiento/PlanMejoramiento.C.php",
+            type:"POST",
+            datatype:"json",
+            data:data,
+            success:function(data){
+                data = JSON.parse(data);
+                console.log(data);
+                if(data==0){
+                    Swal.fire({
+                        type:'success',
+                        title:'Se ha cerrado su plan',
+                      });
+                    
+                }else if(data==1){
+                   Swal.fire({
+                    type:'error',
+                    title:'Se ha vencido su evidencia',
+                  });
+                }
+                leer();
+            }
+        });
+    }
+
+}
 
 
 

@@ -28,7 +28,7 @@ $sesion->autenticacion();
 
     <title>Plan de Mejoramiento</title>
 </head>
-<body onload="seleccionar(null);">
+<body onload="seleccionar(null);leer();validarTiempo();">
 <div class="container-fluid">
     <div class="row">
       <div class="col-md-12">
@@ -49,8 +49,6 @@ $sesion->autenticacion();
         <form class="form-inline my-2 my-lg-0" id="buscador">
             <select class="form-control" id="criterio">
               <option value="hallazgo.tema_hallazgo">Hallazgo</option>
-              <option value="plan_mejoramiento.aspecto_mejora">Aspecto a Mejorar</option>
-              <option value="plan_mejoramiento.acciones_planteadas">Acciones Planteadas</option>
               <option value="plan_mejoramiento.estado_plaMejor">Estado</option>
             </select>
             <input class="form-control mr-sm-2 " type="search"  placeholder="Search" id="texto" aria-label="Search">
@@ -73,14 +71,6 @@ $sesion->autenticacion();
 
                     <div class="form-row">
                         <div class="col-md-6 mb-3">
-                            <label for="validationDefault01">Aspecto Por mejorar</label>
-                            <input type="text" class="form-control" id="aspecto_edit"  disabled>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <label for="validationDefault02">Acciones Planteadas</label>
-                            <input type="text" class="form-control" id="accionesPlan_edit"  disabled>
-                        </div>
-                        <div class="col-md-6 mb-3">
                           <label for="validationDefault02">Entregable</label>
                           <input type="file"  id="entregable_edit" name="entregable_edit" required>
                       </div>
@@ -100,6 +90,7 @@ $sesion->autenticacion();
                         <label for="validationDefault02">Fecha Entregable</label>
                         <input type="date" class="form-control" id="fecha_edit" name="fecha_edit" disabled>
                         <input type="hidden" id="idAuditoria">
+                        <input type="hidden" id="idEjecucion">
                       </div>
                     </div>
                     <div class="col-md-12 mb-3">
@@ -157,9 +148,6 @@ $sesion->autenticacion();
           <tr>
               <th scope="col">#</th>
               <th scope="col">Hallazgo</th>
-              <th scope="col">Aspecto por Mejorar</th>
-              <th scope="col">Acciones Planteadas</th>
-              <th scope="col">Entregable</th>
               <th scope="col">Fecha implementacion</th>
               <th scope="col">Estado</th>
               <th scope="col">Acciones</th>
@@ -169,7 +157,7 @@ $sesion->autenticacion();
       </tbody>
     </table>
     <div class="modal fade" id="staticBackdrop3" tabindex="-1" aria-labelledby="exampleModalLabel3" aria-hidden="true">
-      <div class="modal-dialog">
+      <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="staticBackdropLabel1">Prorrogas</h5>
@@ -201,7 +189,7 @@ $sesion->autenticacion();
   </div>
   
   <div class="modal fade" id="staticBackdrop4" tabindex="-1" aria-labelledby="exampleModalLabel4" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="staticBackdropLabel4">Hallazgos</h5>
@@ -216,6 +204,8 @@ $sesion->autenticacion();
                   <tr>
                       <th scope="col">#</th>
                       <th scope="col">Tema </th>
+                      <th scope="col">Acciones Plantedas</th>
+                      <th scope="col">Aspecto Por Mejorar</th>
                       <th scope="col">Fecha </th>
                       <th scope="col">Evidencia</th>
                   </tr>

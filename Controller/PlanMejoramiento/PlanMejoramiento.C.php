@@ -21,8 +21,6 @@
             $data = $planMejoramientom->vEdit();
             break;
         case 'editar':
-
-            
             $aspectoMejorar=$_POST['aspecto_edit'];
             $accionesPlan=$_POST['accionesPlan_edit'];
             $estado=$_POST['estado_edit'];
@@ -55,15 +53,17 @@
             break;
         case 'Evidencia':
             $idAuditoria = $_POST['idAuditoria'];
-            $directorio = "../File/".$idAuditoria."/evidencia-planMejoramiento/";
+            $directorio = "../../File/".$idAuditoria."/evidencia-planMejoramiento/";
             $archivo = $directorio.basename($_FILES['entregable_edit']['name']);
+            $nombreArchivo = basename($_FILES['entregable_edit']['name']);
             $tipoArchivo = strtolower(pathinfo($archivo,PATHINFO_EXTENSION));
-            $tamanoArchivo = isset($_FILES['entregable_edit']['tmp_name']);
+            $validaArchivo = isset($_FILES['entregable_edit']['tmp_name']);
             $valida = $_FILES['entregable_edit']['tmp_name'];
             $size = $_FILES['entregable_edit']['size'];
-            
+            $idEjecucion = $_POST['idEjecucion'];
             $idPlanMejoramiento=$_POST['id'];
-            $data=$planMejoramientom->evidencia($archivo,$tipoArchivo,$tamanoArchivo,$valida,$size,$idPlanMejoramiento);
+            $planMejoramientod = new PlanMejoramientod(null,null,null,null,null,null);
+            $data=$planMejoramientom->evidencia($planMejoramientod,$archivo,$tipoArchivo,$validaArchivo,$nombreArchivo,$valida,$size,$idPlanMejoramiento,$idEjecucion);
             break;
         case 'validarAuditoria':
             $id=$_POST['id'];
@@ -75,6 +75,14 @@
             break;
         case 'leer':
             $data=$planMejoramientom->leer();
+            break;
+        case 'fecha':
+           
+            $id=$_POST['id'];
+           
+            
+            $data=$planMejoramientom->vFecha($id);
+            
             break;
     }
     
