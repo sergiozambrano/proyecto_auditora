@@ -8,18 +8,18 @@ $(document).ready(function () {
     datatype: 'json',
     success: function(data){
       data = JSON.parse(data);
-      $('input#codigo_contrato').attr('value',data[0]['cod_contrato_usu']);
-      $('input#primer_nombre').attr('value', data[0]['nombre_pri_per']);
-      $('input#segundo_nombre').attr('value', data[0]['nombre_seg_per']);
-      $('input#primer_apellido').attr('value', data[0]['apellido_pri_per']);
-      $('input#segundo_apellido').attr('value', data[0]['apellido_seg_per']);
-      $('input#tipo_documento').attr('value', data[0]['tipo_doc_per']);
-      $('input#numero_documento').attr('value', data[0]['num_documento']);
-      $('input#numero_celular').attr('value', data[0]['num_celular']);
-      $('input#correo').attr('value', data[0]['correo']);
-      $('input#fecha_nacimiento').attr('value', data[0]['fecha_nac_per']);
-      $('input#genero').attr('value', data[0]['genero_per']);
-      $('input#perfil_laboral').attr('value', data[0]['perfil_usu']);
+      $('input#codigo_contrato').attr('value',data[0][1]);
+      $('input#primer_nombre').attr('value', data[0][2]);
+      $('input#segundo_nombre').attr('value', data[0][3]);
+      $('input#primer_apellido').attr('value', data[0][4]);
+      $('input#segundo_apellido').attr('value', data[0][5]);
+      $('input#tipo_documento').attr('value', data[0][6]);
+      $('input#numero_documento').attr('value', data[0][7]);
+      $('input#numero_celular').attr('value', data[0][8]);
+      $('input#correo').attr('value', data[0][9]);
+      $('input#fecha_nacimiento').attr('value', data[0][10]);
+      $('input#genero').attr('value', data[0][11]);
+      $('input#perfil_laboral').attr('value', data[0][12]);
     }
   });
 

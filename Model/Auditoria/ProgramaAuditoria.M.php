@@ -10,6 +10,9 @@ class ProgramaM extends Conexion{
     parent::__construct();
   }
 
+  /**
+   * mostrar las auditorias vinculadas a un auditor
+   */
   public function auditorias($id){
     try {
       $this->sql = "SELECT a_p.id_auditoria, a.nombre_unidad, a_p.id_usu_auditor, MONTH(a_p.fecha_programacion) AS fecha,
@@ -21,7 +24,7 @@ class ProgramaM extends Conexion{
       $this->statement = $this->conexion->prepare($this->sql);
       $this->statement->execute(array($id));
 
-      $this->resultSet = $this->statement->fetchAll(PDO::FETCH_ASSOC);
+      $this->resultSet = $this->statement->fetchAll(PDO::FETCH_NUM);
 
       return $this->resultSet;
 
@@ -30,6 +33,9 @@ class ProgramaM extends Conexion{
     }
   }
 
+  /**
+   * Creacion de carpetas para los anexos de la auditoria
+   */
   public function inicioAuditoria($id_auditoria, $id_usuario){
     try {
       $this->sql = "UPDATE auditoria_programacion SET estado_auditoria='En proceso' WHERE id_auditoria=?";

@@ -11,10 +11,10 @@ $(document).ready(function(){
       data = JSON.parse(data);
 
       for (let i = 0; i < data.length; i++) {
-        $('select#selectRol').append("<option value="+i+">"+data[i]['nombre_rol']+"</option>");
+        $('select#selectRol').append("<option value="+i+">"+data[i][0]+"</option>");
       }
 
-      acceso(data[0]['nombre_rol']);
+      acceso(data[0][0]);
     }
   });
 

@@ -215,3 +215,7 @@ $(document).ready(function (e){
             /* $('#usuario').val('');
             $('#idArea').val(''); */
         }
+
+$('.cerrarModal').on('click', function() {
+  $('#modelActualizar').modal('hide');
+})

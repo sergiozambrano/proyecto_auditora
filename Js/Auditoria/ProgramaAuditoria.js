@@ -14,19 +14,19 @@ $(document).ready(function(){
 
         conts += "<tr>"+
                     "<td>"+
-                      "<p>"+data[i]['nombre_unidad']+"</p>"+
+                      "<p>"+data[i][1]+"</p>"+
                     "</td>"+
-                    "<td>"+mes(data[i]['fecha'])+"</td>"+
+                    "<td>"+mes(data[i][3])+"</td>"+
                     "<td>";
 
-        if (data[i]['fecha'] != mesActual && data[i]['estado_auditoria'] == 'Programada') {
+        if (data[i][3] != mesActual && data[i][4] == 'Programada') {
           conts += "<button class='btn btn-secondary' value='' type='button' disabled>Iniciar</button>";
 
-        }else if(data[i]['fecha'] == mesActual && data[i]['estado_auditoria'] == 'Programada'){
-          conts += "<button class='btn btn-success' type='button' onclick='btn("+data[i]['id_auditoria']+",1);'>Iniciar</button>";
+        }else if(data[i][3] == mesActual && data[i][4] == 'Programada'){
+          conts += "<button class='btn btn-success' type='button' onclick='btn("+data[i][0]+",1);'>Iniciar</button>";
 
-        }else if(data[i]['fecha'] == mesActual && data[i]['estado_auditoria'] == 'En proceso'){
-          conts += "<button class='btn btn-primary' type='button'  onclick='btn("+data[i]['id_auditoria']+",2);'>Seguir</button>";
+        }else if(data[i][3] == mesActual && data[i][4] == 'En proceso'){
+          conts += "<button class='btn btn-primary' type='button'  onclick='btn("+data[i][0]+",2);'>Seguir</button>";
         }
 
         conts +=    "</td>"+

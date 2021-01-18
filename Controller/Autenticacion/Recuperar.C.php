@@ -1,6 +1,7 @@
 <?php
-include_once("../../Model/Autenticacion/Login.M.php");
-include_once("../../Model/Autenticacion/Login.D.php");
+include_once "../../Model/Autenticacion/Login.M.php";
+include_once "../../Model/Autenticacion/Login.D.php";
+
 if(!isset($_SESSION)) {
   session_start();
 }

@@ -1,5 +1,5 @@
 <?php
-include_once('../../Enviroment/Conexion.php');
+include_once '../../Enviroment/Conexion.php';
 
 class UsuarioM extends Conexion{
   private $sql;
@@ -15,7 +15,7 @@ class UsuarioM extends Conexion{
       $this->statement = $this->conexion->prepare($this->sql);
       $this->statement->execute(array($id));
 
-      $this->resulSet = $this->statement->fetchAll(PDO::FETCH_ASSOC);
+      $this->resulSet = $this->statement->fetchAll(PDO::FETCH_NUM);
       return $this->resulSet;
 
     } catch (\Throwable $e) {
@@ -23,6 +23,9 @@ class UsuarioM extends Conexion{
     }
   }
 
+  /**
+   * Mostrar los datos del usuario
+   */
   public function datos($id){
     try {
       $this->sql = "SELECT p.id_persona,u.cod_contrato_usu,p.nombre_pri_per,p.nombre_seg_per,p.apellido_pri_per,p.apellido_seg_per,
@@ -34,7 +37,7 @@ class UsuarioM extends Conexion{
       $this->statement = $this->conexion->prepare($this->sql);
       $this->statement->execute(array($id));
 
-      $this->resulSet = $this->statement->fetchAll(PDO::FETCH_ASSOC);
+      $this->resulSet = $this->statement->fetchAll(PDO::FETCH_NUM);
       return $this->resulSet;
 
     } catch (\Throwable $e) {
@@ -51,9 +54,9 @@ class UsuarioM extends Conexion{
       $this->statement = $this->conexion->prepare($this->sql);
       $this->statement->execute(array($usuarioD->id));
 
-      $this->resulSet = $this->statement->fetch(PDO::FETCH_ASSOC);
+      $this->resulSet = $this->statement->fetch(PDO::FETCH_NUM);
 
-      if (password_verify($usuarioD->claveActual, $this->resulSet['pass_usu'])) {
+      if (password_verify($usuarioD->claveActual, $this->resulSet[1])) {
 
         if($usuarioD->claveActual != $usuarioD->claveNueva){
           $this->sql = "UPDATE usuario SET pass_usu=? WHERE id_usuario=?";

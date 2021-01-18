@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 12-01-2021 a las 00:44:44
+-- Tiempo de generación: 18-01-2021 a las 01:16:27
 -- Versión del servidor: 10.4.14-MariaDB
 -- Versión de PHP: 7.4.11
 
@@ -48,7 +48,7 @@ CREATE TABLE `anexos` (
   `id_anexo` int(11) NOT NULL,
   `id_ejecucion_auditoria` int(11) NOT NULL,
   `nombre_anexo` varchar(255) NOT NULL,
-  `estado_anexo` enum('Sin validar','Primera validacióm','Segunda validación') NOT NULL,
+  `estado_anexo` tinyint(1) NOT NULL,
   `ruta_anexo` varchar(255) NOT NULL,
   `id_usuario_creacion` int(11) NOT NULL,
   `fecha_creacion` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
@@ -64,10 +64,14 @@ CREATE TABLE `areas` (
   `id_area` int(11) NOT NULL,
   `id_usuario_encargado` int(11) NOT NULL,
   `nombre_unidad` varchar(45) NOT NULL,
-  `certificado` tinyint(4) NOT NULL,
+  `certificado` enum('si certificado','no certificado') NOT NULL,
   `id_usuario_creacion` int(11) NOT NULL,
   `fecha_creacion` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `areas`
+--
 
 -- --------------------------------------------------------
 
@@ -82,7 +86,24 @@ CREATE TABLE `auditoria_programacion` (
   `tipo_auditoria` varchar(45) NOT NULL,
   `fecha_programacion` date NOT NULL,
   `estado_auditoria` enum('Programada','En proceso','Finalizada') NOT NULL COMMENT 'Agregar los estados de una auditoria',
-  `observacion` mediumtext NOT NULL,
+  `observacion` mediumtext DEFAULT NULL,
+  `id_usuario_creacion` int(11) NOT NULL,
+  `fecha_creacion` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `auditoria_programacion`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `backup`
+--
+
+CREATE TABLE `backup` (
+  `id_backup` int(11) NOT NULL,
+  `dia_respaldo` int(11) NOT NULL,
   `id_usuario_creacion` int(11) NOT NULL,
   `fecha_creacion` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -95,12 +116,16 @@ CREATE TABLE `auditoria_programacion` (
 
 CREATE TABLE `ejecucion_auditoria` (
   `id_ejecucion_auditoria` int(11) NOT NULL,
-  `id_auditoria_programada` int(11) NOT NULL COMMENT 'Auditor lider encargado de la auditoria',
+  `id_auditoria_programada` int(11) NOT NULL,
   `fecha_inicio` date NOT NULL,
   `fecha_final` date DEFAULT NULL,
   `id_usuario_creacion` int(11) NOT NULL,
   `fecha_creacion` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `ejecucion_auditoria`
+--
 
 -- --------------------------------------------------------
 
@@ -113,10 +138,15 @@ CREATE TABLE `hallazgo` (
   `id_ejecucion_auditoria` int(11) NOT NULL,
   `fecha_hallazgo` datetime NOT NULL,
   `tema_hallazgo` mediumtext NOT NULL,
+  `acciones_planteadas` mediumtext NOT NULL,
+  `aspecto_mejora` mediumtext NOT NULL,
   `ruta_evidencia` varchar(255) NOT NULL,
-  `id_usuario_creacion` int(11) NOT NULL,
-  `fecha_creacion` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `id_usuario_creacion` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `hallazgo`
+--
 
 -- --------------------------------------------------------
 
@@ -153,14 +183,16 @@ CREATE TABLE `persona` (
 CREATE TABLE `plan_mejoramiento` (
   `id_plan_mejoramiento` int(11) NOT NULL,
   `id_hallazgo` int(11) NOT NULL,
-  `aspecto_mejora` mediumtext NOT NULL,
-  `acciones_planteadas` text NOT NULL,
   `fecha_evidencia` date NOT NULL,
-  `ruta_evidencia` varchar(255) NOT NULL,
+  `ruta_evidencia` varchar(255) DEFAULT NULL,
   `id_usuario_creacion` int(11) NOT NULL,
   `fecha_creacion` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `estado_plaMejor` enum('Abierto','Sin avance','Cerrado','Vencido') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `plan_mejoramiento`
+--
 
 -- --------------------------------------------------------
 
@@ -172,6 +204,8 @@ CREATE TABLE `prorroga_mejoramiento` (
   `id_prorroga_mejoramiento` int(11) NOT NULL,
   `id_plan_mejoramiento` int(11) NOT NULL,
   `fecha_adicional` varchar(45) NOT NULL,
+  `estado_prorroga` tinyint(1) NOT NULL,
+  `observacion` varchar(200) DEFAULT NULL,
   `id_usuario_creacion` int(11) NOT NULL,
   `fecha_creacion` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -194,12 +228,6 @@ CREATE TABLE `rol` (
 -- Volcado de datos para la tabla `rol`
 --
 
-INSERT INTO `rol` (`id_rol`, `nombre_rol`, `estado_rol`, `id_usuario_creacion`, `fecha_creacion`) VALUES
-(1, 'Administrador', 1, 0, '2021-01-09 03:45:54'),
-(2, 'Auditor', 1, 0, '2021-01-09 03:45:54'),
-(3, 'Coordinador de área', 1, 0, '2021-01-09 03:46:20'),
-(4, 'Coordinador de auditoría', 1, 0, '2021-01-09 03:46:20');
-
 -- --------------------------------------------------------
 
 --
@@ -210,9 +238,8 @@ CREATE TABLE `trasa_anexos` (
   `id_trasa_anexos` int(11) NOT NULL,
   `id_anexo` int(11) NOT NULL,
   `id_usuario_validacion` int(11) NOT NULL,
-  `fecha_validacion` date NOT NULL,
-  `id_usuario_creacion` int(11) NOT NULL,
-  `fecha_creacion` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `fecha_validacion` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `observa_anexo` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -295,6 +322,7 @@ ALTER TABLE `anexos`
 --
 ALTER TABLE `areas`
   ADD PRIMARY KEY (`id_area`),
+  ADD UNIQUE KEY `nombre_unidad` (`nombre_unidad`),
   ADD KEY `fk_unidadNegocio_usuario` (`id_usuario_encargado`);
 
 --
@@ -304,6 +332,12 @@ ALTER TABLE `auditoria_programacion`
   ADD PRIMARY KEY (`id_auditoria`),
   ADD KEY `fk_auditoria_area` (`id_area`),
   ADD KEY `fk_auditoria_usuario` (`id_usu_auditor`);
+
+--
+-- Indices de la tabla `backup`
+--
+ALTER TABLE `backup`
+  ADD PRIMARY KEY (`id_backup`);
 
 --
 -- Indices de la tabla `ejecucion_auditoria`
@@ -388,43 +422,49 @@ ALTER TABLE `actualizacion`
 -- AUTO_INCREMENT de la tabla `anexos`
 --
 ALTER TABLE `anexos`
-  MODIFY `id_anexo` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_anexo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `areas`
 --
 ALTER TABLE `areas`
-  MODIFY `id_area` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_area` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
 
 --
 -- AUTO_INCREMENT de la tabla `auditoria_programacion`
 --
 ALTER TABLE `auditoria_programacion`
-  MODIFY `id_auditoria` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_auditoria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
+-- AUTO_INCREMENT de la tabla `backup`
+--
+ALTER TABLE `backup`
+  MODIFY `id_backup` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `ejecucion_auditoria`
 --
 ALTER TABLE `ejecucion_auditoria`
-  MODIFY `id_ejecucion_auditoria` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_ejecucion_auditoria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT de la tabla `hallazgo`
 --
 ALTER TABLE `hallazgo`
-  MODIFY `id_hallazgo` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_hallazgo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `persona`
 --
 ALTER TABLE `persona`
-  MODIFY `id_persona` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_persona` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `plan_mejoramiento`
 --
 ALTER TABLE `plan_mejoramiento`
-  MODIFY `id_plan_mejoramiento` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_plan_mejoramiento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `rol`
@@ -436,19 +476,19 @@ ALTER TABLE `rol`
 -- AUTO_INCREMENT de la tabla `trasa_anexos`
 --
 ALTER TABLE `trasa_anexos`
-  MODIFY `id_trasa_anexos` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_trasa_anexos` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario_rol`
 --
 ALTER TABLE `usuario_rol`
-  MODIFY `id_usuario_rol` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_usuario_rol` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `vacaciones`

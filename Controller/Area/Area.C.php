@@ -5,6 +5,7 @@
     if(!isset($_SESSION)) {
         session_start();
     }
+
     $accion = $_POST["accion"];
     $data;
 

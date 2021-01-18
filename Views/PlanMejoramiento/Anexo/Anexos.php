@@ -25,14 +25,14 @@ $sesion->autenticacion();
   <link href="../../../Css/estiloP.css" rel="stylesheet">
   <link rel="stylesheet" href="../../../Library/sweetalert2/sweetalert2.min.css">
   <link rel="stylesheet" href="../../../Css/style.css">
-  
+
 </head>
 <body onload="leer()">
   <div class="container-fluid">
       <div class="row">
         <div class="col-md-12">
           <h2>
-            Plan de Mejoramiento de auditorias
+            Documentación auditoría
           </h2>
         </div>
       </div>
@@ -51,7 +51,7 @@ $sesion->autenticacion();
         </table>
       </div>
   </div>
-  
+
     <!-- Código JavaScript-->
     <script src="../../../Library/vendor/jquery/jquery.min.js"></script>
   <script src="../../../Library/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -65,7 +65,7 @@ $sesion->autenticacion();
 
   <!-- datatables JS -->
   <script src="../../../Library/vendor/datatables/datatables.min.js"></script>
-  
+
   <script src="../../../Js/PlanMejoramiento/Anexo/Anexo.js"></script>
 </body>
 </html>

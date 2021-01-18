@@ -1,5 +1,5 @@
 <?php
-include_once('../../Enviroment/Conexion.php');
+include_once '../../Enviroment/Conexion.php';
 
 if(!isset($_SESSION)) {
   session_start();
@@ -26,12 +26,12 @@ class LoginM extends Conexion{
       $this->resulSet =  $this->statement->rowCount();  #Obteniendo el numero de filas afectadas por la consulta
 
       if ($this->resulSet === 1) {
-        $this->resulSet = $this->statement->fetch(PDO::FETCH_ASSOC);  #Obteniendo los campos de la fila en un arreglo asociativo
+        $this->resulSet = $this->statement->fetch(PDO::FETCH_NUM);  #Obteniendo los campos de la fila en un arreglo asociativo
 
-        if ($this->resulSet['estado_usu'] == 1) {
-          if (password_verify($loginD->pass, $this->resulSet['pass_usu'])) {
-            $_SESSION['nombre'] = $this->resulSet['nombre_pri_per']." ".$this->resulSet['apellido_pri_per'];
-            $_SESSION['id'] = $this->resulSet['id_usuario'];
+        if ($this->resulSet[4] == 1) {
+          if (password_verify($loginD->pass, $this->resulSet[3])) {
+            $_SESSION['nombre'] = $this->resulSet[0]." ".$this->resulSet[1];
+            $_SESSION['id'] = $this->resulSet[2];
             return 1;
           }
           else{
@@ -77,7 +77,7 @@ class LoginM extends Conexion{
       $this->statement = $this->conexion->prepare($this->sql);
       $this->statement->execute(array($documento));
 
-      return $this->resulSet = $this->statement->fetch(PDO::FETCH_ASSOC);
+      return $this->resulSet = $this->statement->fetch(PDO::FETCH_NUM);
 
     } catch (\Throwable $th) {
       return $th;
