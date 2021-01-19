@@ -1,5 +1,5 @@
 function eliminar(id){
-        
+
     let data = {
         'id':id,
         'accion': "eliminar"
@@ -39,7 +39,7 @@ function seleccionar(id){
         data:{'accion': "seleccionar"},
         success: function(data){
             data = JSON.parse(data);
- 
+
             for (let index = 0; index < data.length; index++) {
                 //tabla con los tados consultados (roles)
                 var text1 ="<tr>"+
@@ -57,8 +57,8 @@ function seleccionar(id){
                 //id de la tabla
                 $('#tbody').append(text1);
             }
-            
-            //verificamos si el id ya existe esto lo hacemos para editar los datos        
+
+            //verificamos si el id ya existe esto lo hacemos para editar los datos
             if(id!=null){
 
                 for (let index = 0; index < data.length; index++) {
@@ -94,7 +94,7 @@ function seleccionar(id){
                                 "<option>Auditor</option>"+
                                 "<option selected>Coordinador de área</option>";
                             }
-                            
+
                             text +="</select>"+
                             "</div>"+
                             "<div class='col-md-6 mb-3'>"+
@@ -108,7 +108,7 @@ function seleccionar(id){
                                 text += "<option>Activo</option>"+
                                 "<option selected>Inactivo</option>";
                             }
-                            
+
                             text +="</select>"+
                             "</div>"+
                             "</div>"+
@@ -129,21 +129,21 @@ $(document).ready(function (e){
     seleccionar(null);
     //insercion de datos
     $('#form').submit(function(e){
-        e.preventDefault(); 
-    
+        e.preventDefault();
+
         let data = {
-            'nombre_rol':$.trim($('#nombre_rol').val()),      
+            'nombre_rol':$.trim($('#nombre_rol').val()),
             'estado_rol':$.trim($('#estado_rol').val()),
             'accion': "insertar"
         }
-    
+
         $.ajax({
             url:"../../Controller/Rol/Rol.C.php",
             type:"POST",
             datatype:"json",
             data:data,
             success:function(data){
-                //validamos si la insercion fue correcta    
+                //validamos si la insercion fue correcta
                 if (data == 1) {
                     Swal.fire({
                         type:'success',
@@ -166,15 +166,14 @@ $(document).ready(function (e){
     });
 
     $('#form_edit').submit(function(e){
-        e.preventDefault(); 
+        e.preventDefault();
 
         let data = {
-            'nombre_rol':$.trim($('#nombre_rol_edit').val()),      
-            'estado_rol':$.trim($('#estado_rol_edit').val()),          
+            'nombre_rol':$.trim($('#nombre_rol_edit').val()),
+            'estado_rol':$.trim($('#estado_rol_edit').val()),
             'id':$.trim($('#boton_edit').val()),
             'accion': "editar"
         }
-        console.log(data);
         $.ajax({
             url:"../../Controller/Rol/Rol.C.php",
             type:"POST",
@@ -196,5 +195,5 @@ $(document).ready(function (e){
             }
         });
     });
-    
+
 });

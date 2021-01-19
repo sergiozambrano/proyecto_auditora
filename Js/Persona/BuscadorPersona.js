@@ -1,15 +1,13 @@
 $('#buscador').keyup(function (e) {
     e.preventDefault();
-    
-    // En data se trae el valor ingresado en la visa 
+
+    // En data se trae el valor ingresado en la visa
     var data = {
         criterio: $('#criterio').val(),
         texto: $('#texto').val()
     };
-    console.log(data);
 
     $.post('../../Controller/Persona/BuscadorPersona.C.php', data, function (respuesta) {
-        console.log(respuesta);
         let datos = JSON.parse(respuesta);
         let tabla = '';
         datos.forEach((dato,i) => { //Si se encuentra un dato de la busqueda se carga la tabla con sus respectivos campos
@@ -41,5 +39,5 @@ $('#buscador').keyup(function (e) {
 });
 
 
-    
-    
+
+

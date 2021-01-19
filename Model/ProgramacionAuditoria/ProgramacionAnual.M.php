@@ -13,9 +13,10 @@
 
         public function read(){
             try {
-                $this->sql = "SELECT YEAR(`fecha_programacion`) 
-                            FROM `auditoria_programacion` 
-                            GROUP BY YEAR(`fecha_programacion`)";
+                $this->sql = "SELECT YEAR(`fecha_programacion`)
+                            FROM `auditoria_programacion`
+                            GROUP BY YEAR(`fecha_programacion`)
+                            ORDER BY YEAR(`fecha_programacion`) DESC";
                 $this->statement = $this->conexion->prepare($this->sql);
                 $this->resultset=$this->statement->execute();
 

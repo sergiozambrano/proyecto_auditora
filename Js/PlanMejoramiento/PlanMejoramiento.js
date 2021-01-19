@@ -39,12 +39,19 @@ function seleccionar(id){
             success:function(data){
                 data = JSON.parse(data);
                 $('#tbody').empty();
+<<<<<<< HEAD
 
                 var text;
                 for (let index = 0; index < data.length; index++) {
 
 
                     text ="<tr>"+
+=======
+                for (let index = 0; index < data.length; index++) {
+
+
+                    text="<tr>"+
+>>>>>>> prueba
                     "<td>"+(index+1)+"</td>"+
                     "<td><a data-toggle='modal' data-target='#staticBackdrop4' onclick='hallazgo("+data[index][0]+")'>"+data[index][2]+"</a></td>"+
                     "<td>"+data[index][4]+"</td>"+
@@ -53,10 +60,17 @@ function seleccionar(id){
                     "<button type='button' class='btn btn-primary btn-sm' data-toggle='modal' data-target='#staticBackdrop1' onclick='ValidarEditar("+data[index][0]+");validarEvidencia("+data[index][0]+")'>Editar</button>"+
                     "<button type='button' class='btn btn-info   btn-sm' data-toggle='modal' data-target='#staticBackdrop2' onclick='validarProrroga("+data[index][0]+");'>Crear Prorroga</button>"+
                     "</tr>";
+<<<<<<< HEAD
                     $('#tbody').append(text);
                 }
 
 
+=======
+
+                }
+
+                $('#tbody').append(text);
+>>>>>>> prueba
             }
         });
     });
@@ -109,7 +123,11 @@ function evidencia(){
             formData.append('id',id);
             formData.append('accion',accion);
 
+<<<<<<< HEAD
       console.log(formData);
+=======
+
+>>>>>>> prueba
 
     $.ajax({
         url:"../../Controller/PlanMejoramiento/PlanMejoramiento.C.php",
@@ -381,6 +399,7 @@ function leer(){
         data:{'accion':"leer"},
         success:function(data){
 
+<<<<<<< HEAD
           data = JSON.parse(data);
 
           var text;
@@ -398,6 +417,24 @@ function leer(){
           }
 
           $('#tbody').append(text);
+=======
+            data = JSON.parse(data);
+            for (let index = 0; index < data.length; index++) {
+
+
+                                text="<tr>"+
+                                "<td>"+(index+1)+"</td>"+
+                                "<td><a data-toggle='modal' data-target='#staticBackdrop4' onclick='hallazgo("+data[index][0]+")'>"+data[index][2]+"</a></td>"+
+                                "<td>"+data[index][4]+"</td>"+
+                                "<td>"+data[index][5]+"</td>"+
+                                "<td>"+
+                                "<button type='button' class='btn btn-primary btn-sm' data-toggle='modal' data-target='#staticBackdrop1' onclick='ValidarEditar("+data[index][1]+");validarEvidencia("+data[index][1]+")'>Editar</button>"+
+                                "<button type='button' class='btn btn-info   btn-sm' data-toggle='modal' data-target='#staticBackdrop2' onclick='validarProrroga("+data[index][1]+");'>Crear Prorroga</button>"+
+                                "</tr>";
+            }
+
+            $('#tbody').append(text);
+>>>>>>> prueba
         }
     });
 }

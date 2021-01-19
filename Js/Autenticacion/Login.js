@@ -66,8 +66,6 @@ $('#formLogin').submit(function(e){
             title:'Error inesperado contacte al Administrador',
           });
         }
-
-        console.log(contar);
       }
     });
   }

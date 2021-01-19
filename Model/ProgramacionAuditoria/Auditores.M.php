@@ -22,7 +22,7 @@
                         INNER JOIN `rol` AS r
                         ON ur.`id_rol`= r.`id_rol`
                         WHERE r.`id_rol` = 2
-                        ";
+                        AND u.`estado_usu` = 1";
 
           $this->statement = $this->conexion->prepare($this->sql);
           $this->statement->execute();

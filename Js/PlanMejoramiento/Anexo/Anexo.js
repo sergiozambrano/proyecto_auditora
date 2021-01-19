@@ -7,7 +7,6 @@ function leer(){
         data:{'accion':"leer"},
         success:function(data){
             data=JSON.parse(data);
-            console.log(data);
             for (let index = 0; index < data.length; index++) {
                             var text="<tr>"+
                                 "<td>"+(index+1)+"</td>"+
@@ -20,10 +19,10 @@ function leer(){
                                 "</a></td>"+
                                 "<td>"+
                                 "</tr>";
-                
+
             }
             $("#datos").append(text);
-            
+
         }
     });
 };

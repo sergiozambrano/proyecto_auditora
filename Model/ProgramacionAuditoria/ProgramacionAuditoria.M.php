@@ -12,53 +12,23 @@
     }
 
     //Metodo para imprimir todo los registros de la table de programacion de auditoria
-    public function read($programacionAuditoria, $where){
+    public function read($where){
       try {
 
-        //Verifica si llego el arreglo del flitro como no null
-        if($programacionAuditoria!=null){
+        //Consulta sin filtro
+        $this->sql = "SELECT u.`id_persona`, p.`nombre_pri_per`, p.`nombre_seg_per`, p.`apellido_pri_per`, p.`apellido_seg_per`, pa.`tipo_auditoria`,pa.`fecha_programacion`, pa.`estado_auditoria`, pa.`observacion`, a.`nombre_unidad`, pa.`id_auditoria`, pa.`id_area`, pa.`id_usu_auditor`
+                      FROM `auditoria_programacion` AS pa
+                      INNER JOIN `usuario` AS u
+                      ON pa.`id_usu_auditor`= u.`id_usuario`
+                      INNER JOIN `persona` AS p
+                      ON u.`id_persona`= p.`id_persona`
+                      INNER JOIN `areas` AS a
+                      ON pa.`id_area` = a.`id_area`
+                      WHERE YEAR(pa.`fecha_programacion`) = ?";
+        $this->statement = $this->conexion->prepare($this->sql);
+        $this->resultset=$this->statement->execute(array($where));
 
-          //Consulta con filtro
-          $this->sql = "SELECT u.`id_persona`, p.`nombre_pri_per`, p.`nombre_seg_per`, p.`apellido_pri_per`, p.`apellido_seg_per`, pa.`tipo_auditoria`,pa.`fecha_programacion`, pa.`estado_auditoria`, pa.`observacion`, a.`nombre_unidad`, pa.`id_auditoria`, pa.`id_area`, pa.`id_usu_auditor`
-                        FROM `auditoria_programacion` AS pa
-                        INNER JOIN `usuario` AS u
-                        ON pa.`id_usu_auditor`= u.`id_usuario`
-                        INNER JOIN `persona` AS p
-                        ON u.`id_persona`= p.`id_persona`
-                        INNER JOIN `areas` AS a
-                        ON pa.`id_area` = a.`id_area` 
-                        WHERE pa.`id_usu_auditor` LIKE ?
-                        AND pa.`id_area` LIKE ?
-                        AND pa.`tipo_auditoria` LIKE ?
-                        AND YEAR(pa.`fecha_programacion`) = ?";
-
-          $this->statement = $this->conexion->prepare($this->sql);
-          $this->resultset = $this->statement->execute(
-            array(
-              $programacionAuditoria->idUsuarioAuditor,
-              $programacionAuditoria->idArea,
-              $programacionAuditoria->tipoAuditoria,
-              $where
-            )
-          );
-
-        }
-        else{
-          //Consulta sin filtro
-          $this->sql = "SELECT u.`id_persona`, p.`nombre_pri_per`, p.`nombre_seg_per`, p.`apellido_pri_per`, p.`apellido_seg_per`, pa.`tipo_auditoria`,pa.`fecha_programacion`, pa.`estado_auditoria`, pa.`observacion`, a.`nombre_unidad`, pa.`id_auditoria`, pa.`id_area`, pa.`id_usu_auditor`
-                        FROM `auditoria_programacion` AS pa
-                        INNER JOIN `usuario` AS u
-                        ON pa.`id_usu_auditor`= u.`id_usuario`
-                        INNER JOIN `persona` AS p
-                        ON u.`id_persona`= p.`id_persona`
-                        INNER JOIN `areas` AS a
-                        ON pa.`id_area` = a.`id_area`
-                        WHERE YEAR(pa.`fecha_programacion`) = ?";
-          $this->statement = $this->conexion->prepare($this->sql);
-          $this->resultset=$this->statement->execute(array($where));
-        }
-
-        return $this->resultset = $this->statement->fetchAll(PDO::FETCH_NUM);
+      return $this->resultset = $this->statement->fetchAll(PDO::FETCH_NUM);
 
       } catch (\Throwable $th) {
           return $th;
@@ -85,7 +55,7 @@
 
           if($this->resultset){
             return 1;
-          } 
+          }
           else{
             return 2;
           }
@@ -113,7 +83,7 @@
 
           if($this->resultset){
             return 1;
-          } 
+          }
           else{
             return 2;
           }
@@ -128,20 +98,20 @@
 
         //Condicional para saber a que formulario esta haciendo la validacion
         if($operacion=="Create"){
-          $this->sql= "SELECT `fecha_programacion` 
-                      FROM `auditoria_programacion` 
+          $this->sql= "SELECT `fecha_programacion`
+                      FROM `auditoria_programacion`
                       WHERE `id_usu_auditor` = ?
                       AND `fecha_programacion` = ?";
 
           $this->statement = $this->conexion->prepare($this->sql);
           $this->statement->execute(array($programacionAuditoria->idUsuarioAuditor, $programacionAuditoria->fechaProgramacion));
-                      
+
         }
         else if($operacion=="Edit"){
-          $this->sql= "SELECT `fecha_programacion` 
-                      FROM `auditoria_programacion` 
-                      WHERE `id_usu_auditor` = ? 
-                      AND `fecha_programacion` = ? 
+          $this->sql= "SELECT `fecha_programacion`
+                      FROM `auditoria_programacion`
+                      WHERE `id_usu_auditor` = ?
+                      AND `fecha_programacion` = ?
                       AND `id_auditoria` != ?";
 
           $this->statement = $this->conexion->prepare($this->sql);
@@ -167,21 +137,21 @@
 
         //Condicional para saber a que formulario esta haciendo la validacion
         if($operacion=="Create"){
-          $this->sql= "SELECT `fecha_programacion` 
-                    FROM `auditoria_programacion` 
+          $this->sql= "SELECT `fecha_programacion`
+                    FROM `auditoria_programacion`
                     WHERE `id_area` = ?
                     AND `fecha_programacion` = ?";
-          
+
           $this->statement = $this->conexion->prepare($this->sql);
           $this->statement->execute(array($programacionAuditoria->idArea, $programacionAuditoria->fechaProgramacion));
         }
         else if($operacion=="Edit"){
-          $this->sql= "SELECT `fecha_programacion` 
-                    FROM `auditoria_programacion` 
+          $this->sql= "SELECT `fecha_programacion`
+                    FROM `auditoria_programacion`
                     WHERE `id_area` = ?
                     AND `fecha_programacion` = ?
                     AND `id_auditoria` != ?";
-          
+
           $this->statement = $this->conexion->prepare($this->sql);
           $this->statement->execute(array($programacionAuditoria->idArea, $programacionAuditoria->fechaProgramacion, $where));
 
@@ -199,6 +169,30 @@
       }catch (Exception $e){
         return 0;
       }
+    }
+
+    public function Search($where,$criterio,$texto){
+      //Consulta con filtro
+      $this->sql = "SELECT u.`id_persona`, concat(p.`nombre_pri_per`,' ', p.`apellido_pri_per`), pa.`tipo_auditoria`,pa.`fecha_programacion`, pa.`estado_auditoria`, pa.`observacion`, a.`nombre_unidad`, pa.`id_auditoria`, pa.`id_area`, pa.`id_usu_auditor`
+                    FROM `auditoria_programacion` AS pa
+                    INNER JOIN `usuario` AS u
+                    ON pa.`id_usu_auditor`= u.`id_usuario`
+                    INNER JOIN `persona` AS p
+                    ON u.`id_persona`= p.`id_persona`
+                    INNER JOIN `areas` AS a
+                    ON pa.`id_area` = a.`id_area`
+                    WHERE $criterio LIKE ?
+                    AND YEAR(pa.`fecha_programacion`) = ?";
+
+      $this->statement = $this->conexion->prepare($this->sql);
+      $this->resultset = $this->statement->execute(
+        array(
+          $texto,
+          $where
+        )
+      );
+
+      return $this->resultset = $this->statement->fetchAll(PDO::FETCH_NUM);
     }
   }
 
