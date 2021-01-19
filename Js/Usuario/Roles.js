@@ -47,7 +47,10 @@ $(document).ready(function(){
           break;
 
         case 'Coordinador de auditoría':
-          accion  = "<a class='nav-link' href='../ProgramacionAuditoria/ProgramacionAnual.php' target='main'><span>Plan anual</span></a>";
+          accion  = "<a class='nav-link' href='../ProgramacionAuditoria/ProgramacionAnual.php' target='main'><span>Plan anual</span></a>"+
+                    "<a class='nav-link' href='../Reportes/ReporteAnual.php' target='main'><span>Reportes</span></a>"+
+                    "<a class='nav-link' href='../ProgramacionAuditoria/Anexo.php' target='main'><span>Anexos</span></a>"+
+                    "<a class='nav-link' href='../Hallazgo/HallazgoCoordinador/VistaHallazgo.php' target='main'><span>Hallazgos</span></a>";
           break;
 
         case 'Coordinador de área':

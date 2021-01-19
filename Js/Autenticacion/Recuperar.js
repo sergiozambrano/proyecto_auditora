@@ -50,8 +50,6 @@ $(document).ready(function () {
 
     var codigoDigitado = $.trim($('#codigo').val());
 
-    console.log(codigoDigitado);
-
     $.ajax({
       url:"../../Controller/Autenticacion/Recuperar.C.php",
       type:"POST",

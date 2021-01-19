@@ -10,21 +10,20 @@ $(document).ready(function (e){
         data:{'accion': "seleccionar"},
         success:function(data){
             data = JSON.parse(data);
-            console.log(data);
             if (data.length >= 1) {
 
-                fechaMayor = data[data.length-1]; //Cojer la fecha mayor del arreglo traido de la base de datos
+                fechaMayor = data[0]; //Cojer la fecha mayor del arreglo traido de la base de datos
+
+                //Condicional y funcion para saber si el año mayor del registro es igual o no al año actual, 1 = igual, 2 = no es igual
+                if(ObtenerFecha(fechaMayor) == 2){
+                  //Si el año mayor del arreglo no es igual a la fecha actual crea un boton con la fecha actual y como si fuese una nueva programacion de auditoria
+                  string += "<button type='button' class='list-group-item list-group-item-action' onclick='Redireccionar("+ObtenerFecha()+");'>"+ObtenerFecha()+" <span class='badge badge-secondary'>Nuevo</span></button>"
+                }
 
                 for (let index = 0; index < data.length; index++) {
 
                     string += "<button type='button' class='list-group-item list-group-item-action' onclick='Redireccionar("+data[index]+");'>"+data[index]+"</button>";
 
-                }
-
-                //Condicional y funcion para saber si el año mayor del registro es igual o no al año actual, 1 = igual, 2 = no es igual
-                if(ObtenerFecha(fechaMayor) == 2){
-                    //Si el año mayor del arreglo no es igual a la fecha actual crea un boton con la fecha actual y como si fuese una nueva programacion de auditoria
-                    string += "<button type='button' class='list-group-item list-group-item-action' onclick='Redireccionar("+ObtenerFecha()+");'>"+ObtenerFecha()+" <span class='badge badge-secondary'>Nuevo</span></button>"
                 }
 
                 $('#contenedor').append(string);

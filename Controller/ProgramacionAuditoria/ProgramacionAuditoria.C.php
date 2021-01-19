@@ -17,7 +17,7 @@
     switch ($accion) {
         case 'seleccionar':
             $where=$_POST['where'];
-            $data = $programacionAuditoriaM->read(null,$where);
+            $data = $programacionAuditoriaM->read($where);
             break;
         case 'insertar':
             $idArea=$_POST['area'];
@@ -60,7 +60,7 @@
             }
 
             //Hacer la validacion al area segun la fecha especificada por el usuario
-            
+
             $programacionAuditoriaD=new programacionAuditoriaD($idArea,null,null,$fechaProgramacion,null,null,null);
 
             //Vericar el formulario en donde hicieron la validacion
@@ -99,16 +99,14 @@
             }
 
             break;
+
         case 'buscar':
 
-            $idAuditor="%".$_POST['auditor_buscar']."%";
-            $idArea="%".$_POST['area_buscar']."%";
-            $tipoAuditoria="%".$_POST['tipo_buscar']."%";
             $where=$_POST['where'];
-            
-            $programacionAuditoriaD=new programacionAuditoriaD($idArea,$idAuditor,$tipoAuditoria,null,null,null,null);
+            $criterio = $_POST['criterio'];
+            $texto = "%".$_POST['texto']."%";
 
-            $data = $programacionAuditoriaM->read($programacionAuditoriaD, $where);
+            $data = $programacionAuditoriaM->Search($where,$criterio,$texto);
 
             break;
     }

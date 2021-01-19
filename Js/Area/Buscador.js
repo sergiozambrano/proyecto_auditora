@@ -8,7 +8,6 @@ $('#buscador').keyup(function (e) {
     };
 
     $.post('../../Controller/Area/Buscar.C.php', data, function (respuesta) {
-        console.log(respuesta);
         let datos = JSON.parse(respuesta);
         let tabla = '';
         datos.forEach((dato,i) => { //Si se encuentra un dato de la busqueda se carga la tabla con sus respectivos campos

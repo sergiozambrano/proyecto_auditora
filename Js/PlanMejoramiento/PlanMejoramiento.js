@@ -9,12 +9,11 @@ function seleccionar(id){
         data:{'accion': "seleccionar"},
         success: function(data){
             data = JSON.parse(data);
-            console.log(data);
             $('#hallazgo').append("<option selected disabled>--selecciona--</option>");
             $('#Hallazgo').append("<option selected disabled>--selecciona--</option>");
             for (let index = 0; index < data.length; index++) {
                 $('#hallazgo').append(
-                    
+
                     "<option value='"+data[index][0]+"'>"+data[index][1]+"</option>"
                 );
                 $('#Hallazgo').append(
@@ -22,7 +21,7 @@ function seleccionar(id){
                 );
             }
         }
-        
+
     });
     $('#hallazgo').change(function(){
         var data={
@@ -30,9 +29,9 @@ function seleccionar(id){
             "accion":"seleccionarA"
         }
         $('#boton').empty();
-        
+
         $.ajax({
-            
+
             url:"../../Controller/PlanMejoramiento/PlanMejoramiento.C.php",
             type:"POST",
             datatype:"json",
@@ -40,10 +39,9 @@ function seleccionar(id){
             success:function(data){
                 data = JSON.parse(data);
                 $('#tbody').empty();
-                console.log(data);
                 for (let index = 0; index < data.length; index++) {
-                    
-                    
+
+
                     text="<tr>"+
                     "<td>"+(index+1)+"</td>"+
                     "<td><a data-toggle='modal' data-target='#staticBackdrop4' onclick='hallazgo("+data[index][0]+")'>"+data[index][2]+"</a></td>"+
@@ -53,11 +51,11 @@ function seleccionar(id){
                     "<button type='button' class='btn btn-primary btn-sm' data-toggle='modal' data-target='#staticBackdrop1' onclick='ValidarEditar("+data[index][0]+");validarEvidencia("+data[index][0]+")'>Editar</button>"+
                     "<button type='button' class='btn btn-info   btn-sm' data-toggle='modal' data-target='#staticBackdrop2' onclick='validarProrroga("+data[index][0]+");'>Crear Prorroga</button>"+
                     "</tr>";
-                                    
+
                 }
-                
-                $('#tbody').append(text);        
-            }          
+
+                $('#tbody').append(text);
+            }
         });
     });
 }
@@ -67,7 +65,7 @@ function validarEvidencia(id){
             'accion':"validarAuditoria"
 
         }
-        
+
     $.ajax({
         url:"../../Controller/PlanMejoramiento/PlanMejoramiento.C.php",
         type:"POST",
@@ -75,15 +73,14 @@ function validarEvidencia(id){
         data:data,
         success: function(data){
             data = JSON.parse(data);
-            console.log(data);
             if (data.length >= 1) {
-            
+
                 for (let index = 0; index < data.length; index++) {
-                    
+
                     if(data[index][0]){
                         $('#idEjecucion').val(data[index][1]);
                         $('#idAuditoria').val(data[index][0]);
-                        
+
                     }
 
                 }
@@ -93,7 +90,7 @@ function validarEvidencia(id){
             }
 
         }
-    });  
+    });
 }
 function evidencia(){
     $('#formEdit').submit(function(e){
@@ -109,8 +106,8 @@ function evidencia(){
             formData.append('idAuditoria',idA);
             formData.append('id',id);
             formData.append('accion',accion);
-            
-            
+
+
 
     $.ajax({
         url:"../../Controller/PlanMejoramiento/PlanMejoramiento.C.php",
@@ -120,54 +117,53 @@ function evidencia(){
         contentType:false,
         processData:false,
         success: function(data){
-            console.log(data);
-            
+
             data = JSON.parse(data);
-            
+
             if (data===true) {
                 Swal.fire({
                     type:'success',
                     title:'Los datos fueron actualizados',
                   });
                 $('#staticBackdrop1').modal('hide');
-                
+
             }else if(data===0){
                 Swal.fire({
                     type:'error',
                     title:'No Hay ningun archivo',
                   });
-                  
+
                   $('#staticBackdrop1').modal('hide');
 
-                  
+
                     }else if(data===1){
-                        
+
                         Swal.fire({
                             type:'error',
                             title:'El archivo es muy pesado',
                           });
                           $('#staticBackdrop1').modal('hide');
-                          
+
                     }else if(data===2){
                         Swal.fire({
                             type:'error',
                             title:'Archivo no valido',
                           });
                           $('#staticBackdrop1').modal('hide');
-                          
+
                     }else if(data===3){
                         Swal.fire({
                             type:'error',
                             title:'Ya hay un archivo subido',
                           });
                           $('#staticBackdrop1').modal('hide');
-                          
-                    } 
+
+                    }
                     leer();
             }
-            
-        
-        
+
+
+
     });
     return false;
 });
@@ -181,18 +177,17 @@ function ValidarEditar(id){
         data:{'accion': "validarEditar"},
         success: function(data){
             data = JSON.parse(data);
-            console.log(data);
             if (data.length >= 1) {
-            
+
                 for (let index = 0; index < data.length; index++) {
 
                     if(data[index][0]==id){
 
-                        
+
                         tiempo(data[index][0],$('#fecha_edit').val(data[index][2]));
                         $('#estado_edit').val(data[index][6]);
                         $('#id').val(data[index][0]);
-                    
+
                     }
 
                 }
@@ -202,7 +197,7 @@ function ValidarEditar(id){
             }
 
         }
-    });  
+    });
 
 }
 function editar(){
@@ -221,27 +216,26 @@ function editar(){
         datatype:"json",
         data:data,
         success: function(data){
-            console.log(data);
             data = JSON.parse(data);
-            
+
             if (data) {
                 Swal.fire({
                     type:'success',
                     title:'Los datos fueron actualizados',
                   });
                 $('#staticBackdrop1').modal('hide');
-                
+
             }else{
                 Swal.fire({
                     type:'error',
                     title:'Los datos no fueron actualizados',
                   });
-                
+
             }
             leer();
         }
-        
-        
+
+
     });
 });
 }
@@ -254,14 +248,13 @@ function validarProrroga(id){
         data:{'accion': "validarEditar"},
         success: function(data){
             data = JSON.parse(data);
-            console.log(data);
             if (data.length >= 1) {
-            
+
                 for (let index = 0; index < data.length; index++) {
 
                     if(data[index][0]==id){
                         $('#idProrroga').val(data[index][0]);
-                        
+
                     }
 
                 }
@@ -271,18 +264,18 @@ function validarProrroga(id){
             }
 
         }
-    });  
+    });
 
 }
 function prorroga(){
     $('#formProrroga').submit(function(e){
         e.preventDefault();
             let data={
-                'observacionProrro':$.trim($('#observacionProrro').val()),  
+                'observacionProrro':$.trim($('#observacionProrro').val()),
                 'fechaProrroga':$.trim($('#fechaProrro').val()),
                 'id':$.trim($('#idProrroga').val()),
                 'accion': "prorroga"
-                
+
             }
             $.ajax({
                 url:"../../Controller/PlanMejoramiento/PlanMejoramiento.C.php",
@@ -290,37 +283,36 @@ function prorroga(){
                 datatype:"json",
                 data:data,
                 success: function(data){
-                    console.log(data);
                     data = JSON.parse(data);
-                        
+
                         if (data===true) {
                             Swal.fire({
                                 type:'success',
                                 title:'Prorroga actualizada',
                             });
                             $('#staticBackdrop2').modal('hide');
-                            
+
 
                         }else if(data===2){
-                           
+
                             Swal.fire({
                                 type:'error',
                                 title:'Ya existe una prorroga',
                             });
                             $('#staticBackdrop2').modal('hide');
-                            
-                            
+
+
                         }else if(data===-0){
                             Swal.fire({
                                 type:'error',
                                 title:'La prorroga excede los 6 meses',
                             });
                         }
-                        
+
                         $('#staticBackdrop2').modal('hide');
-                        
+
                     }
-                
+
             });
     })
 }
@@ -333,23 +325,21 @@ function vProrroga(){
         data:{'accion': "vProrroga"},
         success:function(data){
             data = JSON.parse(data);
-            
-            console.log(data);
-            
+
             for (let index = 0; index < data.length; index++) {
-                
+
                 if(data[index][4]=="Valido"){
-                
+
                 $('#tpro').append("<tr>"+
                                 "<td>"+(index+1)+"</td>"+
                                 "<td>"+data[index][1]+"</td>"+
                                 "<td>"+data[index][2]+"</td>"+
                                 "<td>"+data[index][3]+"</td>"+
                                 "</tr>");
-                }   
-            }     
-        }          
-    });    
+                }
+            }
+        }
+    });
 }
 function hallazgo(id){
     $('#tHallazgo').empty();
@@ -363,9 +353,8 @@ function hallazgo(id){
         datatype:"json",
         data:data,
         success:function(data){
-            
+
             data = JSON.parse(data);
-            console.log(data);
             for (let index = 0; index < data.length; index++) {
                 $('#tHallazgo').append("<tr>"+
                                     "<td>"+(index+1)+"</td>"+
@@ -389,12 +378,11 @@ function leer(){
         datatype:"json",
         data:{'accion':"leer"},
         success:function(data){
-           
+
             data = JSON.parse(data);
-            console.log(data);
             for (let index = 0; index < data.length; index++) {
-                    
-                    
+
+
                                 text="<tr>"+
                                 "<td>"+(index+1)+"</td>"+
                                 "<td><a data-toggle='modal' data-target='#staticBackdrop4' onclick='hallazgo("+data[index][0]+")'>"+data[index][2]+"</a></td>"+
@@ -405,10 +393,10 @@ function leer(){
                                 "<button type='button' class='btn btn-info   btn-sm' data-toggle='modal' data-target='#staticBackdrop2' onclick='validarProrroga("+data[index][1]+");'>Crear Prorroga</button>"+
                                 "</tr>";
             }
-            
+
             $('#tbody').append(text);
-        }   
-    });    
+        }
+    });
 }
 function validarTiempo(){
     $.ajax({
@@ -418,19 +406,18 @@ function validarTiempo(){
         data:{'accion': "validarEditar"},
         success: function(data){
             data = JSON.parse(data);
-            console.log(data);
                 for (let index = 0; index < data.length; index++) {
                     if(data[index][6]=="Abierto"){
                     tiempo(data[index][0],data[index][2]);
                     }
                 }
         }
-    });  
+    });
 }
 function tiempo(id,fecha){
     var fechaActual = new Date();
     fechaActual=(fechaActual.getFullYear()+"-"+ (fechaActual.getMonth() +1) +"-"+fechaActual.getDate());
-    
+
     if (fechaActual>fecha) {
         let data={
             'id':id,
@@ -443,13 +430,12 @@ function tiempo(id,fecha){
             data:data,
             success:function(data){
                 data = JSON.parse(data);
-                console.log(data);
                 if(data==0){
                     Swal.fire({
                         type:'success',
                         title:'Se ha cerrado su plan',
                       });
-                    
+
                 }else if(data==1){
                    Swal.fire({
                     type:'error',

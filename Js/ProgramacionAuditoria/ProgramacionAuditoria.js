@@ -3,7 +3,7 @@ var cont = 0; /*Contador para que que se envien la peticion con datos y los guar
 
 $(document).ready(function (e){
 
-    Seleccionar(null);/*Ejecutar la funcion de imprimir todos los daos de la tabla programacion de auditoria*/
+    Seleccionar();/*Ejecutar la funcion de imprimir todos los daos de la tabla programacion de auditoria*/
 
     $("#ano").append(FechaValidar());/*Imprime la fecha correspondiente de la programacion de auditoria en el titulo*/
 
@@ -52,20 +52,20 @@ $(document).ready(function (e){
                 if (data == 1) {
                     $('#modalAgregar').modal('hide');
                     Swal.fire({
-                        type:'success',
+                        icon:'success',
                         title:'Datos ingresados correctamente!!',
                     });
-                    Seleccionar(null);
+                    Seleccionar();
                     Limpiar("Create");
                 }else if(data == 2){
                     Swal.fire({
-                        type:'warning',
+                        icon:'warning',
                         title:'Error al enviar los datos!!',
                     });
                 }
                 else{
                     Swal.fire({
-                        type:'error',
+                        icon:'error',
                         title:'Error del sistema!!\nContactese con el administrador',
                     });
                 }
@@ -75,7 +75,7 @@ $(document).ready(function (e){
         } else{
 
             Swal.fire({
-                type:'warning',
+                icon:'warning',
                 title:'Debe ingresar todos los datos!!',
             });
             return false;
@@ -130,20 +130,20 @@ $(document).ready(function (e){
                   if (data == 1) {
                       $('#modalEditar').modal('hide');
                       Swal.fire({
-                          type:'success',
+                          icon:'success',
                           title:'Datos modificados correctamente!!',
                       });
-                      Seleccionar(null);
+                      Seleccionar();
                       Limpiar("Edit");
                   }else if(data == 2){
                       Swal.fire({
-                          type:'warning',
+                          icon:'warning',
                           title:'Error al modificar los datos los datos!!',
                       });
                   }
                   else{
                       Swal.fire({
-                          type:'error',
+                          icon:'error',
                           title:'Error del sistema!!\nContactese con el administrador',
                       });
                   }
@@ -153,7 +153,7 @@ $(document).ready(function (e){
         } else{
 
             Swal.fire({
-                type:'warning',
+                icon:'warning',
                 title:'Debe ingresar todos los datos!!',
             });
             return false;
@@ -198,37 +198,6 @@ $(document).ready(function (e){
 
     });
 
-    //Filtrar por auditor, area, tipo auditoria
-
-    $('#buscador_area, #buscador_auditor, #buscador_tipo_auditoria').change(function () {
-
-        //Obtener datos a filtrar
-        var auditor = $.trim($('#buscador_auditor').val());
-        var area = $.trim($('#buscador_area').val());
-        var tipo = $.trim($('#buscador_tipo_auditoria').val());
-
-        //Condicional para verificar si los datos vieno o no vacios
-        if((auditor != "-undefined" && auditor != null && auditor != "") || (area != "-undefined" && area != null && area != "") || (tipo != "-undefined" && tipo != null && tipo != "")){
-
-            //Crear arreglo a enviar al php
-            let buscar = {
-                'auditor_buscar':auditor,
-                'area_buscar':area,
-                'tipo_buscar':tipo,
-                'accion': "buscar",
-                'where': FechaValidar()
-            }
-
-            //Enviar arreglo a la funcion de imprimir registro
-            Seleccionar(buscar);
-
-        }
-        else{
-            Seleccionar(null);
-        }
-
-    });
-
     $('#agregar').click(function() {
         $("#btn_agregar").removeAttr("disabled");
         ConsultarUsuarioArea("Create");/*Ejecutar la funcion de imprimir los datos de las tablas usuario y areas, mandando como parametro el formulario*/
@@ -241,28 +210,19 @@ $(document).ready(function (e){
 
 //Funcion para imprimir los registros de la tabla programacion de auditoria
 
-function Seleccionar(buscar){
+function Seleccionar(){
 
     //Declaracion de variables
     var nombre;
     var fecha;
-    let data;
     var string="";
-
-    //Condicional para saber si el arreglo que viene por parametro (para filtrar los registros) no es null y si es null, solo envia un arreglo sin filtros
-    if(buscar!=null){
-        data = buscar;
-    }
-    else{
-        data = {'accion': "seleccionar",'where': FechaValidar()}
-    }
 
     //Enviar los datos al php para ejecutar la operacion
     $.ajax({
         url:"../../Controller/ProgramacionAuditoria/ProgramacionAuditoria.C.php",
         type:"POST",
         datatype:"json",
-        data:data,
+        data:{'accion': "seleccionar",'where': FechaValidar()},
         success:function(data){
             data = JSON.parse(data);
             if (data.length >= 1) {
@@ -279,7 +239,12 @@ function Seleccionar(buscar){
                     string += "<td>"+data[index][5]+"</td>";
                     string += "<td>"+fecha+"</td>";
                     string += "<td>"+data[index][7]+"</td>";
-                    string += "<td>"+data[index][8]+"</td>";
+                    if(data[index][8]==null){
+                      string += "<td></td>";
+                    }
+                    else{
+                      string += "<td>"+data[index][8]+"</td>";
+                    }
                     string += "<td>";
                     //Condicional para desaparecer la opcion de editar cuando los años sean anteriores al actual y cuando un registro esta en estado Finalizado
                     if(FechaValidar() == ObtenerFecha(null) && data[index][7]!="Finalizada"){
@@ -431,7 +396,7 @@ function Disponibilidad(validacion) {
                 case 1:
 
                     mensaje += "<div id='alert' class='alert alert-warning alert-dismissible fade show' role='alert'>";
-                    mensaje += "El auditor y el area ya estan programados para esta fecha!!\nPorfavor escoja otra area, auditor y/o fecha";
+                    mensaje += "El auditor y el area ya estan programados para esta fecha!!<br>Porfavor escoja otra area, auditor y/o fecha";
                     mensaje += "<button type='button' class='close' data-dismiss='alert' aria-label='Close'>";
                     mensaje += "<span aria-hidden='true'>&times;</span>";
                     mensaje += "</button>";
@@ -440,7 +405,7 @@ function Disponibilidad(validacion) {
                     break;
                 case 2:
                     mensaje += "<div id='alert' class='alert alert-warning alert-dismissible fade show' role='alert'>";
-                    mensaje += "El area ya esta programada para auditoria en esta fecha!!\nPorfavor escoja otra area y/o fecha";
+                    mensaje += "El area ya esta programada para auditoria en esta fecha!!<br>Porfavor escoja otra area y/o fecha";
                     mensaje += "<button type='button' class='close' data-dismiss='alert' aria-label='Close'>";
                     mensaje += "<span aria-hidden='true'>&times;</span>";
                     mensaje += "</button>";
@@ -450,7 +415,7 @@ function Disponibilidad(validacion) {
                 case 3:
 
                     mensaje += "<div id='alert' class='alert alert-warning alert-dismissible fade show' role='alert'>";
-                    mensaje += "El usuario ya esta programado a realizar auditoria en esta fecha!!\nPorfavor escoja otro auditor y/o fecha";
+                    mensaje += "El usuario ya esta programado a realizar auditoria en esta fecha!!<br>Porfavor escoja otro auditor y/o fecha";
                     mensaje += "<button type='button' class='close' data-dismiss='alert' aria-label='Close'>";
                     mensaje += "<span aria-hidden='true'>&times;</span>";
                     mensaje += "</button>";
@@ -501,7 +466,7 @@ function BloquearFechas(){
     $("#fecha_pro_au, #fecha_pro_au_edit").attr("max",FechaValidar()+"-12");
 }
 
-//Funcion que muestra los usuarios y las areas en los inputs tipo select de los forrmlarios de agregar y editar
+//Funcion que muestra los usuarios y las areas en los inputs tipo select de los formularios de agregar y editar
 
 function ConsultarUsuarioArea(formulario){
 
@@ -534,7 +499,6 @@ function ConsultarUsuarioArea(formulario){
             if(formulario=="Edit"){
                 $('#id_auditor_edit').html(auditor);
             }
-            $('#buscador_auditor').html("<option value=''>--- Filtar por auditor ---</option>"+auditor);
         }
     });
 
@@ -562,7 +526,6 @@ function ConsultarUsuarioArea(formulario){
             if(formulario=="Edit"){
                 $('#id_area_edit').html(area);
             }
-            $('#buscador_area').html("<option value=''>--- Filtar por area ---</option>"+area);
         }
     });
 }
@@ -625,7 +588,7 @@ function BloquearInputs(tipo){
     }
 }
 
-//Funcion para limpiar imputs y etiquetas html
+//Funcion para limpiar inputs y etiquetas html
 
 function Limpiar(formulario){
     if(formulario=="Create"){
@@ -641,3 +604,69 @@ function Limpiar(formulario){
         $('#observacion_edit').val('');
     }
 }
+
+$('#buscador').keyup(function (e) {
+  e.preventDefault();
+
+  if($('#texto').val()!="" && $('#texto').val()!=null){
+    var string = "";
+
+    // En data se trae el valor ingresado en la visa
+    let data = {
+        'criterio': $('#criterio').val(),
+        'texto': $('#texto').val(),
+        'accion':"buscar",
+        'where': FechaValidar()
+    };
+
+    $.ajax({
+        url:"../../Controller/ProgramacionAuditoria/ProgramacionAuditoria.C.php",
+        type:"POST",
+        datatype:"json",
+        data:data,
+        success:function(data){
+            data = JSON.parse(data);
+            if (data.length >= 1) {
+
+                for (let index = 0; index < data.length; index++) {
+
+                  fecha = FechaProgramacion(data[index][3]); /*Funcion par separarme los años-meses de los dias de dotos tipo date*/
+
+                  string += "<tr>";
+                  string += "<td>"+(index+1)+"</td>";
+                  string += "<td>"+data[index][6]+"</td>";
+                  string += "<td>"+data[index][1]+"</td>";
+                  string += "<td>"+data[index][2]+"</td>";
+                  string += "<td>"+fecha+"</td>";
+                  string += "<td>"+data[index][4]+"</td>";
+                  if(data[index][5]==null){
+                    string += "<td></td>";
+                  }
+                  else{
+                    string += "<td>"+data[index][5]+"</td>";
+                  }
+                  string += "<td>";
+                  //Condicional para desaparecer la opcion de editar cuando los años sean anteriores al actual y cuando un registro esta en estado Finalizado
+                  if(FechaValidar() == ObtenerFecha(null) && data[index][4]!="Finalizada"){
+                      string += "<button type='button' class='btn btn-primary btn-sm' id='editar' onclick='ObtenerEditar("+data[index][7]+");'>Editar</button>";
+                  }
+                  else{
+                      string += "";
+                  }
+                  string += "</td>";
+                  string += "</tr>";
+
+                }
+                $('#tbody').html(string);
+
+            } else {
+                $('#tbody').html("<td colspan='8'>No hay registros.</td>");
+            }
+
+        }
+    });
+  }
+  else{
+    Seleccionar();
+  }
+});

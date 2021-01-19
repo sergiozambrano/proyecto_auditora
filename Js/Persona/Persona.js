@@ -1,5 +1,5 @@
 function eliminar(id){
-        
+
     let data = {
         'id':id,
         'accion': "eliminar"
@@ -50,7 +50,7 @@ function seleccionar(id){
                                 }else{
                                     text_Consul += " "+data[index][2]+"</td>";
                                 }
-                                
+
                                 text_Consul += "<td>"+data[index][3];
                                 //validamos si la persona tiene un segundo apellido
                                  if (data[index][4] == null) {
@@ -72,8 +72,8 @@ function seleccionar(id){
 
                 $('#tbody').append(text_Consul);
             }
-            
-               
+
+
             if(id!=null){
 
                 for (let index = 0; index < data.length; index++) {
@@ -129,7 +129,7 @@ function seleccionar(id){
                                 "<option>Tarjeta de identidad</option>"+
                                 "<option selected>Cedula de extranjeria</option>";
                             }
-                            
+
                             text +="</select>"+
                             "</div>"+
                             "<div class='col-md-6 mb-3'>"+
@@ -141,7 +141,7 @@ function seleccionar(id){
                             "<div class='col-md-6 mb-3'>"+
                             " <label for='validationDefault04'>Numero de telefono</label>"+
                             " <input type='text' class='form-control' id='telefono_edit' value='"+data[index][7]+"' required>"+
-                            "</div>"+   
+                            "</div>"+
                             " <div class='col-md-6 mb-3'>"+
                             "<label for='validationDefault03'>Correo electronico</label>"+
                             " <input type='email' class='form-control' id='correo_edit' value='"+data[index][8]+"' disabled>"+
@@ -170,12 +170,12 @@ function seleccionar(id){
                                 "<option>Femenino</option>"+
                                 "<option selected>Otro</option>";
                             }
-                            
+
                             text +="</select>"+
                             "</div>"+
                             "</div>"+
                             "<button class='btn btn-primary' type='submit' id='boton_edit' value='"+data[index][0]+"'>Editar</button>";
-                        
+
                         $('#form_edit').append(text);
                     }
                 }
@@ -191,11 +191,11 @@ $(document).ready(function (e){
     seleccionar(null);
     //insercion de personas
     $('#form').submit(function(e){
-        e.preventDefault(); 
-    
+        e.preventDefault();
+
         let data = {
-            'primer_nombre':$.trim($('#primer_nombre').val().replace(/^\w/, (c) => c.toUpperCase())),  
-            'segundo_nombre':$.trim($('#segundo_nombre').val().replace(/^\w/, (c) => c.toUpperCase())),     
+            'primer_nombre':$.trim($('#primer_nombre').val().replace(/^\w/, (c) => c.toUpperCase())),
+            'segundo_nombre':$.trim($('#segundo_nombre').val().replace(/^\w/, (c) => c.toUpperCase())),
             'primer_apellido':$.trim($('#primer_apellido').val().replace(/^\w/, (c) => c.toUpperCase())),
             'segundo_apellido':$.trim($('#segundo_apellido').val().replace(/^\w/, (c) => c.toUpperCase())),
             'tipo':$.trim($('#tipo').val()),
@@ -206,7 +206,7 @@ $(document).ready(function (e){
             'genero':$.trim($('#genero').val()),
             'accion': "insertar"
         }
-    
+
         $.ajax({
             url:"../../Controller/Persona/Persona.C.php",
             type:"POST",
@@ -235,11 +235,11 @@ $(document).ready(function (e){
     });
     //edicion de personas
     $('#form_edit').submit(function(e){
-        e.preventDefault(); 
-    
+        e.preventDefault();
+
         let data = {
-            'primer_nombre':$.trim($('#primer_nombre_edit').val().replace(/^\w/, (c) => c.toUpperCase())),  
-            'segundo_nombre':$.trim($('#segundo_nombre_edit').val().replace(/^\w/, (c) => c.toUpperCase())),     
+            'primer_nombre':$.trim($('#primer_nombre_edit').val().replace(/^\w/, (c) => c.toUpperCase())),
+            'segundo_nombre':$.trim($('#segundo_nombre_edit').val().replace(/^\w/, (c) => c.toUpperCase())),
             'primer_apellido':$.trim($('#primer_apellido_edit').val().replace(/^\w/, (c) => c.toUpperCase())),
             'segundo_apellido':$.trim($('#segundo_apellido_edit').val().replace(/^\w/, (c) => c.toUpperCase())),
             'tipo':$.trim($('#tipo_edit').val()),
@@ -251,7 +251,6 @@ $(document).ready(function (e){
             'id':$.trim($('#boton_edit').val()),
             'accion': "editar"
         }
-        console.log(data);
         $.ajax({
             url:"../../Controller/Persona/Persona.C.php",
             type:"POST",
@@ -273,5 +272,5 @@ $(document).ready(function (e){
             }
         });
     });
-    
+
 });

@@ -58,21 +58,21 @@
                 <input type="text" class="form-control" id="segundo_apellido">
               </div>
             </div>
-            <div class="form-row">  
+            <div class="form-row">
               <div class="col-md-6 mb-3">
                 <label for="validationDefault05">Tipo de documento</label>
                 <select class="custom-select" id="tipo" required>
                   <option>Cedula de ciudadania</option>
                   <option>Tarjeta de identidad</option>
                   <option>Cedula de extranjeria</option>
-                </select>	
+                </select>
               </div>
               <div class="col-md-6 mb-3">
                 <label for="validationDefault06">Numero de documento</label>
                 <input type="text" class="form-control" id="documento" required>
               </div>
             </div>
-            <div class="form-row">  
+            <div class="form-row">
               <div class="col-md-6 mb-3">
                 <label for="validationDefault07">Numero de telefono</label>
                 <input type="text" class="form-control" id="telefono" required>
@@ -93,12 +93,12 @@
                   <option>Masculino</option>
                   <option>Femenino</option>
                   <option>Otro</option>
-                </select>	
+                </select>
               </div>
             </div>
             <button class="btn btn-primary" type="submit">Enviar</button>
             <button class="btn btn-secondary" type="reset">Limpiar</button>
-            
+
           </form>
 
     </div>
@@ -107,7 +107,7 @@
           </div>
         </div>
       </div>
-    </div>  
+    </div>
 
     </br>
     <!-- tabla para visualizar las personas registradas -->
@@ -115,7 +115,7 @@
       <thead class="thead-dark">
           <tr>
               <th scope="col">#</th>
-              <th scope="col">Nombres</th>        
+              <th scope="col">Nombres</th>
               <th scope="col">Apellidos</th>
               <th scope="col">Tipo Documento</th>
               <th scope="col">Numero documento</th>
@@ -127,7 +127,7 @@
           </tr>
       </thead>
       <tbody id="tbody">
-            
+
       </tbody>
     </table>
 

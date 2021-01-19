@@ -139,7 +139,6 @@ $(document).ready(function (e){
                 'accion': "editar"
             }
         }
-        console.log(data);
 
             //Se valida para que se ingresen todos los datos al momento de insertarlos
             if(data['nombre'].length == "" || data['certificado'] == "" || data['usuario'] == ""){
