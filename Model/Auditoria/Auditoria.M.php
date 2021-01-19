@@ -15,9 +15,11 @@ class AuditoriaM extends Conexion{
    */
   public function mostrar($id){
     try {
-      $this->sql = "SELECT * FROM anexos AS a
-                  LEFT JOIN trasa_anexos AS t_a ON t_a.id_anexo=a.id_anexo
-                  WHERE a.id_usuario_creacion=?";
+      $this->sql = "SELECT a.id_anexo,a.nombre_anexo,a.estado_anexo,a.ruta_anexo,t_a.id_usuario_validacion,t_a.fecha_validacion,t_a.observa_anexo
+                    FROM anexos AS a
+                    LEFT JOIN trasa_anexos AS t_a ON t_a.id_anexo=a.id_anexo
+                    WHERE a.id_usuario_creacion=?
+                    ORDER BY a.fecha_creacion DESC";
 
       $this->statement = $this->conexion->prepare($this->sql);
       $this->statement->execute(array($id));

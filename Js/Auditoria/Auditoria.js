@@ -18,30 +18,30 @@ function mostrar(){
         tabla +=
           "<tr>"+
           "<td>"+(i+1)+"</td>"+
-          "<td>"+data[i][2]+"</td>";
+          "<td>"+data[i][1]+"</td>";
 
-          if(data[i][3] == 1){
+          if(data[i][2] == 1){
             tabla += "<td>Validado</td>";
 
           }else{
             tabla += "<td>No Validado</td>";
           }
 
-          if (data[i][9] != null) {
-            tabla += "<td>"+data[i][9]+"</td>";
+          if (data[i][4] != null) {
+            tabla += "<td>"+data[i][4]+"</td>";
 
           }else{
             tabla += "<td></td>";
           }
 
-          if (data[i][10] != null) {
-            tabla += "<td>"+data[i][10]+"</td>";
+          if (data[i][5] != null) {
+            tabla += "<td>"+data[i][5]+"</td>";
 
           }else{
             tabla += "<td></td>";
           }
 
-          if (data[i][10] != null) {
+          if (data[i][6] != null) {
             tabla += "<td><a href=''>Ver mas...</a></td>";
 
           }else{
