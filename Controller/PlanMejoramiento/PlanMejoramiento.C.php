@@ -2,10 +2,10 @@
   require_once "../../Model/PlanMejoramiento/PlanMejoramiento.D.php";
   require_once "../../Model/PlanMejoramiento/PlanMejoramiento.M.php";
 
-    /*if(!isset($_SESSION)) {
+    if(!isset($_SESSION)) {
         session_start();
-        $IdCreatePer = $_SESSION['IdUserCrea'];
-    }*/
+        
+    }
     $accion = $_POST["accion"];
     $data;
     $planMejoramientom=new PlanMejoramientom();
@@ -27,7 +27,7 @@
 
             $idPlanMejoramiento=$_POST['id'];
 
-            $planMejoramientod = new PlanMejoramientod(null,$aspectoMejorar,$accionesPlan,null,null,$estado);
+            $planMejoramientod = new PlanMejoramientod(null,$aspectoMejorar,$accionesPlan,null,null,$estado,$idUsuarioCrea = $_SESSION['id']);
 
             $data=$planMejoramientom->update($planMejoramientod, $idPlanMejoramiento);
 
@@ -43,7 +43,7 @@
             }else{
                 $observacion=$_POST['observacionProrro'];
                 $idPlanMejoramiento=$_POST['id'];
-                $planMejoramientod = new PlanMejoramientod(null,null,null,null,$fechaImplementacion,null);
+                $planMejoramientod = new PlanMejoramientod(null,null,null,null,$fechaImplementacion,null,$idUsuarioCrea = $_SESSION['id']);
             
                 $data=$planMejoramientom->prorroga($planMejoramientod,$observacion,$estado,$idPlanMejoramiento);
             }
@@ -52,7 +52,9 @@
             $data =$planMejoramientom->vProrroga();
             break;
         case 'Evidencia':
+            $idAnexo = $_POST['idAnexo'];
             $idAuditoria = $_POST['idAuditoria'];
+            $copia = $_POST['archivoSubido'];
             $directorio = "../../File/".$idAuditoria."/evidencia-planMejoramiento/";
             $archivo = $directorio.basename($_FILES['entregable_edit']['name']);
             $nombreArchivo = basename($_FILES['entregable_edit']['name']);
@@ -62,8 +64,8 @@
             $size = $_FILES['entregable_edit']['size'];
             $idEjecucion = $_POST['idEjecucion'];
             $idPlanMejoramiento=$_POST['id'];
-            $planMejoramientod = new PlanMejoramientod(null,null,null,null,null,null);
-            $data=$planMejoramientom->evidencia($planMejoramientod,$archivo,$tipoArchivo,$validaArchivo,$nombreArchivo,$valida,$size,$idPlanMejoramiento,$idEjecucion);
+            $planMejoramientod = new PlanMejoramientod(null,null,null,null,null,null,$idUsuarioCrea = $_SESSION['id']);
+            $data=$planMejoramientom->evidencia($idAnexo,$copia,$planMejoramientod,$archivo,$tipoArchivo,$validaArchivo,$nombreArchivo,$valida,$size,$idPlanMejoramiento,$idEjecucion);
             break;
         case 'validarAuditoria':
             $id=$_POST['id'];

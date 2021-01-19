@@ -19,7 +19,7 @@ $sesion->autenticacion();
   <link rel="stylesheet" type="text/css" href="../../../Library/vendor/datatables/datatables.min.css"/>
 
   <!--datables estilo bootstrap 4 CSS-->
-  <link rel="stylesheet"  type="text/css" href="../../../Library/vendor/datatables/DataTables-1.10.18/css/dataTables.bootstrap4.min.css">
+  <link rel="stylesheet"  type="text/css" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css">
 
   <!--Css propios-->
   <link href="../../../Css/estiloP.css" rel="stylesheet">
@@ -37,18 +37,17 @@ $sesion->autenticacion();
         </div>
       </div>
       <br>
-    <form>
-        <div>
-            <select name="hallazgo" id="hallazgo">
+    <div class="d-flex align-items-center">
+      <form class="form-inline my-2 my-lg-0">
+              <select class="form-control"name="hallazgo" id="hallazgo">
 
-            </select>
-        </div>
-    </form>
+              </select>
+      </form>
 
-    <form class="form-inline my-2 my-lg-0" id="buscador">
-      <input class="form-control mr-sm-2 " type="search"  placeholder="Buscar por año" id="texto" aria-label="Search">
-    </form>
-
+      <form class="form-inline my-2 my-lg-0" id="buscador">
+        <input class="form-control mr-sm-2 " type="search"  placeholder="Buscar por año" id="texto" aria-label="Search">
+      </form>
+    </div>  
     </br>
     <table class="table">
       <thead class="thead-dark">

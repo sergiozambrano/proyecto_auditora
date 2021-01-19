@@ -19,7 +19,7 @@ $sesion->autenticacion();
   <link rel="stylesheet" type="text/css" href="../../Library/vendor/datatables/datatables.min.css"/>
 
   <!--datables estilo bootstrap 4 CSS-->
-  <link rel="stylesheet"  type="text/css" href="../../Library/vendor/datatables/DataTables-1.10.18/css/dataTables.bootstrap4.min.css">
+  <link rel="stylesheet"  type="text/css" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css">
 
   <!--Css propios-->
   <link href="../../Css/estiloP.css" rel="stylesheet">
@@ -38,14 +38,14 @@ $sesion->autenticacion();
     </div>
     <br>
     <div class="row">
-      <div class="col-md-1">
+      <div class="col-md-3">
         <form id="form" class="form-inline my-2 my-lg-0">
             <label for='validationDefault01'>Hallazgo</label>
             <select class='form-select'  id='hallazgo' name='hallazgo'>
             </select>
         </form>
       </div>
-      <div class="col-md-11">
+      <div class="col-md-9">
         <form class="form-inline my-2 my-lg-0" id="buscador">
             <select class="form-control" id="criterio">
               <option value="hallazgo.tema_hallazgo">Hallazgo</option>
@@ -55,7 +55,7 @@ $sesion->autenticacion();
         </form>
       </div>
     </div>
-    
+
     <div class="modal fade" id="staticBackdrop1" tabindex="-1" aria-labelledby="exampleModalLabel1" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -91,6 +91,8 @@ $sesion->autenticacion();
                         <input type="date" class="form-control" id="fecha_edit" name="fecha_edit" disabled>
                         <input type="hidden" id="idAuditoria">
                         <input type="hidden" id="idEjecucion">
+                        <input type="hidden" id="idAnexo">
+                        <input type="hidden" id="nombreArchivo">
                       </div>
                     </div>
                     <div class="col-md-12 mb-3">
@@ -187,7 +189,7 @@ $sesion->autenticacion();
         </div>
       </div>
   </div>
-  
+
   <div class="modal fade" id="staticBackdrop4" tabindex="-1" aria-labelledby="exampleModalLabel4" aria-hidden="true">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">

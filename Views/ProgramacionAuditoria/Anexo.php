@@ -23,21 +23,11 @@ $sesion->autenticacion();
         </h2>
       </div>
     </div>
-    <div class="row justify-content-between">
-      <div class="col-8">
-        <button type="button" id="validados" class="btn btn-primary">Anexos validados</button>
-      </div>
-      <div class="col-3">
-        <form id="buscador">
-          <div class="form-row">
-            <div class="col-md-12 mb-3">
-              <input class="form-control" type="search"  placeholder="Buscar por nombre anexo" id="texto" aria-label="Search">
-            </div>
-          </div>
-        </form>
-      </div>
-    </div>
-    <br>
+    <button type="button" id="validados" class="btn btn-primary">Anexos validados</button>
+    <form class="form-inline my-2 my-lg-0" id="buscador">
+      <label for="texto" id="criterio">Buscar por nombre del anexo:</label>
+      <input class="form-control mr-sm-2" type="search"  placeholder="Buscar" id="texto" aria-label="Search">
+    </form>
     <div class="table-responsive">
       <table class="table">
         <thead class="thead-dark">
@@ -47,6 +37,7 @@ $sesion->autenticacion();
                 <th scope="col">Auditoria</th>
                 <th scope="col">Estado del anexo</th>
                 <th scope="col">Descargar anexo</th>
+                <th scope="col">Ver observaciones</th>
                 <th scope="col">Opciones</th>
             </tr>
         </thead>
@@ -84,7 +75,7 @@ $sesion->autenticacion();
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
         </div>
       </div>
     </div>
@@ -123,7 +114,7 @@ $sesion->autenticacion();
           </form>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
         </div>
       </div>
     </div>
@@ -159,14 +150,34 @@ $sesion->autenticacion();
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal observacion -->
+  <div class="modal fade" id="modalObsevacion" tabindex="-1" aria-labelledby="modalObsevacionLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalObsevacionLabel">Observaciones</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p class="text-justify" id="imprimir_observacion">
+          </p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
         </div>
       </div>
     </div>
   </div>
   <script src="../../Library/jquery-3.3.1.min.js"></script>
   <script src="../../Library/bootstrap/js/bootstrap.min.js"></script>
-  <script src="../../Library/popper.min.js"></script>
   <script src="../../Library/sweetalert2/sweetalert2.min.js"></script>
 
   <script src="../../Js/ProgramacionAuditoria/Anexo.js"></script>

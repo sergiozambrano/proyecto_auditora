@@ -13,6 +13,27 @@
     margin-left: 16px;
 }
 
+#insertar{
+    margin-top: 1.3em;
+    margin-left: 16px;
+}
+
+#activos{
+    margin-top: 1.3em;
+    margin-left: 16px;
+}
+
+#inactivos{
+    margin-top: 1.3em;
+    margin-left: 16px;
+}
+
+#selecth{
+    margin-top: 1.3em;
+    margin-left: 16px;
+}
+
+
 #criterio{
     margin-right: 10px;
 }

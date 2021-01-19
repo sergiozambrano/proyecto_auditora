@@ -29,30 +29,16 @@ $sesion->autenticacion();
           </h2>
         </div>
       </div>
-      <br>
-      <div class="row justify-content-between">
-        <div class="col-4">
-          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalAgregar" id="agregar">Agregar nuevo</button>
-        </div>
-        <div class="col-4">
-          <form id="buscador">
-            <div class="form-row">
-              <div class="col-md-6 mb-3">
-                <select class="form-control" id="criterio">
-                  <option value="a.`nombre_unidad`">Area</option>
-                  <option value="concat(p.`nombre_pri_per`,' ', p.`apellido_pri_per`)" title="Solo escribir el primer nombre y el primer apellido">Auditor</option>
-                  <option value="pa.`tipo_auditoria`">Tipo Auditoria</option>
-                  <option value="pa.`estado_auditoria`">Estado de la auditoria</option>
-                </select>
-              </div>
-              <div class="col-md-6 mb-3">
-                <input class="form-control" type="search"  placeholder="Search" id="texto" aria-label="Search">
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
-      <br>
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalAgregar" id="agregar">Agregar nuevo</button>
+      <form class="form-inline my-2 my-lg-0" id="buscador">
+            <select class="form-control" id="criterio">
+              <option value="a.`nombre_unidad`">Area</option>
+              <option value="concat(p.`nombre_pri_per`,' ', p.`apellido_pri_per`)" title="Solo escribir el primer nombre y el primer apellido">Auditor</option>
+              <option value="pa.`tipo_auditoria`">Tipo Auditoria</option>
+              <option value="pa.`estado_auditoria`">Estado de la auditoria</option>
+            </select>
+            <input class="form-control mr-sm-2" type="search"  placeholder="Buscar" id="texto" aria-label="Search">
+      </form>
       <div class="table-responsive">
         <table class="table">
           <thead class="thead-dark">
@@ -193,9 +179,29 @@ $sesion->autenticacion();
         </div>
       </div>
     </div>
+
+    <!-- Modal observacion -->
+  <div class="modal fade" id="modalObsevacion" tabindex="-1" aria-labelledby="modalObsevacionLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modalObsevacionLabel">Observaciones</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p class="text-justify" id="imprimir_observacion">
+          </p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
   <script src="../../Library/jquery-3.3.1.min.js"></script>
   <script src="../../Library/bootstrap/js/bootstrap.min.js"></script>
-  <script src="../../Library/popper.min.js"></script>
   <script src="../../Library/sweetalert2/sweetalert2.min.js"></script>
 
   <script src="../../Js/ProgramacionAuditoria/ProgramacionAuditoria.js"></script>

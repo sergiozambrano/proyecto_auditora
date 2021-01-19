@@ -30,12 +30,11 @@ $(document).ready(function (e){
           if (data.length >= 1) {;
 
             for (let index = 0; index < data.length; index++) {
-              ObtenerObsevacion(data[index][0],index);
 
               string += "<tr>";
               string += "<td>"+(index+1)+"</td>";
               string += "<td>"+data[index][2]+"</td>";
-              string += "<td><a href='#' onclick='ObtenerInfo("+data[index][1]+",1)'>";
+              string += "<td><a href='#' onclick='ObtenerInfo("+data[index][1]+",1);'>";
               string += "<svg xmlns='../../img/undraw_posting_photo.svg' width='30' height='30' fill='currentColor' class='bi bi-arrow-up-square-fill' viewBox='0 0 17 17'>";
               string += "<path fill-rule='evenodd' d='M8 10a.5.5 0 0 0 .5-.5V3.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 3.707V9.5a.5.5 0 0 0 .5.5zm-7 2.5a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13a.5.5 0 0 1-.5-.5z'/>";
               string += "</svg>";
@@ -50,7 +49,7 @@ $(document).ready(function (e){
               string += "<path d='M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z'/>";
               string += "</svg>";
               string += "</a></td>";
-              string += "<td id='imprimir_observacion"+index+"'></td>";
+              string += "<td><a href='#' onclick='ObtenerObsevacion("+data[index][0]+",1);'>Ver mas...</a></td>";
               string += "</tr>";
             }
 
@@ -166,6 +165,7 @@ function Seleccionar(){
                   string += "<path d='M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z'/>";
                   string += "</svg>";
                   string += "</a></td>";
+                  string += "<td><a href='#' onclick='ObtenerObsevacion("+data[index][0]+",0);'>Ver mas...</a></td>";
                   string += "<td>";
                   string += "<button type='button' class='btn btn-primary btn-sm' id='validacion' onclick='ObtenerValidacion("+data[index][0]+");'>Validar</button>";
                   string += "</td>";
@@ -284,10 +284,13 @@ function Validar(anexo){
 
 
 //Obtener las observaciones de los anexos validados
-function ObtenerObsevacion(anexo,cont){
+function ObtenerObsevacion(anexo, tipo){
+
+  if(tipo==1){
+    $('#modalValidados').modal("hide");
+  }
 
   var string = "";
-  var etiqueta = '#imprimir_observacion'+cont;
 
   $.ajax({
     url:"../../Controller/ProgramacionAuditoria/Anexo.C.php",
@@ -297,16 +300,25 @@ function ObtenerObsevacion(anexo,cont){
     success:function(data){
       data = JSON.parse(data);
 
-      for (let index = 0; index < data.length; index++) {
+      if (data.length >= 1) {
 
-        string += (index+1)+". "+data[index][0]+"<br>";
+        for (let index = 0; index < data.length; index++) {
+
+          string += (index+1)+". "+data[index][0]+"<br>";
+
+        }
+
+        $("#imprimir_observacion").html(string);
 
       }
-
-      $(etiqueta).html(string);
+      else{
+        $("#imprimir_observacion").html("El anexo no tiene observaciones.");
+      }
 
     }
   });
+
+  $('#modalObsevacion').modal("show");
 
 }
 
@@ -365,6 +377,7 @@ $('#buscador').keyup(function (e) {
                     string += "<path d='M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z'/>";
                     string += "</svg>";
                     string += "</a></td>";
+                    string += "<td><a href='#' onclick='ObtenerObsevacion("+data[index][0]+",0);'>Ver mas...</a></td>";
                     string += "<td>";
                     string += "<button type='button' class='btn btn-primary btn-sm' id='validacion' onclick='ObtenerValidacion("+data[index][0]+");'>Validar</button>";
                     string += "</td>";

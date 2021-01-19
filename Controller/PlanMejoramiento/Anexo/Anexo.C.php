@@ -12,7 +12,12 @@
         case 'leer':
             $data = $anexoM->leer();
             break;
+        case 'filtro':
+            $fecha=$_POST['fechaA'];
+            $data = $anexoM->filtroAuditoria($fecha);
+            break;
     }
+
     
     print json_encode($data);
 ?>

@@ -19,24 +19,36 @@ $sesion->autenticacion();
   <link rel="stylesheet" type="text/css" href="../../../Library/vendor/datatables/datatables.min.css"/>
 
   <!--datables estilo bootstrap 4 CSS-->
-  <link rel="stylesheet"  type="text/css" href="../../../Library/vendor/datatables/DataTables-1.10.18/css/dataTables.bootstrap4.min.css">
+  <link rel="stylesheet"  type="text/css" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css">
 
   <!--Css propios-->
   <link href="../../../Css/estiloP.css" rel="stylesheet">
   <link rel="stylesheet" href="../../../Library/sweetalert2/sweetalert2.min.css">
   <link rel="stylesheet" href="../../../Css/style.css">
-
+  
 </head>
 <body onload="leer()">
   <div class="container-fluid">
       <div class="row">
         <div class="col-md-12">
           <h2>
-            Documentación auditoría
+            Plan de Mejoramiento de auditorias
           </h2>
         </div>
       </div>
       <br>
+    <form class="col-md-2" style="position:absolute;right: 0;">
+      <div class="row g-3 align-items-center">  
+        <div  class="form-check">
+          <input class="form-check-input" type="checkbox" value="" id="filtroA" onclick="filtrarAuditoria();">
+          <label class="form-check-label" for="flexCheckDefault" >
+            Año Actual
+          </label>
+        </div>
+      </div> 
+    </form>
+    <br>
+    <br>
       <div class="table-responsive">
         <table class="table">
           <thead class="thead-dark">
@@ -51,7 +63,7 @@ $sesion->autenticacion();
         </table>
       </div>
   </div>
-
+  
     <!-- Código JavaScript-->
     <script src="../../../Library/vendor/jquery/jquery.min.js"></script>
   <script src="../../../Library/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -65,7 +77,7 @@ $sesion->autenticacion();
 
   <!-- datatables JS -->
   <script src="../../../Library/vendor/datatables/datatables.min.js"></script>
-
+  
   <script src="../../../Js/PlanMejoramiento/Anexo/Anexo.js"></script>
 </body>
 </html>

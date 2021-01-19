@@ -5,3 +5,18 @@
 span b{
   font-size: 15px;
 }
+
+#buscador{
+  padding: 20px;
+  float: right;
+  margin-right: -15px;
+}
+
+#validados, #agregar{
+  margin-top: 1.3em;
+  margin-left: 16px;
+}
+
+#criterio{
+  margin-right: 10px;
+}

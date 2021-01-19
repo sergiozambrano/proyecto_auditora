@@ -8,14 +8,14 @@
     private $estado;
     private $idUsuarioCrea;
 
-    public function __construct($hallazgo,$aspectoMejorar,$accionesPlan,$entregable,$fechaImplementacion,$estado){
+    public function __construct($hallazgo,$aspectoMejorar,$accionesPlan,$entregable,$fechaImplementacion,$estado,$idUsuarioCrea){
       $this->hallazgo=$hallazgo;
       $this->aspectoMejorar=$aspectoMejorar;
       $this->accionesPlan=$accionesPlan;
       $this->entregable=$entregable;
       $this->fechaImplementacion=$fechaImplementacion;
       $this->estado=$estado;
-      $this->idUsuarioCrea=0;
+      $this->idUsuarioCrea=$idUsuarioCrea;
     }
 
     public function __set($name, $value){

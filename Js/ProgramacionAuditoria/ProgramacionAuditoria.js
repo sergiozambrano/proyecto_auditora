@@ -239,12 +239,7 @@ function Seleccionar(){
                     string += "<td>"+data[index][5]+"</td>";
                     string += "<td>"+fecha+"</td>";
                     string += "<td>"+data[index][7]+"</td>";
-                    if(data[index][8]==null){
-                      string += "<td></td>";
-                    }
-                    else{
-                      string += "<td>"+data[index][8]+"</td>";
-                    }
+                    string += "<td><a href='#' onclick='ObtenerObsevacion(\""+data[index][8]+"\");'>Ver mas...</a></td>";
                     string += "<td>";
                     //Condicional para desaparecer la opcion de editar cuando los años sean anteriores al actual y cuando un registro esta en estado Finalizado
                     if(FechaValidar() == ObtenerFecha(null) && data[index][7]!="Finalizada"){
@@ -639,12 +634,7 @@ $('#buscador').keyup(function (e) {
                   string += "<td>"+data[index][2]+"</td>";
                   string += "<td>"+fecha+"</td>";
                   string += "<td>"+data[index][4]+"</td>";
-                  if(data[index][5]==null){
-                    string += "<td></td>";
-                  }
-                  else{
-                    string += "<td>"+data[index][5]+"</td>";
-                  }
+                  string += "<td><a href='#' onclick='ObtenerObsevacion(\""+data[index][5]+"\");'>Ver mas...</a></td>";
                   string += "<td>";
                   //Condicional para desaparecer la opcion de editar cuando los años sean anteriores al actual y cuando un registro esta en estado Finalizado
                   if(FechaValidar() == ObtenerFecha(null) && data[index][4]!="Finalizada"){
@@ -670,3 +660,14 @@ $('#buscador').keyup(function (e) {
     Seleccionar();
   }
 });
+
+function ObtenerObsevacion(anexo){
+  if(anexo!=null && anexo!="" && anexo!="null"){
+    $("#imprimir_observacion").html(anexo);
+  }
+  else{
+    $("#imprimir_observacion").html("La programacion de auditoria no tiene observaciones.");
+  }
+
+  $('#modalObsevacion').modal("show");
+}

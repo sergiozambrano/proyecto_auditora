@@ -13,12 +13,12 @@
   </br>
 
     <!-- boton de usuarios activos -->
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_usuarios_activos" onclick="seleccionar_usuarios_activos();">
+    <button type="button" class="btn btn-primary" id="activos" data-toggle="modal" data-target="#modal_usuarios_activos" onclick="seleccionar_usuarios_activos();">
         usuarios activos
     </button>
 
     <!-- boton de usuarios inactivos -->
-    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal_usuarios_inactivos" onclick="seleccionar_usuarios_inactivos();">
+    <button type="button" class="btn btn-danger" id="inactivos" data-toggle="modal" data-target="#modal_usuarios_inactivos" onclick="seleccionar_usuarios_inactivos();">
         usuarios inactivos
     </button>
 

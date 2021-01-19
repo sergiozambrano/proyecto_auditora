@@ -2,10 +2,6 @@
   require_once "../../Model/Reportes/Reportes.D.php";
   require_once "../../Model/Reportes/Reportes.M.php";
 
-    /*if(!isset($_SESSION)) {
-        session_start();
-        $IdCreatePer = $_SESSION['IdUserCrea'];
-    }*/
     $accion = $_POST["accion"];
     $data;
     $pedidoE = new Reporte();
