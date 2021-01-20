@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 19-01-2021 a las 23:55:30
+-- Tiempo de generación: 20-01-2021 a las 18:05:44
 -- Versión del servidor: 10.4.14-MariaDB
 -- Versión de PHP: 7.4.11
 
@@ -24,23 +24,6 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `actualizacion`
---
-
-CREATE TABLE `actualizacion` (
-  `id_actualizacion` int(11) NOT NULL,
-  `nom_tabla` varchar(50) NOT NULL,
-  `nom_campo` varchar(50) NOT NULL,
-  `accion` enum('Actualización','Eliminación') NOT NULL,
-  `id_registro` int(11) NOT NULL,
-  `registro` varchar(100) NOT NULL,
-  `fecha_modificacion` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `id_usuario_creacion` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
 -- Estructura de tabla para la tabla `anexos`
 --
 
@@ -53,10 +36,6 @@ CREATE TABLE `anexos` (
   `id_usuario_creacion` int(11) NOT NULL,
   `fecha_creacion` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Volcado de datos para la tabla `anexos`
---
 
 -- --------------------------------------------------------
 
@@ -72,10 +51,6 @@ CREATE TABLE `areas` (
   `id_usuario_creacion` int(11) NOT NULL,
   `fecha_creacion` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Volcado de datos para la tabla `areas`
---
 
 -- --------------------------------------------------------
 
@@ -94,10 +69,6 @@ CREATE TABLE `auditoria_programacion` (
   `id_usuario_creacion` int(11) NOT NULL,
   `fecha_creacion` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Volcado de datos para la tabla `auditoria_programacion`
---
 
 -- --------------------------------------------------------
 
@@ -127,10 +98,6 @@ CREATE TABLE `ejecucion_auditoria` (
   `fecha_creacion` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Volcado de datos para la tabla `ejecucion_auditoria`
---
-
 -- --------------------------------------------------------
 
 --
@@ -147,10 +114,6 @@ CREATE TABLE `hallazgo` (
   `ruta_evidencia` varchar(255) NOT NULL,
   `id_usuario_creacion` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Volcado de datos para la tabla `hallazgo`
---
 
 -- --------------------------------------------------------
 
@@ -173,10 +136,6 @@ CREATE TABLE `persona` (
   `id_usuario_creacion` int(11) NOT NULL,
   `fecha_creacion` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Volcado de datos para la tabla `persona`
---
 
 -- --------------------------------------------------------
 
@@ -224,10 +183,6 @@ CREATE TABLE `rol` (
   `fecha_creacion` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Volcado de datos para la tabla `rol`
---
-
 -- --------------------------------------------------------
 
 --
@@ -241,10 +196,6 @@ CREATE TABLE `trasa_anexos` (
   `fecha_validacion` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `observa_anexo` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Volcado de datos para la tabla `trasa_anexos`
---
 
 -- --------------------------------------------------------
 
@@ -262,10 +213,6 @@ CREATE TABLE `usuario` (
   `fecha_creacion` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Volcado de datos para la tabla `usuario`
---
-
 -- --------------------------------------------------------
 
 --
@@ -281,34 +228,8 @@ CREATE TABLE `usuario_rol` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Volcado de datos para la tabla `usuario_rol`
---
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `vacaciones`
---
-
-CREATE TABLE `vacaciones` (
-  `id_vacaciones` int(11) NOT NULL,
-  `id_usuario` int(11) NOT NULL,
-  `fecha_inicio` date NOT NULL,
-  `fecha_fin` date NOT NULL,
-  `estado_vacaciones` tinyint(4) NOT NULL,
-  `id_usuario_creacion` int(11) NOT NULL,
-  `fecha_creacion` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
 -- Índices para tablas volcadas
 --
-
---
--- Indices de la tabla `actualizacion`
---
-ALTER TABLE `actualizacion`
-  ADD PRIMARY KEY (`id_actualizacion`);
 
 --
 -- Indices de la tabla `anexos`
@@ -402,39 +323,26 @@ ALTER TABLE `usuario_rol`
   ADD KEY `fk_usuarioRol_usuarios` (`id_usuario`);
 
 --
--- Indices de la tabla `vacaciones`
---
-ALTER TABLE `vacaciones`
-  ADD PRIMARY KEY (`id_vacaciones`),
-  ADD KEY `fk_vaciones_usuario` (`id_usuario`);
-
---
 -- AUTO_INCREMENT de las tablas volcadas
 --
-
---
--- AUTO_INCREMENT de la tabla `actualizacion`
---
-ALTER TABLE `actualizacion`
-  MODIFY `id_actualizacion` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `anexos`
 --
 ALTER TABLE `anexos`
-  MODIFY `id_anexo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id_anexo` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `areas`
 --
 ALTER TABLE `areas`
-  MODIFY `id_area` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
+  MODIFY `id_area` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `auditoria_programacion`
 --
 ALTER TABLE `auditoria_programacion`
-  MODIFY `id_auditoria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_auditoria` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `backup`
@@ -446,19 +354,19 @@ ALTER TABLE `backup`
 -- AUTO_INCREMENT de la tabla `ejecucion_auditoria`
 --
 ALTER TABLE `ejecucion_auditoria`
-  MODIFY `id_ejecucion_auditoria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_ejecucion_auditoria` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `hallazgo`
 --
 ALTER TABLE `hallazgo`
-  MODIFY `id_hallazgo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_hallazgo` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `persona`
 --
 ALTER TABLE `persona`
-  MODIFY `id_persona` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_persona` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `plan_mejoramiento`
@@ -476,31 +384,25 @@ ALTER TABLE `prorroga_mejoramiento`
 -- AUTO_INCREMENT de la tabla `rol`
 --
 ALTER TABLE `rol`
-  MODIFY `id_rol` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_rol` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `trasa_anexos`
 --
 ALTER TABLE `trasa_anexos`
-  MODIFY `id_trasa_anexos` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_trasa_anexos` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario_rol`
 --
 ALTER TABLE `usuario_rol`
-  MODIFY `id_usuario_rol` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
---
--- AUTO_INCREMENT de la tabla `vacaciones`
---
-ALTER TABLE `vacaciones`
-  MODIFY `id_vacaciones` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_usuario_rol` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Restricciones para tablas volcadas
@@ -567,12 +469,6 @@ ALTER TABLE `usuario`
 ALTER TABLE `usuario_rol`
   ADD CONSTRAINT `fk_usuarioRol_rol` FOREIGN KEY (`id_rol`) REFERENCES `rol` (`id_rol`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `fk_usuarioRol_usuarios` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Filtros para la tabla `vacaciones`
---
-ALTER TABLE `vacaciones`
-  ADD CONSTRAINT `fk_vaciones_usuario` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
