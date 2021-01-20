@@ -22,8 +22,8 @@ function leer(){
 
                                 $("#datos").append(text);
             }
-            
-            
+
+
         }
     });
 }
@@ -47,7 +47,7 @@ function filtrarAuditoria(){
         success:function(data){
             $("#datos").empty();
             data=JSON.parse(data);
-            
+
             for (let index = 0; index < data.length; index++) {
                 var text="<tr>"+
                     "<td>"+(index+1)+"</td>"+

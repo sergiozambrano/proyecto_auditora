@@ -47,7 +47,7 @@ $sesion->autenticacion();
       <form class="form-inline my-2 my-lg-0" id="buscador">
         <input class="form-control mr-sm-2 " type="search"  placeholder="Buscar por año" id="texto" aria-label="Search">
       </form>
-    </div>  
+    </div>
     </br>
     <table class="table">
       <thead class="thead-dark">
@@ -64,9 +64,9 @@ $sesion->autenticacion();
       </tbody>
     </table>
 
-    <!-- Código JavaScript-->
-    <script src="../../../Library/vendor/jquery/jquery.min.js"></script>
-  <script src="../../../Library/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- Código JavaScript-->
+  <script src="../../../Library/vendor/jquery/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
   <script src="../../../Library/sweetalert2/sweetalert2.all.min.js"></script>
 
 

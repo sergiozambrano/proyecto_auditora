@@ -59,7 +59,7 @@ $sesion->autenticacion();
         </div>
         <div class="modal-body">
           <div class="table-responsive">
-            <table class="table table-sm">
+            <table class="thead-dark-sm">
               <thead>
                 <tr>
                   <th scope="col">Nombre del auditor</th>
@@ -132,7 +132,7 @@ $sesion->autenticacion();
         </div>
         <div class="modal-body">
           <div class="table-responsive">
-            <table class="table table-sm">
+            <table class="thead-dark-sm">
               <thead>
                 <tr>
                   <th scope="col">#</th>
@@ -177,7 +177,7 @@ $sesion->autenticacion();
     </div>
   </div>
   <script src="../../Library/jquery-3.3.1.min.js"></script>
-  <script src="../../Library/bootstrap/js/bootstrap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
   <script src="../../Library/sweetalert2/sweetalert2.min.js"></script>
 
   <script src="../../Js/ProgramacionAuditoria/Anexo.js"></script>

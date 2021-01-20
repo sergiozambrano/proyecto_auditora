@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 18-01-2021 a las 01:16:27
+-- Tiempo de generación: 19-01-2021 a las 23:55:30
 -- Versión del servidor: 10.4.14-MariaDB
 -- Versión de PHP: 7.4.11
 
@@ -53,6 +53,10 @@ CREATE TABLE `anexos` (
   `id_usuario_creacion` int(11) NOT NULL,
   `fecha_creacion` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `anexos`
+--
 
 -- --------------------------------------------------------
 
@@ -190,10 +194,6 @@ CREATE TABLE `plan_mejoramiento` (
   `estado_plaMejor` enum('Abierto','Sin avance','Cerrado','Vencido') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Volcado de datos para la tabla `plan_mejoramiento`
---
-
 -- --------------------------------------------------------
 
 --
@@ -242,6 +242,10 @@ CREATE TABLE `trasa_anexos` (
   `observa_anexo` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Volcado de datos para la tabla `trasa_anexos`
+--
+
 -- --------------------------------------------------------
 
 --
@@ -254,10 +258,6 @@ CREATE TABLE `usuario` (
   `cod_contrato_usu` varchar(45) NOT NULL,
   `pass_usu` varchar(150) NOT NULL,
   `estado_usu` tinyint(4) NOT NULL,
-  `perfil_usu` varchar(100) DEFAULT NULL,
-  `pregunta_seg_usu` varchar(255) DEFAULT NULL,
-  `respuesta_seg_usu` varchar(25) DEFAULT NULL,
-  `temporalida_usu` date DEFAULT NULL,
   `id_usuario_creacion` int(11) NOT NULL,
   `fecha_creacion` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -422,7 +422,7 @@ ALTER TABLE `actualizacion`
 -- AUTO_INCREMENT de la tabla `anexos`
 --
 ALTER TABLE `anexos`
-  MODIFY `id_anexo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_anexo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de la tabla `areas`
@@ -434,7 +434,7 @@ ALTER TABLE `areas`
 -- AUTO_INCREMENT de la tabla `auditoria_programacion`
 --
 ALTER TABLE `auditoria_programacion`
-  MODIFY `id_auditoria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id_auditoria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `backup`
@@ -446,13 +446,13 @@ ALTER TABLE `backup`
 -- AUTO_INCREMENT de la tabla `ejecucion_auditoria`
 --
 ALTER TABLE `ejecucion_auditoria`
-  MODIFY `id_ejecucion_auditoria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id_ejecucion_auditoria` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `hallazgo`
 --
 ALTER TABLE `hallazgo`
-  MODIFY `id_hallazgo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_hallazgo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `persona`
@@ -464,7 +464,13 @@ ALTER TABLE `persona`
 -- AUTO_INCREMENT de la tabla `plan_mejoramiento`
 --
 ALTER TABLE `plan_mejoramiento`
-  MODIFY `id_plan_mejoramiento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_plan_mejoramiento` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `prorroga_mejoramiento`
+--
+ALTER TABLE `prorroga_mejoramiento`
+  MODIFY `id_prorroga_mejoramiento` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `rol`
@@ -476,7 +482,7 @@ ALTER TABLE `rol`
 -- AUTO_INCREMENT de la tabla `trasa_anexos`
 --
 ALTER TABLE `trasa_anexos`
-  MODIFY `id_trasa_anexos` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_trasa_anexos` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`

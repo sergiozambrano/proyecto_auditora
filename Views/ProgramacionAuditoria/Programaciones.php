@@ -9,7 +9,7 @@ $sesion->autenticacion();
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Programacion de auditoria</title>
-  <link rel="stylesheet" href="../../Library/bootstrap/css/bootstrap.min.css">
+  <link href="../../Library/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="../../Library/sweetalert2/sweetalert2.min.css">
 
   <link rel="stylesheet" href="../../Css/estiloH.css">
@@ -200,8 +200,9 @@ $sesion->autenticacion();
       </div>
     </div>
   </div>
+
   <script src="../../Library/jquery-3.3.1.min.js"></script>
-  <script src="../../Library/bootstrap/js/bootstrap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
   <script src="../../Library/sweetalert2/sweetalert2.min.js"></script>
 
   <script src="../../Js/ProgramacionAuditoria/ProgramacionAuditoria.js"></script>

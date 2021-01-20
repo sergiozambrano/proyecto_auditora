@@ -26,10 +26,10 @@ if (isset($_POST['accion'])) {
         $_SESSION['codigo'] = rand(1000,9999);
 
         $asunto = utf8_decode("Recuperación de contraseña software auditoría");
-        $mensaje =  utf8_decode("Hola, \n".$datos['nombre_pri_per']." ".$datos['apellido_pri_per'].". \n\n".
+        $mensaje =  utf8_decode("Hola, \n".$datos[0]." ".$datos[1].". \n\n".
         "Este es el código que necesitas para restablecer tu contraseña ".$_SESSION['codigo']);
 
-        if (mail($datos['correo'], $asunto, $mensaje)) {
+        if (mail($datos[2], $asunto, $mensaje)) {
           $data = 1;
 
         } else {

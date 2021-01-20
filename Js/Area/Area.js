@@ -20,36 +20,36 @@ function eliminar(id){
             confirmButtonText: '¡Si, aceptar!',
             }).then(function(confirmar){
                 if(confirmar.isConfirmed){ //Si se confirma accion entra al ajax y elimina
-                $.ajax({
-                    url:"../../Controller/Area/Area.C.php",
-                    type:"POST",
-                    datatype:"json",
-                    data:data,
-                    success:function(data){
-                        if (data==1) {
-                            Swal.fire({
-                                    title: "Dato eliminado correctamente",
-                                    icon: "success"
-                                    });
-                                }
-                        else if(data==2){
-                            Swal.fire({
-                                    title: "Los datos no se eliminaron, contactese con soporte tecnico",
-                                    icon: "warning"
-                                    });
-                                 }
-                            seleccionar(null);
+                  $.ajax({
+                      url:"../../Controller/Area/Area.C.php",
+                      type:"POST",
+                      datatype:"json",
+                      data:data,
+                      success:function(data){
+                          if (data==1) {
+                              Swal.fire({
+                                      title: "Dato eliminado correctamente",
+                                      icon: "success"
+                                      });
+                                  }
+                          else if(data==2){
+                              Swal.fire({
+                                      title: "Los datos no se eliminaron, contactese con soporte tecnico",
+                                      icon: "warning"
+                                      });
+                                  }
+                              seleccionar(null);
+                              }
+                          });
+                }
+                          else{
+                              Swal.fire({
+                                  title: "Los datos no se eliminaron",
+                                  icon: "error"
+                                  });
                             }
-                        });
-                    }
-                        else{
-                            Swal.fire({
-                                title: "Los datos no se eliminaron",
-                                icon: "error"
-                                });
-                           }
-                    })
-                };
+              })
+};
 //función para listar los datos
 function seleccionar(id){
 
@@ -184,37 +184,38 @@ $(document).ready(function (e){
         });
     });
 
-    });
+});
 
-    //Aqui se listan los nombres de las personas, en el select del modal que inserta los datos
-            $.ajax({
-                url:"../../Controller/Area/Area.C.php",
-                type:"POST",
-                datatype:"json",
-                data:{'accion': "listarSelect"},
-                success: function(data){
-                data = JSON.parse(data);
+//Aqui se listan los nombres de las personas, en el select del modal que inserta los datos
+$.ajax({
+    url:"../../Controller/Area/Area.C.php",
+    type:"POST",
+    datatype:"json",
+    data:{'accion': "listarSelect"},
+    success: function(data){
+    data = JSON.parse(data);
 
-                arregloSelect = data;
+    arregloSelect = data;
 
-                    for (let index = 0; index < data.length; index++) {
+        for (let index = 0; index < data.length; index++) {
 
-                        $('#usuario')
-                        .append(
-                                "<option value='"+data[index][1]+"'>"+data[index][0]+"</option>"+
-                                "</select>"
-                            );
+            $('#usuario')
+            .append(
+                    "<option value='"+data[index][1]+"'>"+data[index][0]+"</option>"+
+                    "</select>"
+                );
 
-                    }
-                }
-            });
-        //Con esta función limpiamos los campos
-        function limpiar() {
-            $('#nombre').val('');
-            /* $('#usuario').val('');
-            $('#idArea').val(''); */
         }
+    }
+});
 
-$('.cerrarModal').on('click', function() {
+//Con esta función limpiamos los campos
+function limpiar() {
+    $('#nombre').val('');
+    /* $('#usuario').val('');
+    $('#idArea').val(''); */
+}
+
+function cerrarModal() {
   $('#modelActualizar').modal('hide');
-})
+}

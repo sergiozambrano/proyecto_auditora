@@ -13,8 +13,10 @@ class AuditoriaD{
   private $fecha_validacion;
   private $observa_anexo;
 
-  public function __construct(){
+  private $buscar;
+  private $valor;
 
+  public function __construct(){
   }
 
   public function anexo($id_auditoria,$nombre_anexo,$ruta_anexo,$directorio_anexo,$valida_anexo,$id_usuario_creacion){
@@ -25,6 +27,20 @@ class AuditoriaD{
     $this->directorio_anexo = $directorio_anexo;
     $this->valida_anexo = $valida_anexo;
     $this->id_usuario_creacion = $id_usuario_creacion;
+  }
+
+  public function observacion($observa_anexo){
+    $this->observa_anexo = $observa_anexo;
+
+  }
+
+  public function nombreCoordinador($id_usuario_validacion){
+    $this->id_usuario_validacion = $id_usuario_validacion;
+  }
+
+  public function validacion($id_usuario_creacion,$estado_anexo){
+    $this->id_usuario_creacion = $id_usuario_creacion;
+    $this->estado_anexo = $estado_anexo;
   }
 
   public function __set($name, $value){

@@ -146,7 +146,7 @@ $sesion->autenticacion();
 </div>
 
     <table class="table">
-      <thead class="table-dark">
+      <thead class="thead-dark">
           <tr>
               <th scope="col">#</th>
               <th scope="col">Hallazgo</th>
@@ -170,7 +170,7 @@ $sesion->autenticacion();
           <div class="modal-body">
             <form >
               <table class="table">
-                <thead class="table-dark">
+                <thead class="thead-dark">
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">Plan Mejoramiento</th>
@@ -202,7 +202,7 @@ $sesion->autenticacion();
         <div class="modal-body">
           <form >
             <table class="table">
-              <thead class="table-dark">
+              <thead class="thead-dark">
                   <tr>
                       <th scope="col">#</th>
                       <th scope="col">Tema </th>
@@ -226,7 +226,7 @@ $sesion->autenticacion();
 </div>
     <!-- Código JavaScript-->
   <script src="../../Library/vendor/jquery/jquery.min.js"></script>
-  <script src="../../Library/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
   <script src="../../Library/sweetalert2/sweetalert2.all.min.js"></script>
 
 

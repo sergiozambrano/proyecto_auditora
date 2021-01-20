@@ -25,7 +25,7 @@ $sesion->autenticacion();
   <link href="../../../Css/estiloP.css" rel="stylesheet">
   <link rel="stylesheet" href="../../../Library/sweetalert2/sweetalert2.min.css">
   <link rel="stylesheet" href="../../../Css/style.css">
-  
+
 </head>
 <body onload="leer()">
   <div class="container-fluid">
@@ -38,35 +38,35 @@ $sesion->autenticacion();
       </div>
       <br>
     <form class="col-md-2" style="position:absolute;right: 0;">
-      <div class="row g-3 align-items-center">  
+      <div class="row g-3 align-items-center">
         <div  class="form-check">
           <input class="form-check-input" type="checkbox" value="" id="filtroA" onclick="filtrarAuditoria();">
           <label class="form-check-label" for="flexCheckDefault" >
             Año Actual
           </label>
         </div>
-      </div> 
+      </div>
     </form>
     <br>
     <br>
       <div class="table-responsive">
         <table class="table">
           <thead class="thead-dark">
-              <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">Nombre del anexo</th>
-                  <th scope="col">Descargar anexo</th>
-              </tr>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Nombre del anexo</th>
+              <th scope="col">Descargar anexo</th>
+            </tr>
           </thead>
           <tbody id="datos">
           </tbody>
         </table>
       </div>
   </div>
-  
+
     <!-- Código JavaScript-->
     <script src="../../../Library/vendor/jquery/jquery.min.js"></script>
-  <script src="../../../Library/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
   <script src="../../../Library/sweetalert2/sweetalert2.all.min.js"></script>
 
 
@@ -77,7 +77,7 @@ $sesion->autenticacion();
 
   <!-- datatables JS -->
   <script src="../../../Library/vendor/datatables/datatables.min.js"></script>
-  
+
   <script src="../../../Js/PlanMejoramiento/Anexo/Anexo.js"></script>
 </body>
 </html>

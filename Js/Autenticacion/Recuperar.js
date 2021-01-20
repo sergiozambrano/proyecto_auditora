@@ -58,24 +58,33 @@ $(document).ready(function () {
       success: function(data){
         if (data == 1) {
           Swal.fire({
-            type:'success',
-            title:'Contraseña restablecida exitosamente, recuerda cambiarla nuevamente',
+            title: 'Contraseña restablecida exitosamente',
+            text: "recuerda cambiarla nuevamente",
+            type: 'success',
           });
 
-          $(location).attr('href',"../../index.html");
+          setTimeout(function(){
+            $(location).attr('href',"../../index.html");
+          }, 4000);
 
-        } else if(data == 2){
+        }else if(data == 2){
           Swal.fire({
             type:'error',
-            title:'Limite de intentos alcanzado. El código suministrado no coincide',
+            title:'Limite de intentos alcanzado',
+            text: 'El código suministrado no coincide',
           });
-          location.reload();
+          setTimeout(function(){
+            location.reload();
+          }, 3000);
 
         }else if(data == 0){
           Swal.fire({
             type:'error',
             title:'No se pudo modificar la contraseña error en el sistema',
           });
+          setTimeout(function(){
+            location.reload();
+          }, 3000);
         }
       }
     });

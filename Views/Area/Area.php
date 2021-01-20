@@ -60,7 +60,7 @@
         </div>
       </div>
 
-      <!-- Modal Editar-->
+      <!-- Modal Editar -->
       <div class="modal fade" id="modelActualizar" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
@@ -92,7 +92,7 @@
                 <input type='hidden' id='idArea'>
                 </div>
                   <div class="section1 text-right">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="cerrarModal()">Cerrar</button>
                   <input type="submit"  class="btn btn-primary" value="Editar">
                 </div>
               </form>
@@ -129,11 +129,11 @@
   </section>
 
 
-      <script src="../../Library/jquery-3.3.1.min.js"></script>
-      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
-      <script src="../../Js/Area/Area.js"></script>
-      <script src="../../Js/Area/Buscador.js"></script>
+  <script src="../../Library/jquery-3.3.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+  <script src="../../Js/Area/Area.js"></script>
+  <script src="../../Js/Area/Buscador.js"></script>
 </body>
 </html>

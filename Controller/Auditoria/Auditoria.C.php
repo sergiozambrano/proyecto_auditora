@@ -23,6 +23,35 @@ if(!isset($_POST['accion'])){
       $auditoriaD->anexo($_POST['id_auditoria'], $_FILES['archivo']['name'],$ruta,$direccion, $validacion, $_SESSION['id']);
       $data = $auditoriaM->guaAneCar($auditoriaD);
       break;
+
+    case 'observacion':
+      $auditoriaD->observacion($_POST['id']);
+      $data = $auditoriaM->observacion($auditoriaD);
+      break;
+
+    case 'nombreCoordinador':
+      $auditoriaD->nombreCoordinador($_POST['idUsuVal']);
+      $data = $auditoriaM->nombreCoordinador($auditoriaD);
+      break;
+
+    case 'validacion':
+      $auditoriaD->validacion($_SESSION['id'],$_POST['valor']);
+      $data = $auditoriaM->validacion($auditoriaD);
+      break;
+
+    case 'buscar':
+      $_POST['valor']['buscar'] = ($_POST['valor']['buscar'] == '0') ? 'nombre_anexo' : 'id_usuario_validacion';
+
+      $datos = array($_SESSION['id'],$_POST['valor']['buscar'],$_POST['valor']['valor'],$_POST['valor']['opcion']);
+      $data = $auditoriaM->buscar($datos);
+      break;
+
+    case 'info':
+      $data[0] = $auditoriaM->infoAuditoria($_POST['id']);
+      $auditoriaD->nombreCoordinador($data[0][2]);
+      $data[1] = $auditoriaM->nombreCoordinador($auditoriaD);
+      break;
+
   }
 }
 
