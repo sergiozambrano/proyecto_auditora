@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
     <link rel="stylesheet" href="../../Css/style.css">
     </head>
-    <body> 
+    <body>
     <section class="container-fluid">
       <!--Ventada Modal-->
     <button type="button" class="btn btn-primary my-2" id="btnBackup">Agregar día de respaldo</button>
@@ -23,9 +23,9 @@
                         <div class="input-group mb-3">
                         <div class="input-group-prepend">
                         </div>
-                        <input type="number" min="1" class="form-control" id="tiempo">
+                        <input type="number" min="1" class="form-control" id="tiempo" required="">
                         </div>
-                        </div> 
+                        </div>
                         <div class="section1 text-right">
                         <button type="button" class="btn btn-secondary" id="cerrarModal" data-bs-dismiss="modal">Cerrar</button>
                         <input type="submit"  class="btn btn-primary" id="btnFormulario" value="Enviar" id="inserEnviar">
@@ -54,9 +54,13 @@
           </div>
         </div>
       </section>
-		  <script src="../../Js/Backups/jquery-3.3.1.min.js"></script>
-		  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-      <script src="../../Js/Backups/backup.js"></script>
+
+      <script src="../../Library/jquery-3.3.1.min.js"></script>
       <script src="../../Library/bootstrap/js/bootstrap.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+      <!-- Script propios -->
+      <script src="../../Js/Backups/backup.js"></script>
+
 </body>
 </html>

@@ -8,23 +8,27 @@
     $accion = $_POST["accion"];
     $data;
 
-    $area_m = new area_m();
-    $area_d=new area_d();
+    $backup_m = new backup_m();
+    $backup_d=new backup_d();
 
     switch ($accion) {
         case 'seleccionar':
-            $data = $area_m->read();
+            $data = $backup_m->read();
             break;
 
         case 'insertar':
-            $area_d->insertar($_POST['dia'],$_SESSION['id']);
-            $data=$area_m->insert($area_d);
+            $backup_d->insertar($_POST['dia'],$_SESSION['id']);
+            $data=$backup_m->insert($backup_d);
             break;
         case 'respaldo': 
-            $data = $area_m->respaldo();
+            $data = $backup_m->respaldo();
             break;   
     }
-
+    if (isset($_POST["validar"])) {
+        $cantidad = $backup_m->validarUsuario($_SESSION['id']); 
+        $data[0] = $data;
+        $data[1] = $cantidad;
+    }
     print json_encode($data);
 
 ?>

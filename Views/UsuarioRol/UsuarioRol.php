@@ -35,14 +35,14 @@
       <thead class="thead-dark">
           <tr>
               <th scope="col">#</th>
-              <th scope="col">Primer nombre</th>        
-              <th scope="col">Primer apellido</th> 
+              <th scope="col">Primer nombre</th>
+              <th scope="col">Primer apellido</th>
               <th scope="col">Numero documento</th>
               <th scope="col">Opciones</th>
           </tr>
       </thead>
       <tbody id="tbody">
-            
+
       </tbody>
     </table>
 
@@ -57,20 +57,20 @@
             </button>
           </div>
           <div class="modal-body">
-         
+
             <table class="table">
             <thead class="thead-dark">
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Primer nombre</th>        
-                    <th scope="col">Primer apellido</th> 
+                    <th scope="col">Primer nombre</th>
+                    <th scope="col">Primer apellido</th>
                     <th scope="col">Numero documento</th>
                     <th scope="col">Codigo del contrato</th>
                     <th scope="col">Opciones</th>
                 </tr>
             </thead>
             <tbody id="tbody-activos">
-                    
+
             </tbody>
             </table>
 
@@ -80,7 +80,7 @@
           </div>
         </div>
       </div>
-    </div>  
+    </div>
     <!-- final del modal de usuarios activos -->
 
     <!--comienzo del modal para usuarios inactivos -->
@@ -94,20 +94,20 @@
             </button>
           </div>
           <div class="modal-body">
-         
+
             <table class="table">
             <thead class="thead-dark">
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Primer nombre</th>        
-                    <th scope="col">Primer apellido</th> 
+                    <th scope="col">Primer nombre</th>
+                    <th scope="col">Primer apellido</th>
                     <th scope="col">Numero documento</th>
                     <th scope="col">Codigo del contrato</th>
                     <th scope="col">Opciones</th>
                 </tr>
             </thead>
             <tbody id="tbody-inactivos">
-                    
+
             </tbody>
             </table>
 
@@ -117,7 +117,7 @@
           </div>
         </div>
       </div>
-    </div>  
+    </div>
     <!-- final del modal de usuarios inactivos -->
 
     <!-- modal de asignar usuario -->
@@ -183,7 +183,7 @@
                     </select>
                   </div>
                   <div class='col-md-3 mb-3' id='asignarRol'>
-                    
+
                   </div>
                 </div>
               </form>
@@ -193,11 +193,11 @@
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Roles</th>
-                    <th scope="col">Opciones</th>            
+                    <th scope="col">Opciones</th>
                 </tr>
             </thead>
               <tbody id="tbody-roles">
-                      
+
               </tbody>
             </table>
           </div>
@@ -208,7 +208,7 @@
       </div>
     </div>
   </div>
-    
+
 <script src="../../Library/popper.min.js"></script>
 <script src="../../Library/sweetalert2/sweetalert2.all.min.js"></script>
 

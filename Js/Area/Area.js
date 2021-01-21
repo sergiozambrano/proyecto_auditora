@@ -147,16 +147,6 @@ $(document).ready(function (e){
         }
         console.log(data);
 
-            //Se valida para que se ingresen todos los datos al momento de insertarlos
-            if(data['nombre'].length == "" || data['certificado'] == "" || data['usuario'] == ""){
-                Swal.fire({
-                    icon:'warning',
-                    title: '¡ATENCIÓN !',
-                    text: "¡Debe ingresar todos los datos!",
-                });
-                return false;
-            }
-
         $.ajax({
             url:"../../Controller/Area/Area.C.php",
             type:"POST",
@@ -192,6 +182,7 @@ $(document).ready(function (e){
             }
         });
       }else{
+        cont = 0;
         $("#inserEnviar").attr("disabled", true);
         $("#editEnviar").attr("disabled", true);
       };

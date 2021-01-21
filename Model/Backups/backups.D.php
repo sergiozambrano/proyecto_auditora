@@ -1,5 +1,5 @@
 <?php
-  class area_d{
+  class backup_d{
     private $dia_respaldo;
     private $id_usuario_creacion;
     public function insertar($dia_respaldo,$id_usuario_creacion){
@@ -21,7 +21,6 @@
        unset($this->id_usuario_creacion);
     }
   }
-
 
 
 

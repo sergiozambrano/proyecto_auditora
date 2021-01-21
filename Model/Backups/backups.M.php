@@ -1,7 +1,7 @@
 <?php
     require_once "../../Enviroment/Conexion.php";
 
-    class area_m extends Conexion{
+    class backup_m extends Conexion{
 
         private $sql;
         private $statement;
@@ -46,6 +46,24 @@
 
             }catch(Exception $e){
                 return $e;
+            }
+        }
+        public function validarUsuario($id){
+            try {
+                $this->sql = "SELECT * FROM usuario AS u
+                INNER JOIN usuario_rol AS u_r ON u_r.id_usuario=u.id_usuario
+                INNER JOIN rol AS r ON r.id_rol=u_r.id_rol
+                WHERE u.id_usuario=? && r.nombre_rol='Administrador'";
+
+                $this->statement = $this->conexion->prepare($this->sql);
+                $this->statement->execute(array(
+                    $id
+                ));
+
+                return $this->resulSet = $this->statement->rowCount();
+
+            } catch (\Throwable $th) {
+                return $th;
             }
         }
         #Con esta función traemos la ruta, el nombre y peso de la copia de respaldo de la BD

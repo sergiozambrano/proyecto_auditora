@@ -1,70 +1,39 @@
-
-    let fecha = new Date();
-    hora = fecha.getMinutes() ; //se obtiene la hora actual
-
-    console.log(hora);
-   
-        /*  while (horaImprimible == data['tiempo']) {
-        window.location.href = 'backup.php'; 
-        alert('jjjj');
-        window.location.href = 'index.php'; 
-        break;
-        }*/
-       
+//aqui en el ajax hacemos la validacion para crear la copia de seguridad
     $.ajax({
         url:"../../Controller/Backups/backups.C.php",
         type:"POST",
         datatype:"json",
-        data:{'accion': "seleccionar"},
+        data:{'accion': "seleccionar", 'validar':"validarU"},
         success: function(data){
         data = JSON.parse(data);
 
-            for (let index=0; index < data.length; index++) {
-            var respaldo = 25;
-            var tiempo = Number (respaldo) + Number (data[index][1]);
-            debugger
-           
-                 if (hora == tiempo) {
-                     return function puto(){
-                        window.location.href = '../../Model/Backups/backup.php'; 
-                        alert('jjjj');
-                        window.location.href = '../../Views/Backups/backups.php'; 
-                     };
-                    }  
-                             
-        } 
-    console.log(tiempo);
-    },
+            for (let index=0; index < data[0].length; index++) {
+                var respaldo = 60000; //instaciamos esta variable que equivale a los milisegundos que hay en 24 horas
+                var tiempo = Number (respaldo) + Number (data[0][index][1]);
+
+                if (data[1]>0) {
+                    setInterval(saludar, tiempo);
+
+                    function saludar(){ window.location.href = '../../Model/Backups/backup.php';
+                    alert('Se ha hecho la copia de seguridad');
+                    window.location.href = '../../Views/Plantilla/Plantilla.php'; }
+                }
+            }
+        },
 });
-function k(){
-    Window.setTimeout(function(){
-      puto();
-  }, 3000);  
-  }
 
-
-var cont = 0;       
+var cont = 0;
     $(document).ready(function (e){
 
          $('.form').submit(function(e){
             e.preventDefault();
             cont += 1;
             if (cont == 1) {
-            //aqui data traemos la accion de insetar junto con el dato que se ingresa 
-            let data = { 
+            //aqui en data traemos la accion de insetar junto con el dato que se ingresa
+            let data = {
             'dia':$.trim($('#tiempo').val()),
             'accion': "insertar"
             };
-    
-        //Se valida para que se ingresen todos los datos al momento de insertarlos
-        if(data['dia'].length == ""){
-            Swal.fire({
-                icon:'warning',
-                title: '¡ATENCIÓN !',
-                text: "¡Debe ingresar los datos!",
-            });
-            return false;
-        }
 
         $.ajax({
             url:"../../Controller/Backups/backups.C.php",
@@ -116,7 +85,7 @@ var cont = 0;
         data:data,
         success:function(data){
         data = JSON.parse(data);
-        
+
         for (let index = 0; index < data.length; index++) {
             $('#tbody').append(
             "<tr>"+

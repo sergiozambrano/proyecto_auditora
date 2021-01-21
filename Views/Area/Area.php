@@ -38,7 +38,7 @@
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
                   </div>
-                  <input type="text" class="form-control" placeholder="Area" id="nombre" aria-label="Username" aria-describedby="basic-addon1" >
+                  <input type="text" class="form-control" placeholder="Area" id="nombre" aria-label="Username" aria-describedby="basic-addon1" required="">
                 </div>
                 <div class="input-group mb-3">
                   <div class="input-group-prepend">
@@ -80,7 +80,7 @@
                   <div class="input-group mb-3">
                     <div class="input-group-prepend">
                     </div>
-                    <input type="text" class="form-control" placeholder="Area" id="nombreEditar" aria-label="Username" aria-describedby="basic-addon1" >
+                    <input type="text" class="form-control" placeholder="Area" id="nombreEditar" aria-label="Username" aria-describedby="basic-addon1"  required="">
                   </div>
                   <div class="input-group mb-3">
                     <div class="input-group-prepend">
