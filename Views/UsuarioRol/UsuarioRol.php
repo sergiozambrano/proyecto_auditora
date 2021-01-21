@@ -48,7 +48,7 @@
 
     <!--comienzo del modal para usuarios activos -->
     <div class="modal fade" id="modal_usuarios_activos" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-xl">
+      <div class="modal-dialog modal-xl modal-dialog-scrollable">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">Usuarios activos</h5>
@@ -85,7 +85,7 @@
 
     <!--comienzo del modal para usuarios inactivos -->
     <div class="modal fade" id="modal_usuarios_inactivos" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-xl">
+      <div class="modal-dialog modal-xl modal-dialog-scrollable">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">Usuarios inactivos</h5>

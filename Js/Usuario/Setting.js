@@ -19,7 +19,6 @@ $(document).ready(function () {
       $('input#correo').attr('value', data[0][9]);
       $('input#fecha_nacimiento').attr('value', data[0][10]);
       $('input#genero').attr('value', data[0][11]);
-      $('input#perfil_laboral').attr('value', data[0][12]);
     }
   });
 
@@ -33,10 +32,12 @@ $(document).ready(function () {
     }
 
     var alerta = $('div#alerta');
+    var mensaje = '';
 
     if (data['claveActual'].length <= 0 && data['claveNueva'].length <= 0 && data['repetirClaveNueva'].length <= 0) {
-      alerta.attr('class', 'alert alert-danger').attr('role', 'alert');
-      alerta.text('Debe llenar todos los campos');
+      mensaje += "<div id='alert' class='alert alert-danger my-2' role='alert'>";
+      mensaje +=    "Todos los campos son requeridos";
+      mensaje += "</div>";
 
     }else{
 
@@ -47,7 +48,7 @@ $(document).ready(function () {
         var signos = new RegExp('[^A-Za-z0-9]');
 
         if (upper.test(data['claveNueva']) && lower.test(data['claveNueva']) && numeros.test(data['claveNueva'])
-        && signos.test(data['claveNueva'])) {
+            && signos.test(data['claveNueva'])) {
 
           if (data['claveNueva'] == data['repetirClaveNueva']) {
 
@@ -89,17 +90,28 @@ $(document).ready(function () {
               }
             });
           }else{
-            alerta.attr('class', 'alert alert-danger').attr('role', 'alert');
-            alerta.text('Las contraseñas no coinciden');
+            mensaje += "<div id='alert' class='alert alert-danger alert-dismissible fade show' role='alert'>";
+            mensaje += "Las contraseñas no coinciden</div>";
           }
         }else{
-          alerta.attr('class', 'alert alert-danger').attr('role', 'alert');
-          alerta.text('La contraseña debe tener como mínimo una  mayúscula, una mínuscula y un caracter especial');
+          mensaje += "<div id='alert' class='alert alert-danger alert-dismissible fade show' role='alert'>";
+          mensaje += "La contraseña debe tener como mínimo una  mayúscula, una mínuscula y un caracter especial</div>";
         }
       } else {
-        alerta.attr('class', 'alert alert-danger').attr('role', 'alert');
-        alerta.text('La clave nueva debete tener mínimo 8 carateres y maxímo 20');
+        mensaje += "<div id='alert' class='alert alert-danger alert-dismissible fade show' role='alert'>";
+        mensaje += "La clave nueva debete tener mínimo 8 carateres y maxímo 20</div>";
       }
     }
+
+    if(mensaje != null && mensaje != 'undefined'){
+      alerta.append(mensaje);
+    }
+
+    $('#alert').alert('');
+    window.setTimeout(function() {
+      $("#alert").fadeTo(500, 0).slideUp(500, function(){
+          $("#alert").alert("close");
+      });
+    }, 4000);
   });
 });

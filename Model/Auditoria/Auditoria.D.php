@@ -19,6 +19,11 @@ class AuditoriaD{
   public function __construct(){
   }
 
+  public function mostrar($id_usuario_creacion, $id_auditoria){
+    $this->id_usuario_creacion = $id_usuario_creacion;
+    $this->id_auditoria = $id_auditoria;
+  }
+
   public function anexo($id_auditoria,$nombre_anexo,$ruta_anexo,$directorio_anexo,$valida_anexo,$id_usuario_creacion){
     $this->id_auditoria = $id_auditoria;
     $this->nombre_anexo = $nombre_anexo;
@@ -38,9 +43,19 @@ class AuditoriaD{
     $this->id_usuario_validacion = $id_usuario_validacion;
   }
 
-  public function validacion($id_usuario_creacion,$estado_anexo){
+  public function validacion($id_usuario_creacion, $id_auditoria, $estado_anexo){
     $this->id_usuario_creacion = $id_usuario_creacion;
     $this->estado_anexo = $estado_anexo;
+    $this->id_auditoria = $id_auditoria;
+  }
+
+  public function buscar($id_usuario_creacion,$id_auditoria,$buscar,$valor,$estado_anexo){
+    $this->id_usuario_creacion = $id_usuario_creacion;
+    $this->id_auditoria = $id_auditoria;
+    $this->buscar = $buscar;
+    $this->valor = $valor;
+    $this->estado_anexo = $estado_anexo;
+
   }
 
   public function __set($name, $value){

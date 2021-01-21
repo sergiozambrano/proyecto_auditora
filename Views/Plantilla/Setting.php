@@ -66,10 +66,6 @@ $sesion->autenticacion();
             <label class="form-label" for="genero">Genero</label>
             <input class="form-control"  type="text" id="genero" value="" disabled>
           </div>
-          <div class="col-md-3 form-group">
-            <label class="form-label" for="perfil_laboral">Perfil laboral</label>
-            <input class="form-control"  type="text" id="perfil_laboral" value="" disabled>
-          </div>
       </form>
     </section>
     <br>
@@ -92,8 +88,10 @@ $sesion->autenticacion();
             <input class="form-control" type="password" id="repetirClaveNueva" name="repetirClaveNueva">
           </div>
         </div>
+
         <div id="alerta"></div>
-        <div class="form-group">
+
+        <div class="form-group my-2">
           <button class="btn btn-primary" type="submit" name="btnClave">Cambiar</button>
         </div>
       </form>

@@ -27,13 +27,21 @@
             $idAnexo=$_POST['id_anexo'];
             $data = $anexoM->readObservation($idAnexo);
             break;
-        case 'insertar':
+        case 'insertarObservacion':
             $idAnexo=$_POST['id_anexo'];
             $observacion=$_POST['observacion'];
 
             $anexoD=new anexoD($idAnexo,$idUserValida,$observacion);
 
-            $data=$anexoM->insert($anexoD);
+            $data=$anexoM->insertObservation($anexoD);
+            break;
+        case 'editarObservacion':
+            $idTransAnexo=$_POST['id_trans_anexo'];
+            $observacion=$_POST['observacion'];
+
+            $anexoD=new anexoD(null,null,$observacion);
+
+            $data=$anexoM->editObservation($anexoD, $idTransAnexo);
             break;
         case 'editar':
             $idAnexo=$_POST['id_anexo'];

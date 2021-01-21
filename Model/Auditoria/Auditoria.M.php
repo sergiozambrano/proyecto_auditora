@@ -13,16 +13,20 @@ class AuditoriaM extends Conexion{
   /**
    * Mostrar los anexos vinculados a un auditor
    */
-  public function mostrar($id){
+  public function mostrar($auditoriaD){
     try {
       $this->sql = "SELECT a.id_anexo,a.nombre_anexo,a.estado_anexo,a.ruta_anexo,t_a.id_usuario_validacion,t_a.fecha_validacion,t_a.observa_anexo
                     FROM anexos AS a
+                    INNER JOIN ejecucion_auditoria AS e_a ON e_a.id_ejecucion_auditoria=a.id_ejecucion_auditoria
                     LEFT JOIN trasa_anexos AS t_a ON t_a.id_anexo=a.id_anexo
-                    WHERE a.id_usuario_creacion=?
+                    WHERE a.id_usuario_creacion=? AND e_a.id_auditoria_programada=?
                     ORDER BY a.fecha_creacion DESC";
 
       $this->statement = $this->conexion->prepare($this->sql);
-      $this->statement->execute(array($id));
+      $this->statement->execute(array(
+        $auditoriaD->id_usuario_creacion,
+        $auditoriaD->id_auditoria
+      ));
 
       return $this->resulSet = $this->statement->fetchAll(PDO::FETCH_NUM);
 
@@ -36,9 +40,10 @@ class AuditoriaM extends Conexion{
    */
   public function guaAneCar($auditoriaD){
     try {
-      $this->sql = "SELECT id_anexo, nombre_anexo, ruta_anexo
-                    FROM anexos
-                    WHERE nombre_anexo=? AND id_ejecucion_auditoria=?";
+      $this->sql = "SELECT a.id_anexo, a.nombre_anexo, a.ruta_anexo
+                    FROM anexos AS a
+                    INNER JOIN ejecucion_auditoria AS e_a ON e_a.id_ejecucion_auditoria=a.id_ejecucion_auditoria
+                    WHERE nombre_anexo=? AND e_a.id_auditoria_programada=?";
       $this->statement = $this->conexion->prepare($this->sql);
       $this->statement->execute(array($auditoriaD->nombre_anexo, $auditoriaD->id_auditoria));
 
@@ -85,7 +90,9 @@ class AuditoriaM extends Conexion{
   public function guaAneBd($auditoriaD){
     try {
       $this->sql = "INSERT INTO anexos(id_ejecucion_auditoria,nombre_anexo,estado_anexo,ruta_anexo,id_usuario_creacion)
-                    VALUES (?,?,?,?,?)";
+                    VALUES ((SELECT e_a.id_ejecucion_auditoria FROM auditoria_programacion AS a_p
+                    INNER JOIN ejecucion_auditoria AS e_a ON e_a.id_auditoria_programada=a_p.id_auditoria
+                    WHERE a_p.id_auditoria=?),?,?,?,?)";
       $this->statement = $this->conexion->prepare($this->sql);
       $this->statement->execute(array(
         $auditoriaD->id_auditoria,
@@ -144,11 +151,16 @@ class AuditoriaM extends Conexion{
     try {
       $this->sql = "SELECT a.id_anexo,a.nombre_anexo,a.estado_anexo,a.ruta_anexo,t_a.id_usuario_validacion,t_a.fecha_validacion,t_a.observa_anexo
                     FROM anexos AS a
+                    INNER JOIN ejecucion_auditoria AS e_a ON e_a.id_ejecucion_auditoria=a.id_ejecucion_auditoria
                     LEFT JOIN trasa_anexos AS t_a ON t_a.id_anexo=a.id_anexo
-                    WHERE a.id_usuario_creacion=? AND a.estado_anexo=?
+                    WHERE a.id_usuario_creacion=? AND e_a.id_auditoria_programada=? AND a.estado_anexo=?
                     ORDER BY a.fecha_creacion DESC";
       $this->statement = $this->conexion->prepare($this->sql);
-      $this->statement->execute(array($auditoriaD->id_usuario_creacion,$auditoriaD->estado_anexo));
+      $this->statement->execute(array(
+        $auditoriaD->id_usuario_creacion,
+        $auditoriaD->id_auditoria,
+        $auditoriaD->estado_anexo
+      ));
 
       return $this->resulSet = $this->statement->fetchAll(PDO::FETCH_NUM);
 
@@ -157,33 +169,41 @@ class AuditoriaM extends Conexion{
     }
   }
 
-  public function buscar($datos){
+  public function buscar($auditoriaD){
     try {
-      if ($datos[3] == '') {
+      if ($auditoriaD->estado_anexo == '') {
         $this->sql = "SELECT a.id_anexo, a.nombre_anexo,a.estado_anexo,a.ruta_anexo,t_a.id_usuario_validacion,t_a.fecha_validacion,t_a.observa_anexo
-                      FROM anexos AS a
-                      LEFT JOIN trasa_anexos AS t_a ON t_a.id_anexo=a.id_anexo
-                      WHERE a.id_usuario_creacion=? AND a.".$datos[1]." LIKE '%".$datos[2]."%'
-                      ORDER BY a.fecha_creacion DESC";
+              FROM anexos AS a
+              INNER JOIN ejecucion_auditoria AS e_a ON e_a.id_ejecucion_auditoria=a.id_ejecucion_auditoria
+              LEFT JOIN trasa_anexos AS t_a ON t_a.id_anexo=a.id_anexo
+              WHERE a.id_usuario_creacion=? AND e_a.id_auditoria_programada=? AND a.".$auditoriaD->buscar." LIKE '%".$auditoriaD->valor."%'
+              ORDER BY a.fecha_creacion DESC";
         $this->statement = $this->conexion->prepare($this->sql);
-        $this->statement->execute(array($datos[0]));
+        $this->statement->execute(array(
+          $auditoriaD->id_usuario_creacion,
+          $auditoriaD->id_auditoria,
+        ));
 
-      } else if ($datos[3] != ''){
+      } else if ($auditoriaD->estado_anexo != ''){
         $this->sql = "SELECT a.id_anexo, a.nombre_anexo,a.estado_anexo,a.ruta_anexo,t_a.id_usuario_validacion,t_a.fecha_validacion,t_a.observa_anexo
-                      FROM anexos AS a
-                      LEFT JOIN trasa_anexos AS t_a ON t_a.id_anexo=a.id_anexo
-                      WHERE a.id_usuario_creacion=? AND a.".$datos[1]." LIKE '%".$datos[2]."%' AND a.estado_anexo=?
-                      ORDER BY a.fecha_creacion DESC";
+              FROM anexos AS a
+              INNER JOIN ejecucion_auditoria AS e_a ON e_a.id_ejecucion_auditoria=a.id_ejecucion_auditoria
+              LEFT JOIN trasa_anexos AS t_a ON t_a.id_anexo=a.id_anexo
+              WHERE a.id_usuario_creacion=? AND e_a.id_auditoria_programada=? AND a.estado_anexo=? AND a.".$auditoriaD->buscar." LIKE '%".$auditoriaD->valor."%'
+              ORDER BY a.fecha_creacion DESC";
         $this->statement = $this->conexion->prepare($this->sql);
-        $this->statement->execute(array($datos[0],$datos[3]));
+        $this->statement->execute(array(
+          $auditoriaD->id_usuario_creacion,
+          $auditoriaD->id_auditoria,
+          $auditoriaD->estado_anexo
+        ));
+
       }
-
       return $this->resulSet = $this->statement->fetchAll(PDO::FETCH_NUM);
 
     } catch (\Throwable $th) {
       throw $th;
     }
-
   }
 
   public function infoAuditoria($id){

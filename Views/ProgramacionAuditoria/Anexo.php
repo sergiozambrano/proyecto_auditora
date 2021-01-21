@@ -49,7 +49,7 @@ $sesion->autenticacion();
 
   <!-- Modal informacion auditoria -->
   <div class="modal fade" id="modalInformacion" tabindex="-1" aria-labelledby="modalInformacionLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="modalInformacionLabel">Informacion de auditoria</h5>
@@ -59,7 +59,7 @@ $sesion->autenticacion();
         </div>
         <div class="modal-body">
           <div class="table-responsive">
-            <table class="thead-dark-sm">
+            <table class="table table-sm">
               <thead>
                 <tr>
                   <th scope="col">Nombre del auditor</th>
@@ -83,7 +83,7 @@ $sesion->autenticacion();
 
   <!-- Modal validacion -->
   <div class="modal fade" id="modalValidacion" tabindex="-1" aria-labelledby="modalValidacionLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="modalValidacionLabel">Validar anexo</h5>
@@ -122,7 +122,7 @@ $sesion->autenticacion();
 
   <!-- Modal validados -->
   <div class="modal fade" id="modalValidados" tabindex="-1" aria-labelledby="modalValidadosLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="modalValidadosLabel">Anexos validados</h5>
@@ -132,7 +132,7 @@ $sesion->autenticacion();
         </div>
         <div class="modal-body">
           <div class="table-responsive">
-            <table class="thead-dark-sm">
+            <table class="table table-sm">
               <thead>
                 <tr>
                   <th scope="col">#</th>
@@ -158,7 +158,7 @@ $sesion->autenticacion();
 
   <!-- Modal observacion -->
   <div class="modal fade" id="modalObsevacion" tabindex="-1" aria-labelledby="modalObsevacionLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="modalObsevacionLabel">Observaciones</h5>
@@ -177,7 +177,7 @@ $sesion->autenticacion();
     </div>
   </div>
   <script src="../../Library/jquery-3.3.1.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+  <script src="../../Library/bootstrap/js/bootstrap.min.js"></script>
   <script src="../../Library/sweetalert2/sweetalert2.min.js"></script>
 
   <script src="../../Js/ProgramacionAuditoria/Anexo.js"></script>

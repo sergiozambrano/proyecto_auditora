@@ -1,4 +1,5 @@
 var cont=0;
+var control=0;
 function seleccionar(id){
 
     $('#tbody').empty();
@@ -11,21 +12,18 @@ function seleccionar(id){
         data:{'accion': "seleccionar"},
         success: function(data){
             data = JSON.parse(data);
- 
+            text_Consul = "";
             for (let index = 0; index < data.length; index++) {
-                text_Consul = "<tr>"+
-                                "<td>"+(index+1)+"</td>"+
-                                "<td>"+data[index][1]+"</td>"+
-                                "<td>"+data[index][2]+"</td>"+
-                                "<td>"+data[index][3]+"</td>"+
-                                "<td>"+
-                                "<button type='button' class='btn btn-primary btn-sm' data-toggle='modal' data-target='#staticBackdrop' onclick='seleccionar("+data[index][0]+");'>Asignar usuario</button>"+
-                                "</tr>";
-
-
-                $('#tbody').append(text_Consul);
+                 text_Consul += "<tr>";
+                 text_Consul +="<td>"+(index+1)+"</td>";
+                 text_Consul +="<td>"+data[index][1]+"</td>";
+                 text_Consul +="<td>"+data[index][2]+"</td>";
+                 text_Consul +="<td>"+data[index][3]+"</td>";
+                 text_Consul +="<td>";
+                 text_Consul +="<button type='button' class='btn btn-primary btn-sm' data-toggle='modal' data-target='#staticBackdrop' onclick='seleccionar("+data[index][0]+");'>Asignar usuario</button>";
+                 text_Consul +="</tr>";          
             }
-            
+             $('#tbody').html(text_Consul);
                 
             if(id!=null){
 
@@ -67,123 +65,134 @@ $(document).ready(function (e){
 
     $('#form').submit(function(e){
         e.preventDefault(); 
-      
-        let data = {
-            'numero_contrato':$.trim($('#numero_contrato').val()),
-            'contraseña':$.trim($('#contraseña').val()),
-            'verificar_contraseña':$.trim($('#verificar_contraseña').val()),
-            'idPersona':$.trim($('#boton_asignar').val()),
-            'accion': "insertar"
-        }
 
-        console.log(data);
-        if (data['contraseña'] == data['verificar_contraseña']) {
-             $.ajax({
-                url:"../../Controller/UsuarioRol/UsuarioRol.C.php",
-                type:"POST",
-                datatype:"json",
-                data:data,
-                success:function(data){
-                    if (data) {
-                        Swal.fire({
-                            type:'success',
-                            title:'Datos ingresados correctamente!!',
-                        });
-                        seleccionar($('#boton_asignar').val());
-                    }else{
-                        Swal.fire({
-                            type:'warning',
-                            title:'Error al ingresar los datos!!',
-                        });
+        cont +=1 ;
+        if(cont==1){
+
+            let data = {
+                'numero_contrato':$.trim($('#numero_contrato').val()),
+                'contraseña':$.trim($('#contraseña').val()),
+                'verificar_contraseña':$.trim($('#verificar_contraseña').val()),
+                'idPersona':$.trim($('#boton_asignar').val()),
+                'accion': "insertar"
+            }
+
+            if (data['contraseña'] == data['verificar_contraseña']) {
+                $.ajax({
+                    url:"../../Controller/UsuarioRol/UsuarioRol.C.php",
+                    type:"POST",
+                    datatype:"json",
+                    data:data,
+                    success:function(data){
+                        cont = 0;
+                        if (data) {
+                            Swal.fire({
+                                type:'success',
+                                title:'Datos ingresados correctamente!!',
+                            });
+                            seleccionar($('#boton_asignar').val());
+                        }else{
+                            Swal.fire({
+                                type:'warning',
+                                title:'Error al ingresar los datos!!',
+                            });
+                        }
                     }
-                }
-            });
-        } else {
-            Swal.fire({
-                type:'warning',
-                title:'Error las contraseñas no coinciden!!',
-            });
-        }
-           
+                });
+            } else {
+                Swal.fire({
+                    type:'warning',
+                    title:'Error las contraseñas no coinciden!!',
+                });
+            }
+        }  
     });
 
     $('#form_edit').submit(function(e){
         e.preventDefault(); 
     
-        let data = {
-            'numero_contrato':$.trim($('#numero_contrato_edit').val()),
-            'contraseña':$.trim($('#contraseña_edit').val()),
-            'verificar_contraseña':$.trim($('#verificar_contraseña_edit').val()),
-            'idPersona':$.trim($('#boton_edit').val()),
-            'accion': "editar"
+        cont +=1 ;
+        if(cont==1){
+            let data = {
+                'numero_contrato':$.trim($('#numero_contrato_edit').val()),
+                'contraseña':$.trim($('#contraseña_edit').val()),
+                'verificar_contraseña':$.trim($('#verificar_contraseña_edit').val()),
+                'idPersona':$.trim($('#boton_edit').val()),
+                'accion': "editar"
+            }
+            
+            if (data['contraseña'] == data['verificar_contraseña']) {
+                $.ajax({
+                    url:"../../Controller/UsuarioRol/UsuarioRol.C.php",
+                    type:"POST",
+                    datatype:"json",
+                    data:data,
+                    success:function(data){
+                        cont = 0;
+                        if (data) {
+                        $("#editar_usuario").modal("hide");
+                        Swal.fire({
+                                type:'success',
+                                title:'Datos actualizados correctamente!!',
+                            });
+                            seleccionar_usuarios_activos();
+                        }else{
+                            Swal.fire({
+                                type:'warning',
+                                title:'Error al actualizar los datos!!',
+                            });;
+                        }
+                    }
+                });
+            } else {
+                Swal.fire({
+                    type:'warning',
+                    title:'Error las contraseñas no coinciden!!',
+                });
+            }    
         }
-        console.log(data);
-        if (data['contraseña'] == data['verificar_contraseña']) {
+    });
+
+
+    $('#form_roles').submit(function(e){
+        e.preventDefault(); 
+        cont +=1 ;
+        if(cont==1){
+            let data = {
+                'idusuario':$.trim($('#boton_rol').val()),
+                'idrol':$('select#selectRol option:Selected').val(),
+                'accion': "asignarRol"
+            }
+
+            var usuario=$('#boton_rol').val();
+
             $.ajax({
                 url:"../../Controller/UsuarioRol/UsuarioRol.C.php",
                 type:"POST",
                 datatype:"json",
                 data:data,
                 success:function(data){
-                    if (data) {
-                       Swal.fire({
+                    cont = 0;
+                    if (data == 1) {
+                        Swal.fire({
                             type:'success',
-                            title:'Datos actualizados correctamente!!',
+                            title:'El rol fue asigno correctamente!!',
                         });
-                        seleccionar_usuarios_activos();
+                        roles(usuario);
+                    }else if (data == 2) {
+                        Swal.fire({
+                            type:'warning',
+                            title:'Error el rol ya existe!!',
+                        });
                     }else{
                         Swal.fire({
                             type:'warning',
-                            title:'Error al actualizar los datos!!',
-                        });;
+                            title:'Error el rol no fue asignado correctamente!!',
+                        });
                     }
                 }
             });
-        } else {
-            Swal.fire({
-                type:'warning',
-                title:'Error las contraseñas no coinciden!!',
-            });
-        }    
-    });
-
-
-    $('#form_roles').submit(function(e){
-        e.preventDefault(); 
-    
-        let data = {
-            'idusuario':$.trim($('#boton_rol').val()),
-            'idrol':$('select#selectRol option:Selected').val(),
-            'accion': "asignarRol"
         }
-
-        var usuario=$('#boton_rol').val();
-
-        $.ajax({
-            url:"../../Controller/UsuarioRol/UsuarioRol.C.php",
-            type:"POST",
-            datatype:"json",
-            data:data,
-            success:function(data){
-                if (data == 1) {
-                    Swal.fire({
-                        type:'success',
-                        title:'El rol fue asigno correctamente!!',
-                    });
-                    roles(usuario);
-                }else if (data == 2) {
-                    Swal.fire({
-                        type:'warning',
-                        title:'Error el rol ya existe!!',
-                    });
-                }else{
-                    Swal.fire({
-                        type:'warning',
-                        title:'Error el rol no fue asignado correctamente!!',
-                    });
-                }
-            }
-        });
     });
     
 });
@@ -200,23 +209,23 @@ function seleccionar_usuarios_activos(id){
         data:{'accion': "seleccionar_usuarios_activos"},
         success: function(data){
             data = JSON.parse(data);
- 
+
+            text_Consul = "";
+
             for (let index = 0; index < data.length; index++) {
-                text_Consul = "<tr>"+
-                                "<td>"+(index+1)+"</td>"+
-                                "<td>"+data[index][1]+"</td>"+
-                                "<td>"+data[index][2]+"</td>"+
-                                "<td>"+data[index][3]+"</td>"+
-                                "<td>"+data[index][4]+"</td>"+
-                                "<td>"+
-                                "<button type='button' class='btn btn-primary btn-sm' data-toggle='modal' data-target='#editar_usuario' onclick='seleccionar_usuarios_activos("+data[index][0]+");'>Editar</button>"+
-                                 "<button type='button' class='btn btn-success btn-sm' data-toggle='modal' data-target='#roles_usuario' onclick='roles("+data[index][5]+");'>Roles</button>"+
-                                "<button type='button' class='btn btn-danger btn-sm' id='eliminar' onclick='desactivar("+data[index][0]+");'>Desactivar</button></td>"+
-                                "</tr>";
-
-
-                $('#tbody-activos').append(text_Consul);
+                text_Consul += "<tr>";
+                text_Consul += "<td>"+(index+1)+"</td>";
+                text_Consul += "<td>"+data[index][1]+"</td>";
+                text_Consul += "<td>"+data[index][2]+"</td>";
+                text_Consul += "<td>"+data[index][3]+"</td>";
+                text_Consul += "<td>"+data[index][4]+"</td>";
+                text_Consul += "<td>";
+                text_Consul += "<button type='button' class='btn btn-primary btn-sm' data-toggle='modal' data-target='#editar_usuario' onclick='seleccionar_usuarios_activos("+data[index][0]+");'>Editar</button>";
+                text_Consul += "<button type='button' class='btn btn-success btn-sm' data-toggle='modal' data-target='#roles_usuario' onclick='roles("+data[index][5]+");'>Roles</button>";
+                text_Consul += "<button type='button' class='btn btn-danger btn-sm' id='eliminar' onclick='desactivar("+data[index][0]+");'>Desactivar</button></td>";
+                text_Consul += "</tr>";
             }  
+            $('#tbody-activos').html(text_Consul);
 
             if(id!=null){
 
@@ -259,7 +268,7 @@ function roles(id){
 
     $('div#asignarRol').html("<button class='btn btn-primary' type='submit' id='boton_rol'  value='"+id+"'>Asignar</button>");
 
-    cont= cont +1;
+    control= control +1;
         let data = {
             'id':id,
             'accion': "roles"
@@ -274,7 +283,7 @@ function roles(id){
             data:data,
             success: function(data){
                 data = JSON.parse(data);
-
+                var consulta_final ="";
                 for (let index = 0; index < data.length; index++) {
                     text_Consul_roles = "<tr>"+
                                     "<td>"+(index+1)+"</td>"+
@@ -282,18 +291,16 @@ function roles(id){
                                     "<td>"+
                                     "<button type='button' class='btn btn-danger btn-sm' id='eliminar' onclick='eliminar("+data[index][1]+","+data[index][2]+");'>Desactivar</button></td>"+
                                     "</tr>";
-
-                    $('#tbody-roles').append(text_Consul_roles); 
-
+                    consulta_final+=text_Consul_roles;
                 }  
-
+                $('#tbody-roles').html(consulta_final); 
                
                
             }
         });
 
         
-    if(cont==1){    
+    if(control==1){    
         $('#rolAsignado').empty();
 
         $.ajax({
@@ -383,21 +390,19 @@ function seleccionar_usuarios_inactivos(){
         data:{'accion': "seleccionar_usuarios_inactivos"},
         success: function(data){
             data = JSON.parse(data);
- 
+            text_Consul_inactivos = "";
             for (let index = 0; index < data.length; index++) {
-                text_Consul_inactivos = "<tr>"+
-                                "<td>"+(index+1)+"</td>"+
-                                "<td>"+data[index][1]+"</td>"+
-                                "<td>"+data[index][2]+"</td>"+
-                                "<td>"+data[index][3]+"</td>"+
-                                "<td>"+data[index][4]+"</td>"+
-                                "<td>"+
-                                "<button type='button' class='btn btn-danger btn-sm' id='eliminar' onclick='activar("+data[index][0]+");'>Activar</button></td>"+
-                                "</tr>";
-
-
-                $('#tbody-inactivos').append(text_Consul_inactivos);
+                text_Consul_inactivos += "<tr>";
+                text_Consul_inactivos += "<td>"+(index+1)+"</td>";
+                text_Consul_inactivos += "<td>"+data[index][1]+"</td>";
+                text_Consul_inactivos += "<td>"+data[index][2]+"</td>";
+                text_Consul_inactivos += "<td>"+data[index][3]+"</td>";
+                text_Consul_inactivos += "<td>"+data[index][4]+"</td>";
+                text_Consul_inactivos += "<td>";
+                text_Consul_inactivos += "<button type='button' class='btn btn-danger btn-sm' id='eliminar' onclick='activar("+data[index][0]+");'>Activar</button></td>";
+                text_Consul_inactivos += "</tr>";
             }  
+            $('#tbody-inactivos').html(text_Consul_inactivos);
         }
     });
 

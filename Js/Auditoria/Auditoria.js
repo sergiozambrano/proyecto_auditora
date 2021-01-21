@@ -10,6 +10,7 @@ function mostrar(obj=null, buscar=null){
     $.ajax({
       url: '../../Controller/Auditoria/Auditoria.C.php',
       type: 'POST',
+      data: {'id_auditoria': sessionStorage.Id},
       datatype: 'JSON',
       success: function(data) {
         data = JSON.parse(data);
@@ -62,6 +63,7 @@ function mostrar(obj=null, buscar=null){
   }else{
     if (buscar == 'validar') {
       data = {
+        'id_auditoria': sessionStorage.Id,
         'valor': parseInt(obj),
         'accion': 'validacion'
       }
@@ -300,17 +302,20 @@ $('#formArchivo').submit(function (e) {
 });
 
 $('#desactivar').on('click', function () {
+  $('#valorBuscador').val('');
   document.querySelectorAll('[name=validacion]').forEach((x) => x.checked=false);
   mostrar();
 });
 
 $('input:radio[name=validacion]').change(function() {
-  $('#valorBuscador').empty();
+  $('#valorBuscador').val('');
   mostrar($('input:radio[name=validacion]:checked').val(), 'validar');
+
 });
 
 $('#valorBuscador').keyup(function() {
   data = {
+    'id_auditoria': sessionStorage.Id,
     'buscar': $('select#selecBuscador option:Selected').val(),
     'valor': $('#valorBuscador').val(),
     'opcion': $('input:radio[name=validacion]:checked').val() || null
@@ -327,6 +332,8 @@ $('#valorBuscador').keyup(function() {
   }else{
     mostrar(data, 'buscador');
   }
+
+
 });
 
 function info(){

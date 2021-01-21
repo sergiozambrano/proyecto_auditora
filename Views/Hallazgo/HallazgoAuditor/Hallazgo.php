@@ -17,7 +17,7 @@
   <section class="container-fluid">
     <article class="row align-items-center my-2">
       <div class="col ">
-        <a class='btn btn-outline-primary' href="Hallazgo.html">Volver</a>
+        <a class='btn btn-outline-primary' href="HallazgoProgramada.php">Volver</a>
       </div>
 
       <div class="col">
@@ -54,27 +54,87 @@
             <th scope="col">#</th>
             <th scope="col">Hallazgo</th>
             <th scope="col">Fecha</th>
-            <th scope="col">Evidencia</th>
             <th scope="col">Estado</th>
-            <th scope="col">Descargar</th>
+            <th scope="col">Evidencia</th>
+            <th scope="col">Opciones</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody id="tbodyHallazgo">
 
         </tbody>
       </table>
     </article>
   </section>
 
+  <!-- Modal ver Hallazgo-->
+  <div class="modal fade" id="verHallazgoModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Hallazgo</h5>
+        </div>
+        <div class="modal-body">
+          <table class="table">
+            <thead class="thead-dark">
+            </thead>
+            <tbody id="verHallazgo">
+
+            </tbody>
+          </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="cerrarModal()">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal validar Plan mejoramiento-->
+  <div class="modal fade" id="planMejoramientoModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Valida plan mejoramiento</h5>
+        </div>
+        <div class="modal-body">
+          <table class="table">
+            <thead class="thead-dark">
+            </thead>
+            <tbody id="planMejoramiento">
+
+            </tbody>
+          </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="cerrarModal()">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Modal de Prorrogas-->
   <div class="modal fade" id="prorrogasModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">Prorrogas</h5>
         </div>
         <div class="modal-body">
-          ...
+          <table class="table">
+            <thead class="thead-dark">
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Plan mejoramiento</th>
+                <th scope="col">Fecha</th>
+                <th scope="col">Estado</th>
+                <th scope="col">Observacion</th>
+                <th scope="col">Opciones</th>
+              </tr>
+            </thead>
+            <tbody id="tbodyProrroga">
+
+            </tbody>
+          </table>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" onclick="cerrarModal()">Cerrar</button>
@@ -85,13 +145,27 @@
 
   <!-- Modal de crear hallazgos-->
   <div class="modal fade" id="hallazgoModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">Crear Hallazgo</h5>
         </div>
         <div class="modal-body">
-          ...
+          <table class="table">
+            <thead class="thead-dark">
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Plan mejoramiento</th>
+                <th scope="col">Fecha</th>
+                <th scope="col">Estado</th>
+                <th scope="col">Observacion</th>
+                <th scope="col">Opciones</th>
+              </tr>
+            </thead>
+            <tbody id="tbodyHallazgo">
+
+            </tbody>
+          </table>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" onclick="cerrarModal()">Cerrar</button>
@@ -106,6 +180,6 @@
   <script src="../../../Library/sweetalert2/sweetalert2.all.min.js"></script>
 
   <!-- Código propio JavaScript-->
-  <script src="../../../Js/Hallazgo/HallazgoAuditor/HallazgoProgramada.js"></script>
+  <script src="../../../Js/Hallazgo/HallazgoAuditor/Hallazgo.js"></script>
 </body>
 </html>

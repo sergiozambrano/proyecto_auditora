@@ -55,9 +55,9 @@ $sesion->autenticacion();
         </form>
       </div>
     </div>
-
+    
     <div class="modal fade" id="staticBackdrop1" tabindex="-1" aria-labelledby="exampleModalLabel1" aria-hidden="true">
-      <div class="modal-dialog">
+      <div class="modal-dialog modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="staticBackdropLabel1">Editar Plan Mejoramiento</h5>
@@ -109,7 +109,7 @@ $sesion->autenticacion();
       </div>
   </div>
   <div class="modal fade" id="staticBackdrop2" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog modal-dialog-scrollable">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="staticBackdropLabel1">Crear Prorroga</h5>
@@ -146,7 +146,7 @@ $sesion->autenticacion();
 </div>
 
     <table class="table">
-      <thead class="thead-dark">
+      <thead class="table-dark">
           <tr>
               <th scope="col">#</th>
               <th scope="col">Hallazgo</th>
@@ -159,7 +159,7 @@ $sesion->autenticacion();
       </tbody>
     </table>
     <div class="modal fade" id="staticBackdrop3" tabindex="-1" aria-labelledby="exampleModalLabel3" aria-hidden="true">
-      <div class="modal-dialog modal-lg">
+      <div class="modal-dialog modal-lg modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="staticBackdropLabel1">Prorrogas</h5>
@@ -170,7 +170,7 @@ $sesion->autenticacion();
           <div class="modal-body">
             <form >
               <table class="table">
-                <thead class="thead-dark">
+                <thead class="table-dark">
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">Plan Mejoramiento</th>
@@ -189,9 +189,9 @@ $sesion->autenticacion();
         </div>
       </div>
   </div>
-
+  
   <div class="modal fade" id="staticBackdrop4" tabindex="-1" aria-labelledby="exampleModalLabel4" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-lg modal-dialog modal-dialog-scrollable">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="staticBackdropLabel4">Hallazgos</h5>
@@ -202,7 +202,7 @@ $sesion->autenticacion();
         <div class="modal-body">
           <form >
             <table class="table">
-              <thead class="thead-dark">
+              <thead class="table-dark">
                   <tr>
                       <th scope="col">#</th>
                       <th scope="col">Tema </th>
@@ -226,7 +226,7 @@ $sesion->autenticacion();
 </div>
     <!-- Código JavaScript-->
   <script src="../../Library/vendor/jquery/jquery.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+  <script src="../../Library/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="../../Library/sweetalert2/sweetalert2.all.min.js"></script>
 
 

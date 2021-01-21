@@ -11,13 +11,8 @@ $data;
 $hallazgoD = new HallazgoD();
 $hallazgoM = new HallazgoM();
 
-if (!isset($_POST['accion'])) {
-  $hallazgoD->mostrar($_POST['id_auditoria'], $_SESSION['id']);
-  $data = $hallazgoM->mostrar($hallazgoD);
-
-} else {
-  # code...
-}
+$hallazgoD->hallazgo($_SESSION['id']);
+$data = $hallazgoM->mostrarAuditorias($hallazgoD);
 
 print json_encode($data);
 ?>

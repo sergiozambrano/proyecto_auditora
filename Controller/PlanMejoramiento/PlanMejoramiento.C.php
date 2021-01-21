@@ -68,8 +68,9 @@
             $data=$planMejoramientom->evidencia($idAnexo,$copia,$planMejoramientod,$archivo,$tipoArchivo,$validaArchivo,$nombreArchivo,$valida,$size,$idPlanMejoramiento,$idEjecucion);
             break;
         case 'validarAuditoria':
+            $ruta=$_POST['ruta'];
             $id=$_POST['id'];
-            $data=$planMejoramientom->vAuditoria($id);
+            $data=$planMejoramientom->vAuditoria($id,$ruta);
             break;
         case 'hallazgo':
             $idHallazgo=$_POST['id'];
@@ -85,6 +86,10 @@
             
             $data=$planMejoramientom->vFecha($id);
             
+            break;
+        case 'fechaProrroga':
+            $id_plan_mejoramiento = $_POST['idPlan'];
+            $data=$planMejoramientom->fechaProrroga($id_plan_mejoramiento);
             break;
     }
     

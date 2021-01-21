@@ -19,7 +19,7 @@ $sesion->autenticacion();
   <!--datables CSS básico-->
   <link rel="stylesheet" type="text/css" href="../../Library/vendor/datatables/datatables.min.css"/>
 
-  <!--datables estilo bootstrap 5 CSS-->
+  <!--datables estilo bootstrap 4 CSS-->
   <link rel="stylesheet"  type="text/css" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css">
 
   <!--Css propios-->
@@ -31,7 +31,7 @@ $sesion->autenticacion();
 </head>
 <body onload="filtroAno()">
     <!-- charts -->
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script> 
     <div class="container-fluid">
       <div class="row">
         <div class="col-md-12">
@@ -46,11 +46,11 @@ $sesion->autenticacion();
                 </svg>
             </a>
     <canvas id="chart_div" style="width: 300px; height: 100px;"></canvas>
-
-
+    
+         
     <!-- Código JavaScript-->
   <script src="../../Library/vendor/jquery/jquery.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+  <script src="../../Library/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="../../Library/sweetalert2/sweetalert2.all.min.js"></script>
 
 

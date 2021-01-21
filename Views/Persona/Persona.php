@@ -69,13 +69,13 @@
               </div>
               <div class="col-md-6 mb-3">
                 <label for="validationDefault06">Numero de documento</label>
-                <input type="text" class="form-control" id="documento" required>
+                <input type="number" class="form-control" id="documento" required>
               </div>
             </div>
             <div class="form-row">
               <div class="col-md-6 mb-3">
                 <label for="validationDefault07">Numero de telefono</label>
-                <input type="text" class="form-control" id="telefono" required>
+                <input type="number" class="form-control" id="telefono" required>
               </div>
               <div class="col-md-6 mb-3">
                 <label for="validationDefault08">Correo electronico</label>
@@ -97,8 +97,6 @@
               </div>
             </div>
             <button class="btn btn-primary" type="submit">Enviar</button>
-            <button class="btn btn-secondary" type="reset">Limpiar</button>
-
           </form>
 
     </div>

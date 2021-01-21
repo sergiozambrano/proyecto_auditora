@@ -9,7 +9,7 @@ $sesion->autenticacion();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <link rel="stylesheet" href="../../Library/bootstrap/css/bootstrap.min.css">
 </head>
 <body>
 
@@ -28,7 +28,7 @@ $sesion->autenticacion();
     </div>
 
     <script src="../../Library/jquery-3.3.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+    <script src="../../Library/bootstrap/js/bootstrap.min.js"></script>
     <script src="../../Js/ProgramacionAuditoria/ProgramacionAnual.js"></script>
     <script src="../../Js/ProgramacionAuditoria/Services.js"></script>
 </body>

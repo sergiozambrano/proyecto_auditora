@@ -3,42 +3,121 @@ var cont = 0; /*Contador para que que se envien la peticion con datos y los guar
 
 $(document).ready(function (e){
 
-    Seleccionar();/*Ejecutar la funcion de imprimir todos los daos de la tabla programacion de auditoria*/
+  $("#ano").append(FechaValidar());/*Imprime la fecha correspondiente de la programacion de auditoria en el titulo*/
 
-    $("#ano").append(FechaValidar());/*Imprime la fecha correspondiente de la programacion de auditoria en el titulo*/
+  Seleccionar();/*Ejecutar la funcion de imprimir todos los daos de la tabla programacion de auditoria*/
 
-    ConsultarUsuarioArea(null);/*Ejecutar la funcion de imprimir los datos de las tablas usuario y areas, mandando como parametro el formulario*/
+  ConsultarUsuarioArea(null);/*Ejecutar la funcion de imprimir los datos de las tablas usuario y areas, mandando como parametro el formulario*/
 
-    BloquearFechas();/*Ejecutar la funcion de bloquear un determinado rango de meses segun el año*/
+  BloquearFechas();/*Ejecutar la funcion de bloquear un determinado rango de meses segun el año*/
 
-    //Funcion para guardar nuevos registros de programacion de auditoria
+  //Funcion para guardar nuevos registros de programacion de auditoria
 
-    $('#form').submit(function(e){
-      e.preventDefault();
+  $('#form').submit(function(e){
+    e.preventDefault();
 
-      cont += 1;
+    cont += 1;
 
-      //condicional para que solo se realize la operacion cuando el contador global es 1
-      if(cont==1){
-        if($('#id_area').val() != "" && $('#id_auditor').val() != "" && $('#tipo_auditoria').val() != "" && $('#fecha_pro_au').val() != ""){
+    //condicional para que solo se realize la operacion cuando el contador global es 1
+    if(cont==1){
+      if($('#id_area').val() != "" && $('#id_auditor').val() != "" && $('#tipo_auditoria').val() != "" && $('#fecha_pro_au').val() != ""){
+
+        var observacion;
+
+        //Condicional para saber si no envia nada de observacion y enviar el dato como null
+        if ($('#observacion').val() != "") {
+            observacion = $.trim($('#observacion').val());
+        } else {
+            observacion = null;
+        }
+
+        //Arreglo a enviar
+        let data = {
+            'area':$.trim($('#id_area').val()),
+            'auditor':$.trim($('#id_auditor').val()),
+            'tipo_auditoria':$.trim($('#tipo_auditoria').val()),
+            'fecha_programada':$.trim($('#fecha_pro_au').val()+"-01"),
+            'observacion':observacion,
+            'accion': "insertar"
+        }
+        //Enviar los datos al php para ejecutar la operacion
+        $.ajax({
+            url:"../../Controller/ProgramacionAuditoria/ProgramacionAuditoria.C.php",
+            type:"POST",
+            datatype:"json",
+            data:data,
+            success:function(data){
+              cont = 0; /*Volver a 0 el contador global*/
+              //Respuesta de la operacion 1 = se guardo correctamente, 2 = error al guardar.
+              if (data == 1) {
+                  $('#modalAgregar').modal('hide');
+                  Swal.fire({
+                      icon:'success',
+                      title:'Datos ingresados correctamente!!',
+                  });
+                  Seleccionar();
+                  Limpiar("Create");
+              }else if(data == 2){
+                  Swal.fire({
+                      icon:'warning',
+                      title:'Error al enviar los datos!!',
+                  });
+              }
+              else{
+                  Swal.fire({
+                      icon:'error',
+                      title:'Error del sistema!!\nContactese con el administrador',
+                  });
+              }
+            }
+        });
+
+      } else{
+
+          Swal.fire({
+              icon:'warning',
+              title:'Debe ingresar todos los datos!!',
+          });
+          cont = 0;
+          return false;
+      }
+    }
+    else{
+      $("#btn_agregar").prop("disabled", true);
+    }
+  });
+
+  //Funcion para editar registros de programacion de auditoria
+
+  $('#form_edit').submit(function(e){
+    e.preventDefault();
+
+    cont += 1;
+
+    //condicional para que solo se realize la operacion cuando el contador global es 1
+    if(cont==1){
+
+      //Verificar si los datos importantes estan
+      if($('#id_area_edit').val() != "" && $('#id_auditor_edit').val() != "" && $('#tipo_auditoria_edit').val() != "" && $('#fecha_pro_au_edit').val() != ""){
 
           var observacion;
 
           //Condicional para saber si no envia nada de observacion y enviar el dato como null
-          if ($('#observacion').val() != "") {
-              observacion = $.trim($('#observacion').val());
+          if ($('#observacion_edit').val() != "") {
+              observacion = $.trim($('#observacion_edit').val());
           } else {
               observacion = null;
           }
 
           //Arreglo a enviar
           let data = {
-              'area':$.trim($('#id_area').val()),
-              'auditor':$.trim($('#id_auditor').val()),
-              'tipo_auditoria':$.trim($('#tipo_auditoria').val()),
-              'fecha_programada':$.trim($('#fecha_pro_au').val()+"-01"),
+              'area':$.trim($('#id_area_edit').val()),
+              'auditor':$.trim($('#id_auditor_edit').val()),
+              'tipo_auditoria':$.trim($('#tipo_auditoria_edit').val()),
+              'fecha_programada':$.trim($('#fecha_pro_au_edit').val()+"-01"),
               'observacion':observacion,
-              'accion': "insertar"
+              'programacion_auditoria':$.trim($('#input_id').val()),
+              'accion': "editar"
           }
           //Enviar los datos al php para ejecutar la operacion
           $.ajax({
@@ -48,19 +127,19 @@ $(document).ready(function (e){
               data:data,
               success:function(data){
                 cont = 0; /*Volver a 0 el contador global*/
-                //Respuesta de la operacion 1 = se guardo correctamente, 2 = error al guardar.
+                //Respuesta de la operacion 1 = se modifico correctamente, 2 = error al modificar.
                 if (data == 1) {
-                    $('#modalAgregar').modal('hide');
+                    $('#modalEditar').modal('hide');
                     Swal.fire({
                         icon:'success',
-                        title:'Datos ingresados correctamente!!',
+                        title:'Datos modificados correctamente!!',
                     });
                     Seleccionar();
-                    Limpiar("Create");
+                    Limpiar("Edit");
                 }else if(data == 2){
                     Swal.fire({
                         icon:'warning',
-                        title:'Error al enviar los datos!!',
+                        title:'Error al modificar los datos los datos!!',
                     });
                 }
                 else{
@@ -72,144 +151,127 @@ $(document).ready(function (e){
               }
           });
 
-        } else{
+      } else{
 
-            Swal.fire({
-                icon:'warning',
-                title:'Debe ingresar todos los datos!!',
-            });
-            return false;
-        }
+          Swal.fire({
+              icon:'warning',
+              title:'Debe ingresar todos los datos!!',
+          });
+          return false;
       }
-      else{
-        $("#btn_agregar").attr("disabled", true);
+    }
+    else{
+      $("#btn_editar").prop("disabled", true);
+    }
+  });
+
+  /*
+  *Funciones de jQuery
+
+  *Consultar meses disponibles del auditor y del area
+  */
+
+  //Validacion del formulario Agregar,
+  $('#id_area, #id_auditor, #fecha_pro_au').change(function () {
+
+      //Obtener arreglo
+      let validacion = ObternerValidacion("Agregar");
+
+      //Validar si el arreglo viene como false
+      if(validacion!=false){
+          //Enviar arreglo para realizar la operacion
+          Disponibilidad(validacion);
       }
-    });
 
-    //Funcion para editar registros de programacion de auditoria
+  });
 
-    $('#form_edit').submit(function(e){
-      e.preventDefault();
+  //Validacion del formulario Editar
+  $('#id_area_edit, #id_auditor_edit, #fecha_pro_au_edit').change(function () {
 
-      cont += 1;
+      //Obtener arreglo
+      let validacion = ObternerValidacion("Editar");
 
-      //condicional para que solo se realize la operacion cuando el contador global es 1
-      if(cont==1){
+      //Validar si el arreglo viene como false
+      if(validacion!=false){
+          //Enviar arreglo para realizar la operacion
+          Disponibilidad(validacion);
+      }
 
-        //Verificar si los datos importantes estan
-        if($('#id_area_edit').val() != "" && $('#id_auditor_edit').val() != "" && $('#tipo_auditoria_edit').val() != "" && $('#fecha_pro_au_edit').val() != ""){
+  });
 
-            var observacion;
+  $('#agregar').click(function() {
+      $("#btn_agregar").prop("disabled", false);
+      ConsultarUsuarioArea("Create");/*Ejecutar la funcion de imprimir los datos de las tablas usuario y areas, mandando como parametro el formulario*/
+      $("#alert").alert("close");/*Ocultar el alert de validacion de ocupacion de area y auditor*/
+  });
 
-            //Condicional para saber si no envia nada de observacion y enviar el dato como null
-            if ($('#observacion_edit').val() != "") {
-                observacion = $.trim($('#observacion_edit').val());
-            } else {
-                observacion = null;
-            }
+  //buscador
+  $('#buscador').keyup(function (e) {
+    e.preventDefault();
 
-            //Arreglo a enviar
-            let data = {
-                'area':$.trim($('#id_area_edit').val()),
-                'auditor':$.trim($('#id_auditor_edit').val()),
-                'tipo_auditoria':$.trim($('#tipo_auditoria_edit').val()),
-                'fecha_programada':$.trim($('#fecha_pro_au_edit').val()+"-01"),
-                'observacion':observacion,
-                'programacion_auditoria':$.trim($('#input_id').val()),
-                'accion': "editar"
-            }
-            //Enviar los datos al php para ejecutar la operacion
-            $.ajax({
-                url:"../../Controller/ProgramacionAuditoria/ProgramacionAuditoria.C.php",
-                type:"POST",
-                datatype:"json",
-                data:data,
-                success:function(data){
-                  cont = 0; /*Volver a 0 el contador global*/
-                  //Respuesta de la operacion 1 = se modifico correctamente, 2 = error al modificar.
-                  if (data == 1) {
-                      $('#modalEditar').modal('hide');
-                      Swal.fire({
-                          icon:'success',
-                          title:'Datos modificados correctamente!!',
-                      });
-                      Seleccionar();
-                      Limpiar("Edit");
-                  }else if(data == 2){
-                      Swal.fire({
-                          icon:'warning',
-                          title:'Error al modificar los datos los datos!!',
-                      });
+    if($('#texto').val()!="" && $('#texto').val()!=null){
+      var string = "";
+
+      // En data se trae el valor ingresado en la visa
+      let data = {
+          'criterio': $('#criterio').val(),
+          'texto': $('#texto').val(),
+          'accion':"buscar",
+          'where': FechaValidar()
+      };
+
+      $.ajax({
+          url:"../../Controller/ProgramacionAuditoria/ProgramacionAuditoria.C.php",
+          type:"POST",
+          datatype:"json",
+          data:data,
+          success:function(data){
+              data = JSON.parse(data);
+              if (data.length >= 1) {
+
+                  for (let index = 0; index < data.length; index++) {
+
+                    fecha = FechaProgramacion(data[index][3]); /*Funcion par separarme los años-meses de los dias de dotos tipo date*/
+
+                    string += "<tr>";
+                    string += "<td>"+(index+1)+"</td>";
+                    string += "<td>"+data[index][6]+"</td>";
+                    string += "<td>"+data[index][1]+"</td>";
+                    string += "<td>"+data[index][2]+"</td>";
+                    string += "<td>"+fecha+"</td>";
+                    string += "<td>"+data[index][4]+"</td>";
+                    string += "<td><a href='#' onclick='ObtenerObsevacion(\""+data[index][5]+"\");'>Ver mas...</a></td>";
+                    string += "<td>";
+                    //Condicional para desaparecer la opcion de editar cuando los años sean anteriores al actual y cuando un registro esta en estado Finalizado
+                    if(FechaValidar() == ObtenerFecha(null) && data[index][4]!="Finalizada"){
+                        string += "<button type='button' class='btn btn-primary btn-sm' id='editar' onclick='ObtenerEditar("+data[index][7]+");'>Editar</button>";
+                    }
+                    else{
+                        string += "";
+                    }
+                    string += "</td>";
+                    string += "</tr>";
+
                   }
-                  else{
-                      Swal.fire({
-                          icon:'error',
-                          title:'Error del sistema!!\nContactese con el administrador',
-                      });
-                  }
-                }
-            });
+                  $('#tbody').html(string);
 
-        } else{
+              } else {
+                  $('#tbody').html("<td colspan='8'>No hay registros.</td>");
+              }
 
-            Swal.fire({
-                icon:'warning',
-                title:'Debe ingresar todos los datos!!',
-            });
-            return false;
-        }
-      }
-      else{
-        $("#btn_editar").attr("disabled", true);
-      }
-    });
-
-    /*
-    *Funciones de jQuery
-
-    *Consultar meses disponibles del auditor y del area
-    */
-
-    //Validacion del formulario Agregar,
-    $('#id_area, #id_auditor, #fecha_pro_au').change(function () {
-
-        //Obtener arreglo
-        let validacion = ObternerValidacion("Agregar");
-
-        //Validar si el arreglo viene como false
-        if(validacion!=false){
-            //Enviar arreglo para realizar la operacion
-            Disponibilidad(validacion);
-        }
-
-    });
-
-    //Validacion del formulario Editar
-    $('#id_area_edit, #id_auditor_edit, #fecha_pro_au_edit').change(function () {
-
-        //Obtener arreglo
-        let validacion = ObternerValidacion("Editar");
-
-        //Validar si el arreglo viene como false
-        if(validacion!=false){
-            //Enviar arreglo para realizar la operacion
-            Disponibilidad(validacion);
-        }
-
-    });
-
-    $('#agregar').click(function() {
-        $("#btn_agregar").removeAttr("disabled");
-        ConsultarUsuarioArea("Create");/*Ejecutar la funcion de imprimir los datos de las tablas usuario y areas, mandando como parametro el formulario*/
-        $("#alert").alert("close");/*Ocultar el alert de validacion de ocupacion de area y auditor*/
-    });
+          }
+      });
+    }
+    else{
+      Seleccionar();
+    }
+  });
 
 });
 
 /*Funciones*/
 
 //Funcion para imprimir los registros de la tabla programacion de auditoria
-
 function Seleccionar(){
 
     //Declaracion de variables
@@ -243,7 +305,7 @@ function Seleccionar(){
                     string += "<td>";
                     //Condicional para desaparecer la opcion de editar cuando los años sean anteriores al actual y cuando un registro esta en estado Finalizado
                     if(FechaValidar() == ObtenerFecha(null) && data[index][7]!="Finalizada"){
-                        string += "<button type='button' class='btn btn-primary btn-sm' id='editar' onclick='ObtenerEditar("+data[index][10]+");'>Editar</button>";
+                      string += "<button type='button' class='btn btn-primary btn-sm' id='editar' onclick='ObtenerEditar("+data[index][10]+");'>Editar</button>";
                     }
                     else{
                         string += "";
@@ -263,7 +325,6 @@ function Seleccionar(){
 }
 
 //Funcion para obtener datos de validacion
-
 function ObternerValidacion(operacion){
 
     //Obtener la fecha de el input tipo date de cada formulario
@@ -313,9 +374,10 @@ function ObternerValidacion(operacion){
     }
 }
 
+//Funcion para obtener los registros por id para luego editar
 function ObtenerEditar(idProgramacioAuditoria){
 
-    $("#btn_editar").removeAttr("disabled");
+    $("#btn_editar").prop("disabled", false);
 
     $("#alert").alert("close");/*Ocultar el alert de validacion de ocupacion de area y auditor*/
 
@@ -368,7 +430,6 @@ function ObtenerEditar(idProgramacioAuditoria){
 }
 
 //Funcion para verificar que el auditor ni el usuario esten ocupados en la fecha especificada por el usuario
-
 function Disponibilidad(validacion) {
     //Recibir arreglo y separalos en variables distintas, operacion = tipo de operacion a realizar *crear* o *editar*, estado = el estado de la auditoria *Programada, *En proceso*, *Finalizado*
     var estado = validacion['estado'];
@@ -440,8 +501,8 @@ function Disponibilidad(validacion) {
                 }
                 $("#alert").alert("");
                 window.setTimeout(function() {
-                    $("#alert").fadeTo(500, 0).slideUp(500, function(){
-                        $("#alert").alert("close");
+                      $("#alert").fadeTo(500, 0).slideUp(500, function(){
+                      $("#alert").alert("close");
                     });
                 }, 5000);
 
@@ -462,7 +523,6 @@ function BloquearFechas(){
 }
 
 //Funcion que muestra los usuarios y las areas en los inputs tipo select de los formularios de agregar y editar
-
 function ConsultarUsuarioArea(formulario){
 
     var auditor = "";
@@ -482,9 +542,9 @@ function ConsultarUsuarioArea(formulario){
 
             for (let index = 0; index < data.length; index++) {
 
-                nombre = NombreCompleto(data[index][2], data[index][3], data[index][4], data[index][5]);
+                nombre = NombreCompleto(data[index][1], data[index][2], data[index][3], data[index][4]);
 
-                auditor += "<option value='"+data[index][0]+"'>"+nombre+" - "+data[index][1]+"</option>";
+                auditor += "<option value='"+data[index][0]+"'>"+nombre+"</option>";
 
             }
             //Condicional para saber a que formulario se enviara los auditores en el imput tipo select
@@ -525,8 +585,19 @@ function ConsultarUsuarioArea(formulario){
     });
 }
 
-//Funcion para obtener la variable tipo GET año del registro
+//Abrir modal e imprimir las observaciones
+function ObtenerObsevacion(anexo){
+  if(anexo!=null && anexo!="" && anexo!="null"){
+    $("#imprimir_observacion").html(anexo);
+  }
+  else{
+    $("#imprimir_observacion").html("La programacion de auditoria no tiene observaciones.");
+  }
 
+  $('#modalObsevacion').modal("show");
+}
+
+//Funcion para obtener la variable tipo GET año del registro
 function FechaValidar(){
     //Condicional que verifica si la variable tipo GET existe y si no, utiliza el año actual
     if(ObtenerVariableGET('fecha')!="-undefined" && ObtenerVariableGET('fecha')!="" && ObtenerVariableGET('fecha')!=null){
@@ -547,7 +618,6 @@ function FechaValidar(){
 }
 
 //bloquear input o desaparecer input segun la fecha y el estado de la auditoria
-
 function BloquearInputs(tipo){
     if(tipo=="fecha"){
         $("#modalAgregar").remove();
@@ -557,25 +627,25 @@ function BloquearInputs(tipo){
     else{
         switch (tipo) {
             case "Programada":
-                $('#id_auditor_edit').removeAttr("disabled");
-                $('#id_area_edit').removeAttr("disabled");
-                $('#tipo_auditoria_edit').removeAttr("disabled");
-                $('#fecha_pro_au_edit').removeAttr("disabled");
-                $('#observacion_edit').removeAttr("disabled");
+                $('#id_auditor_edit').prop("disabled", false);
+                $('#id_area_edit').prop("disabled", false);
+                $('#tipo_auditoria_edit').prop("disabled", false);
+                $('#fecha_pro_au_edit').prop("disabled", false);
+                $('#observacion_edit').prop("disabled", false);
                 break;
             case "En proceso":
-                $('#id_auditor_edit').removeAttr("disabled");
-                $('#id_area_edit').attr("disabled", "");
-                $('#tipo_auditoria_edit').attr("disabled", "");
-                $('#fecha_pro_au_edit').attr("disabled", "");
-                $('#observacion_edit').removeAttr("disabled");
+                $('#id_auditor_edit').prop("disabled", false);
+                $('#id_area_edit').prop("disabled", true);
+                $('#tipo_auditoria_edit').prop("disabled", true);
+                $('#fecha_pro_au_edit').prop("disabled", true);
+                $('#observacion_edit').prop("disabled", false);
                 break;
             case "Finalizada":
-                $('#id_auditor_edit').attr("disabled", "");
-                $('#id_area_edit').attr("disabled", "");
-                $('#tipo_auditoria_edit').attr("disabled", "");
-                $('#fecha_pro_au_edit').attr("disabled", "");
-                $('#observacion_edit').attr("disabled", "");
+                $('#id_auditor_edit').prop("disabled", true);
+                $('#id_area_edit').prop("disabled", true);
+                $('#tipo_auditoria_edit').prop("disabled", true);
+                $('#fecha_pro_au_edit').prop("disabled", true);
+                $('#observacion_edit').prop("disabled", true);
                 break;
             default:
                 break;
@@ -584,7 +654,6 @@ function BloquearInputs(tipo){
 }
 
 //Funcion para limpiar inputs y etiquetas html
-
 function Limpiar(formulario){
     if(formulario=="Create"){
         //Inputs Create
@@ -598,76 +667,4 @@ function Limpiar(formulario){
         $('#fecha_pro_au_edit').val('');
         $('#observacion_edit').val('');
     }
-}
-
-$('#buscador').keyup(function (e) {
-  e.preventDefault();
-
-  if($('#texto').val()!="" && $('#texto').val()!=null){
-    var string = "";
-
-    // En data se trae el valor ingresado en la visa
-    let data = {
-        'criterio': $('#criterio').val(),
-        'texto': $('#texto').val(),
-        'accion':"buscar",
-        'where': FechaValidar()
-    };
-
-    $.ajax({
-        url:"../../Controller/ProgramacionAuditoria/ProgramacionAuditoria.C.php",
-        type:"POST",
-        datatype:"json",
-        data:data,
-        success:function(data){
-            data = JSON.parse(data);
-            if (data.length >= 1) {
-
-                for (let index = 0; index < data.length; index++) {
-
-                  fecha = FechaProgramacion(data[index][3]); /*Funcion par separarme los años-meses de los dias de dotos tipo date*/
-
-                  string += "<tr>";
-                  string += "<td>"+(index+1)+"</td>";
-                  string += "<td>"+data[index][6]+"</td>";
-                  string += "<td>"+data[index][1]+"</td>";
-                  string += "<td>"+data[index][2]+"</td>";
-                  string += "<td>"+fecha+"</td>";
-                  string += "<td>"+data[index][4]+"</td>";
-                  string += "<td><a href='#' onclick='ObtenerObsevacion(\""+data[index][5]+"\");'>Ver mas...</a></td>";
-                  string += "<td>";
-                  //Condicional para desaparecer la opcion de editar cuando los años sean anteriores al actual y cuando un registro esta en estado Finalizado
-                  if(FechaValidar() == ObtenerFecha(null) && data[index][4]!="Finalizada"){
-                      string += "<button type='button' class='btn btn-primary btn-sm' id='editar' onclick='ObtenerEditar("+data[index][7]+");'>Editar</button>";
-                  }
-                  else{
-                      string += "";
-                  }
-                  string += "</td>";
-                  string += "</tr>";
-
-                }
-                $('#tbody').html(string);
-
-            } else {
-                $('#tbody').html("<td colspan='8'>No hay registros.</td>");
-            }
-
-        }
-    });
-  }
-  else{
-    Seleccionar();
-  }
-});
-
-function ObtenerObsevacion(anexo){
-  if(anexo!=null && anexo!="" && anexo!="null"){
-    $("#imprimir_observacion").html(anexo);
-  }
-  else{
-    $("#imprimir_observacion").html("La programacion de auditoria no tiene observaciones.");
-  }
-
-  $('#modalObsevacion').modal("show");
 }

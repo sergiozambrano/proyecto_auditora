@@ -19,37 +19,39 @@ function eliminar(id){
             cancelButtonText: 'Cancelar',
             confirmButtonText: '¡Si, aceptar!',
             }).then(function(confirmar){
-                if(confirmar.isConfirmed){ //Si se confirma accion entra al ajax y elimina
-                  $.ajax({
-                      url:"../../Controller/Area/Area.C.php",
-                      type:"POST",
-                      datatype:"json",
-                      data:data,
-                      success:function(data){
-                          if (data==1) {
-                              Swal.fire({
-                                      title: "Dato eliminado correctamente",
-                                      icon: "success"
-                                      });
-                                  }
-                          else if(data==2){
-                              Swal.fire({
-                                      title: "Los datos no se eliminaron, contactese con soporte tecnico",
-                                      icon: "warning"
-                                      });
-                                  }
-                              seleccionar(null);
-                              }
-                          });
-                }
-                          else{
-                              Swal.fire({
-                                  title: "Los datos no se eliminaron",
-                                  icon: "error"
-                                  });
+                if(confirmar.isConfirmed){ //Si se confirma la accion entra al ajax y elimina
+                $.ajax({
+                    url:"../../Controller/Area/Area.C.php",
+                    type:"POST",
+                    datatype:"json",
+                    data:data,
+                    success:function(data){
+                        if (data==1) {
+                            Swal.fire({
+                                    title: "Dato eliminado correctamente",
+                                    icon: "success"
+                                    });
+                                }
+                        else if(data==2){
+                            Swal.fire({
+                                    title: "Los datos no se eliminaron, contactese con soporte tecnico",
+                                    icon: "warning"
+                                    });
+                                 }
+                            seleccionar(null);
                             }
-              })
-};
+                        });
+                    }
+                        else{
+                            Swal.fire({
+                                title: "Los datos no se eliminaron",
+                                icon: "error"
+                                });
+                           }
+                    })
+                };
+                
+
 //función para listar los datos
 function seleccionar(id){
 
@@ -111,14 +113,18 @@ function seleccionar(id){
         }
     });
 }
+var cont = 0;
 
 $(document).ready(function (e){
 
     seleccionar(null);
-
+    
     $('.form').submit(function(e){
         e.preventDefault();
-
+        cont += 1;
+        if (cont == 1) {
+            
+      
         valor = $(this).attr("id");
         let data = {};
 
@@ -139,6 +145,7 @@ $(document).ready(function (e){
                 'accion': "editar"
             }
         }
+        console.log(data);
 
             //Se valida para que se ingresen todos los datos al momento de insertarlos
             if(data['nombre'].length == "" || data['certificado'] == "" || data['usuario'] == ""){
@@ -159,7 +166,6 @@ $(document).ready(function (e){
                 if (data == 1) {
                   //Con esto cerramos el modal luego de insertar los datos
                   $('div#exampleModal').modal('hide');
-                  $('div#modelActualizar').modal('hide');
                   Swal.fire({
                       title: "Exito!!",
                       icon: "success"
@@ -177,45 +183,53 @@ $(document).ready(function (e){
                         icon: "warning"
                     });
                 }
+                cont = 0;
+                $("#inserEnviar").attr("disabled", false);
+                $("#editEnviar").attr("disabled", false);
                 seleccionar(null);
                 limpiar();
                 $('#btnFormulario').val('Enviar');
             }
         });
+      }else{
+        $("#inserEnviar").attr("disabled", true);
+        $("#editEnviar").attr("disabled", true);
+      };
     });
 
-});
+    });
 
-//Aqui se listan los nombres de las personas, en el select del modal que inserta los datos
-$.ajax({
-    url:"../../Controller/Area/Area.C.php",
-    type:"POST",
-    datatype:"json",
-    data:{'accion': "listarSelect"},
-    success: function(data){
-    data = JSON.parse(data);
+    //Aqui se listan los nombres de las personas, en el select del modal que inserta los datos
+            $.ajax({
+                url:"../../Controller/Area/Area.C.php",
+                type:"POST",
+                datatype:"json",
+                data:{'accion': "listarSelect"},
+                success: function(data){
+                data = JSON.parse(data);
 
-    arregloSelect = data;
+                arregloSelect = data;
 
-        for (let index = 0; index < data.length; index++) {
+                    for (let index = 0; index < data.length; index++) {
 
-            $('#usuario')
-            .append(
-                    "<option value='"+data[index][1]+"'>"+data[index][0]+"</option>"+
-                    "</select>"
-                );
+                        $('#usuario')
+                        .append(
+                                "<option value='"+data[index][1]+"'>"+data[index][0]+"</option>"+
+                                "</select>"
+                            );
 
-        }
-    }
-});
-
-//Con esta función limpiamos los campos
-function limpiar() {
-    $('#nombre').val('');
-    /* $('#usuario').val('');
-    $('#idArea').val(''); */
-}
-
-function cerrarModal() {
-  $('#modelActualizar').modal('hide');
-}
+                    }
+                }
+            });
+        //Con esta función limpiamos los campos
+        function limpiar() {
+            $('#nombre').val('');
+            /* $('#usuario').val('');
+            $('#idArea').val(''); */
+        };
+    
+        function Cerrar() {
+                $('#cerrar').click(); //Esto simula un click sobre el botón close de la modal, por lo que no se debe preocupar por qué clases agregar o qué clases sacar.
+                $('.modal-backdrop').remove();//eliminamos el backdrop del modal
+        };
+     

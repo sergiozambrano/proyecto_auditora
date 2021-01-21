@@ -1,3 +1,4 @@
+var cont=0;
 function eliminar(id){
 
     let data = {
@@ -39,7 +40,7 @@ function seleccionar(id){
         data:{'accion': "seleccionar"},
         success: function(data){
             data = JSON.parse(data);
-
+            var consulta_final ="";
             for (let index = 0; index < data.length; index++) {
                 //tabla con los tados consultados (roles)
                 var text1 ="<tr>"+
@@ -54,9 +55,10 @@ function seleccionar(id){
                             "<button type='button' class='btn btn-primary btn-sm' data-toggle='modal' data-target='#staticBackdrop' onclick='seleccionar("+data[index][0]+");'>Editar</button>"+
                             "<button type='button' class='btn btn-danger btn-sm' id='eliminar' onclick='eliminar("+data[index][0]+");'>Eliminar</button></td>"+
                             "</tr>";
-                //id de la tabla
-                $('#tbody').append(text1);
+               consulta_final+=text1;
             }
+            //id de la tabla
+            $('#tbody').append(consulta_final);
 
             //verificamos si el id ya existe esto lo hacemos para editar los datos
             if(id!=null){
@@ -128,72 +130,81 @@ $(document).ready(function (e){
 
     seleccionar(null);
     //insercion de datos
+    
     $('#form').submit(function(e){
         e.preventDefault();
-
-        let data = {
-            'nombre_rol':$.trim($('#nombre_rol').val()),
-            'estado_rol':$.trim($('#estado_rol').val()),
-            'accion': "insertar"
-        }
-
-        $.ajax({
-            url:"../../Controller/Rol/Rol.C.php",
-            type:"POST",
-            datatype:"json",
-            data:data,
-            success:function(data){
-                //validamos si la insercion fue correcta
-                if (data == 1) {
-                    Swal.fire({
-                        type:'success',
-                        title:'Los datos fueron registrados correctamente!!',
-                    });
-                    seleccionar(null);
-                }else if (data == 2) {
-                    Swal.fire({
-                        type:'warning',
-                        title:'Error el rol ya existe!!',
-                    });
-                }else {
-                    Swal.fire({
-                        type:'warning',
-                        title:'Error los datos no fueron registrados correctamente!!',
-                    });
-                }
+        cont +=1 ;
+        if(cont==1){
+            let data = {
+                'nombre_rol':$.trim($('#nombre_rol').val()),
+                'estado_rol':$.trim($('#estado_rol').val()),
+                'accion': "insertar"
             }
-        });
+
+            $.ajax({
+                url:"../../Controller/Rol/Rol.C.php",
+                type:"POST",
+                datatype:"json",
+                data:data,
+                success:function(data){
+                    cont = 0;
+                    //validamos si la insercion fue correcta
+                    if (data == 1) {
+                        $("#exampleModal").modal("hide");
+                        Swal.fire({
+                            type:'success',
+                            title:'Los datos fueron registrados correctamente!!',
+                        });
+                        seleccionar(null);
+                    }else if (data == 2) {
+                        Swal.fire({
+                            type:'warning',
+                            title:'Error el rol ya existe!!',
+                        });
+                    }else {
+                        Swal.fire({
+                            type:'warning',
+                            title:'Error los datos no fueron registrados correctamente!!',
+                        });
+                    }
+                }
+            });
+        }
     });
 
     $('#form_edit').submit(function(e){
         e.preventDefault();
-
-        let data = {
-            'nombre_rol':$.trim($('#nombre_rol_edit').val()),
-            'estado_rol':$.trim($('#estado_rol_edit').val()),
-            'id':$.trim($('#boton_edit').val()),
-            'accion': "editar"
-        }
-        $.ajax({
-            url:"../../Controller/Rol/Rol.C.php",
-            type:"POST",
-            datatype:"json",
-            data:data,
-            success:function(data){
-                if (data) {
-                    Swal.fire({
-                        type:'success',
-                        title:'Los datos fueron actualizados correctamente!!',
-                    });
-                    seleccionar($('#boton_edit').val());
-                }else {
-                    Swal.fire({
-                        type:'warning',
-                        title:'Error los datos no fueron actualizados correctamente!!',
-                    });
-                }
+        cont +=1 ;
+        if(cont==1){
+            let data = {
+                'nombre_rol':$.trim($('#nombre_rol_edit').val()),
+                'estado_rol':$.trim($('#estado_rol_edit').val()),
+                'id':$.trim($('#boton_edit').val()),
+                'accion': "editar"
             }
-        });
+            $.ajax({
+                url:"../../Controller/Rol/Rol.C.php",
+                type:"POST",
+                datatype:"json",
+                data:data,
+                success:function(data){
+                    cont = 0;
+                    if (data) {
+                        $("#staticBackdrop").modal("hide");
+                        Swal.fire({
+                            type:'success',
+                            title:'Los datos fueron actualizados correctamente!!',
+                        });
+                        seleccionar($('#boton_edit').val());
+                    }else {
+                        Swal.fire({
+                            type:'warning',
+                            title:'Error los datos no fueron actualizados correctamente!!',
+                        });
+                    }
+                }
+            });
+        }
     });
 
 });

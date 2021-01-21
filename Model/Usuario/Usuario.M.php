@@ -29,7 +29,7 @@ class UsuarioM extends Conexion{
   public function datos($id){
     try {
       $this->sql = "SELECT p.id_persona,u.cod_contrato_usu,p.nombre_pri_per,p.nombre_seg_per,p.apellido_pri_per,p.apellido_seg_per,
-                    p.tipo_doc_per,p.num_documento,p.num_celular,p.correo,p.fecha_nac_per,p.genero_per,u.perfil_usu
+                    p.tipo_doc_per,p.num_documento,p.num_celular,p.correo,p.fecha_nac_per,p.genero_per
                     FROM persona AS p
                     INNER JOIN usuario AS u ON u.id_persona=p.id_persona
                     WHERE u.id_usuario=?";

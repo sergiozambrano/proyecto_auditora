@@ -81,7 +81,7 @@
     public function readObservation($idAnexo){
       try {
 
-        $this->sql = "SELECT ta.`observa_anexo`
+        $this->sql = "SELECT ta.`id_trasa_anexos`, ta.`observa_anexo`
                       FROM `trasa_anexos` AS ta
                       INNER JOIN `anexos` AS a
                       ON ta.`id_anexo` = a.`id_anexo`
@@ -97,7 +97,7 @@
       }
     }
 
-    public function insert($anexo){
+    public function insertObservation($anexo){
       try{
           $this->sql= "INSERT INTO `trasa_anexos`(`id_anexo`, `id_usuario_validacion`, `observa_anexo`)
           VALUES (?,?,?)";
@@ -109,6 +109,30 @@
                 $anexo->idUsuarioValidacion,
                 $anexo->observacion
               )
+          );
+
+          if($this->resultset){
+            return 1;
+          }
+          else{
+            return 2;
+          }
+
+      }catch(Exception $e){
+        return 0;
+      }
+    }
+
+    public function editObservation($anexo, $idTransAnexo){
+      try{
+          $this->sql= "UPDATE `trasa_anexos` SET `observa_anexo` = ? WHERE `id_trasa_anexos` = ?";
+
+          $this->statement= $this->conexion->prepare($this->sql);
+          $this->resultset=$this->statement->execute(
+            array(
+              $anexo->observacion,
+              $idTransAnexo
+            )
           );
 
           if($this->resultset){

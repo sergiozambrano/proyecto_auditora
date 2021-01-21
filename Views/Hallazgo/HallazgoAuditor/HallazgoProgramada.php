@@ -18,7 +18,7 @@
     <table class="table">
       <thead>
         <tr>
-          <th>Auditorias</th>
+          <th>Hallazgo de auditoría</th>
         </tr>
       </thead>
       <tbody>
@@ -32,6 +32,6 @@
   <script src="../../../Library/sweetalert2/sweetalert2.all.min.js"></script>
 
   <!-- Código propio JavaScript-->
-  <script src="../../../Js/Hallazgo/HallazgoAuditor/Hallazgo.js"></script>
+  <script src="../../../Js/Hallazgo/HallazgoAuditor/HallazgoProgramada.js"></script>
 </body>
 </html>

@@ -97,8 +97,9 @@
          #Con esta función hacemos la consulta para listar los nombres de las personas en el select del modal insetar
         public function readSelect(){
             try {
-                $this->sql = "SELECT concat(persona.nombre_pri_per,' ',persona.apellido_pri_per)persona, persona.id_persona
-                FROM `persona` inner JOIN usuario_rol on usuario_rol.id_usuario = persona.id_persona
+                $this->sql = "SELECT concat(persona.nombre_pri_per,' ',persona.apellido_pri_per)persona, persona.id_persona FROM `persona` 
+                inner JOIN usuario on usuario.id_persona = persona.id_persona 
+                INNER JOIN usuario_rol on usuario_rol.id_usuario = usuario.id_usuario 
                 INNER JOIN rol on usuario_rol.id_rol = rol.id_rol WHERE rol.id_rol=3";
 
                 $this->statement = $this->conexion->prepare($this->sql);

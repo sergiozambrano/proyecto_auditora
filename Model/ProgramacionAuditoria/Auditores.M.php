@@ -13,7 +13,7 @@
 
     public function read(){
       try {
-          $this->sql = "SELECT u.`id_usuario`, u.`perfil_usu`, p.`nombre_pri_per`, p.`nombre_seg_per`, p.`apellido_pri_per`, p.`apellido_seg_per`
+          $this->sql = "SELECT u.`id_usuario`, p.`nombre_pri_per`, p.`nombre_seg_per`, p.`apellido_pri_per`, p.`apellido_seg_per`
                         FROM `usuario` AS u
                         INNER JOIN `persona` AS p
                         ON u.`id_persona`= p.`id_persona`

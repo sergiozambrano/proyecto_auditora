@@ -11,7 +11,8 @@ $auditoriaM = new AuditoriaM();
 $auditoriaD = new AuditoriaD();
 
 if(!isset($_POST['accion'])){
-  $data = $auditoriaM->mostrar($_SESSION['id']);
+  $auditoriaD->mostrar($_SESSION['id'], $_POST['id_auditoria']);
+  $data = $auditoriaM->mostrar($auditoriaD);
 
 }else{
   switch ($_POST['accion']) {
@@ -35,15 +36,15 @@ if(!isset($_POST['accion'])){
       break;
 
     case 'validacion':
-      $auditoriaD->validacion($_SESSION['id'],$_POST['valor']);
+      $auditoriaD->validacion($_SESSION['id'],$_POST['id_auditoria'],$_POST['valor']);
       $data = $auditoriaM->validacion($auditoriaD);
       break;
 
     case 'buscar':
       $_POST['valor']['buscar'] = ($_POST['valor']['buscar'] == '0') ? 'nombre_anexo' : 'id_usuario_validacion';
 
-      $datos = array($_SESSION['id'],$_POST['valor']['buscar'],$_POST['valor']['valor'],$_POST['valor']['opcion']);
-      $data = $auditoriaM->buscar($datos);
+      $auditoriaD->buscar($_SESSION['id'],$_POST['valor']['id_auditoria'],$_POST['valor']['buscar'],$_POST['valor']['valor'],$_POST['valor']['opcion']);
+      $data = $auditoriaM->buscar($auditoriaD);
       break;
 
     case 'info':

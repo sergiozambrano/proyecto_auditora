@@ -1,3 +1,5 @@
+var cont=0;
+
 function eliminar(id){
 
     let data = {
@@ -40,6 +42,7 @@ function seleccionar(id){
         success: function(data){
             data = JSON.parse(data);
             //al traer los datos del Modelo.M los organizamos en una tabla
+            var consulta_final ="";
             for (let index = 0; index < data.length; index++) {
                 text_Consul = "<tr>"+
                                 "<td>"+(index+1)+"</td>"+
@@ -69,9 +72,11 @@ function seleccionar(id){
                                 "<button type='button' class='btn btn-danger btn-sm' id='eliminar' onclick='eliminar("+data[index][0]+");'>Eliminar</button></td>"+
                                 "</tr>";
 
-
-                $('#tbody').append(text_Consul);
+                consulta_final+=text_Consul;
+                
             }
+
+            $('#tbody').html(consulta_final);
 
 
             if(id!=null){
@@ -134,13 +139,13 @@ function seleccionar(id){
                             "</div>"+
                             "<div class='col-md-6 mb-3'>"+
                             " <label for='validationDefault03'>Numero de documento</label>"+
-                            "<input type='text' class='form-control' id='documento_edit' value='"+data[index][6]+"' disabled>"+
+                            "<input type='number' class='form-control' id='documento_edit' value='"+data[index][6]+"' disabled>"+
                             "</div>"+
                             "</div>"+
                             "<div class='form-row'>"+
                             "<div class='col-md-6 mb-3'>"+
                             " <label for='validationDefault04'>Numero de telefono</label>"+
-                            " <input type='text' class='form-control' id='telefono_edit' value='"+data[index][7]+"' required>"+
+                            " <input type='number' class='form-control' id='telefono_edit' value='"+data[index][7]+"' required>"+
                             "</div>"+
                             " <div class='col-md-6 mb-3'>"+
                             "<label for='validationDefault03'>Correo electronico</label>"+
@@ -192,85 +197,108 @@ $(document).ready(function (e){
     //insercion de personas
     $('#form').submit(function(e){
         e.preventDefault();
-
-        let data = {
-            'primer_nombre':$.trim($('#primer_nombre').val().replace(/^\w/, (c) => c.toUpperCase())),
-            'segundo_nombre':$.trim($('#segundo_nombre').val().replace(/^\w/, (c) => c.toUpperCase())),
-            'primer_apellido':$.trim($('#primer_apellido').val().replace(/^\w/, (c) => c.toUpperCase())),
-            'segundo_apellido':$.trim($('#segundo_apellido').val().replace(/^\w/, (c) => c.toUpperCase())),
-            'tipo':$.trim($('#tipo').val()),
-            'documento':$.trim($('#documento').val()),
-            'telefono':$.trim($('#telefono').val()),
-            'correo':$.trim($('#correo').val()),
-            'fecha_naciemiento':$.trim($('#fecha_naciemiento').val()),
-            'genero':$.trim($('#genero').val()),
-            'accion': "insertar"
-        }
-
-        $.ajax({
-            url:"../../Controller/Persona/Persona.C.php",
-            type:"POST",
-            datatype:"json",
-            data:data,
-            success:function(data){
-                if (data == 1) {
-                    Swal.fire({
-                        type:'success',
-                        title:'Los datos fueron registrados correctamente!!',
-                    });
-                    seleccionar(null);
-                }else if (data == 2) {
-                    Swal.fire({
-                        type:'warning',
-                        title:'Error la personas que quieres registrar ya existe!!',
-                    });
-                }else{
-                    Swal.fire({
-                        type:'warning',
-                        title:'Error los datos no se registraron correctamente!!',
-                    });
-                }
+        cont +=1 ;
+        if(cont==1){
+            let data = {
+                'primer_nombre':$.trim($('#primer_nombre').val().replace(/^\w/, (c) => c.toUpperCase())),
+                'segundo_nombre':$.trim($('#segundo_nombre').val().replace(/^\w/, (c) => c.toUpperCase())),
+                'primer_apellido':$.trim($('#primer_apellido').val().replace(/^\w/, (c) => c.toUpperCase())),
+                'segundo_apellido':$.trim($('#segundo_apellido').val().replace(/^\w/, (c) => c.toUpperCase())),
+                'tipo':$.trim($('#tipo').val()),
+                'documento':$.trim($('#documento').val()),
+                'telefono':$.trim($('#telefono').val()),
+                'correo':$.trim($('#correo').val()),
+                'fecha_naciemiento':$.trim($('#fecha_naciemiento').val()),
+                'genero':$.trim($('#genero').val()),
+                'accion': "insertar"
             }
-        });
+
+            $.ajax({
+                url:"../../Controller/Persona/Persona.C.php",
+                type:"POST",
+                datatype:"json",
+                data:data,
+                success:function(data){
+                    cont = 0;
+                    if (data == 1) {
+                        $("#exampleModal").modal("hide");
+                        limpiar();
+                        Swal.fire({
+                            type:'success',
+                            title:'Los datos fueron registrados correctamente!!',
+                        });
+                        seleccionar(null);
+                    }else if (data == 2) {
+                        Swal.fire({
+                            type:'warning',
+                            title:'Error la personas que quieres registrar ya existe!!',
+                        });
+                    }else{
+                        Swal.fire({
+                            type:'warning',
+                            title:'Error los datos no se registraron correctamente!!',
+                        });
+                    }
+                }
+            });     
+        }
     });
+
+    function limpiar(){
+        $("#primer_nombre").val("");
+        $("#segundo_nombre").val("");
+        $("#primer_apellido").val("");
+        $("#segundo_apellido").val("");
+        $("#documento").val("");
+        $("#telefono").val("");
+        $("#correo").val("");
+        $("#fecha_naciemiento").val("");
+    }
+
     //edicion de personas
     $('#form_edit').submit(function(e){
         e.preventDefault();
-
-        let data = {
-            'primer_nombre':$.trim($('#primer_nombre_edit').val().replace(/^\w/, (c) => c.toUpperCase())),
-            'segundo_nombre':$.trim($('#segundo_nombre_edit').val().replace(/^\w/, (c) => c.toUpperCase())),
-            'primer_apellido':$.trim($('#primer_apellido_edit').val().replace(/^\w/, (c) => c.toUpperCase())),
-            'segundo_apellido':$.trim($('#segundo_apellido_edit').val().replace(/^\w/, (c) => c.toUpperCase())),
-            'tipo':$.trim($('#tipo_edit').val()),
-            'documento':$.trim($('#documento_edit').val()),
-            'telefono':$.trim($('#telefono_edit').val()),
-            'correo':$.trim($('#correo_edit').val()),
-            'fecha_naciemiento':$.trim($('#fecha_naciemiento_edit').val()),
-            'genero':$.trim($('#genero_edit').val()),
-            'id':$.trim($('#boton_edit').val()),
-            'accion': "editar"
-        }
-        $.ajax({
-            url:"../../Controller/Persona/Persona.C.php",
-            type:"POST",
-            datatype:"json",
-            data:data,
-            success:function(data){
-                if (data) {
-                     Swal.fire({
-                        type:'success',
-                        title:'Los datos fueron actualizados correctamente!!',
-                    });
-                    seleccionar($('#boton_edit').val());
-                }else{
-                    Swal.fire({
-                        type:'warning',
-                        title:'Error los datos no fueron actualizados correctamente!!',
-                    });
-                }
+        cont +=1 ;
+        if(cont==1){
+            let data = {
+                'primer_nombre':$.trim($('#primer_nombre_edit').val().replace(/^\w/, (c) => c.toUpperCase())),
+                'segundo_nombre':$.trim($('#segundo_nombre_edit').val().replace(/^\w/, (c) => c.toUpperCase())),
+                'primer_apellido':$.trim($('#primer_apellido_edit').val().replace(/^\w/, (c) => c.toUpperCase())),
+                'segundo_apellido':$.trim($('#segundo_apellido_edit').val().replace(/^\w/, (c) => c.toUpperCase())),
+                'tipo':$.trim($('#tipo_edit').val()),
+                'documento':$.trim($('#documento_edit').val()),
+                'telefono':$.trim($('#telefono_edit').val()),
+                'correo':$.trim($('#correo_edit').val()),
+                'fecha_naciemiento':$.trim($('#fecha_naciemiento_edit').val()),
+                'genero':$.trim($('#genero_edit').val()),
+                'id':$.trim($('#boton_edit').val()),
+                'accion': "editar"
             }
-        });
+            $.ajax({
+                url:"../../Controller/Persona/Persona.C.php",
+                type:"POST",
+                datatype:"json",
+                data:data,
+                success:function(data){
+                    cont = 0;
+                    if (data) {
+                        $("#staticBackdrop").modal("hide");
+                        Swal.fire({
+                            type:'success',
+                            title:'Los datos fueron actualizados correctamente!!',
+                        });
+                        seleccionar($('#boton_edit').val());
+                    }else{
+                        Swal.fire({
+                            type:'warning',
+                            title:'Error los datos no fueron actualizados correctamente!!',
+                        });
+                    }
+                }
+            });
+        }
     });
 
 });
+
+

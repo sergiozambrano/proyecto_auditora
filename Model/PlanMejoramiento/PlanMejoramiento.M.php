@@ -80,37 +80,91 @@
               }
             }  
             }else{
-              return 3;
-            }
+             
           
-        }else{
-          if($validaArchivo != false){
-              $size = $size;
-            if($size > 21000000){
-                return 1;
-            }else{
-              if($tipoArchivo=="jpg" || $tipoArchivo=="jpeg" || $tipoArchivo=="png" || $tipoArchivo=="doc" || $tipoArchivo=="docx" || $tipoArchivo=="xls" ||
-              $tipoArchivo=="xlsx" || $tipoArchivo=="ppt" || $tipoArchivo=="pptx" || $tipoArchivo=="pptm" || $tipoArchivo=="pdf" || $tipoArchivo=="xml" ||
-              $tipoArchivo=="mp4" || $tipoArchivo=="txt" || $tipoArchivo=="wmv" || $tipoArchivo=="zip" || $tipoArchivo=="rar"){
-                $this->sql="UPDATE plan_mejoramiento SET `ruta_evidencia`=? WHERE `id_plan_mejoramiento` = ?";
-                $this->statement= $this->conexion->prepare($this->sql);
-                $this->resultset=$this->statement->execute(
-                  array(
-                      $archivo,
-                      $id
-                  )
-                );
-                $anexos= new PlanMejoramientom();
-                $data=$anexos->anexos($planMejoramiento,$idEjecucion,$nombreArchivo,$archivo);
-                if(move_uploaded_file($valida,$archivo)){
-                  return $this->resultset;
-                }
+        
+            if($validaArchivo != false){
+                $size = $size;
+              if($size > 21000000){
+                  return 1;
               }else{
-               return 2;
+                if($tipoArchivo=="jpg" || $tipoArchivo=="jpeg" || $tipoArchivo=="png" || $tipoArchivo=="doc" || $tipoArchivo=="docx" || $tipoArchivo=="xls" ||
+                $tipoArchivo=="xlsx" || $tipoArchivo=="ppt" || $tipoArchivo=="pptx" || $tipoArchivo=="pptm" || $tipoArchivo=="pdf" || $tipoArchivo=="xml" ||
+                $tipoArchivo=="mp4" || $tipoArchivo=="txt" || $tipoArchivo=="wmv" || $tipoArchivo=="zip" || $tipoArchivo=="rar"){
+                  $this->sql="UPDATE plan_mejoramiento SET `ruta_evidencia`=? WHERE `id_plan_mejoramiento` = ?";
+                  $this->statement= $this->conexion->prepare($this->sql);
+                  $this->resultset=$this->statement->execute(
+                    array(
+                        $archivo,
+                        $id
+                    )
+                  );
+                  $anexos= new PlanMejoramientom();
+                  $data=$anexos->anexos($planMejoramiento,$idEjecucion,$nombreArchivo,$archivo);
+                  if(move_uploaded_file($valida,$archivo)){
+                    return $this->resultset;
+                  }
+                }else{
+                return 2;
+                }
               }
-            }
-          }else{
+            }else{
             return 0;
+            }
+            return 3;
+          }
+        }else{
+          if($copia==$nombreArchivo){
+            if($tipoArchivo=="jpg" || $tipoArchivo=="jpeg" || $tipoArchivo=="png" || $tipoArchivo=="doc" || $tipoArchivo=="docx" || $tipoArchivo=="xls" ||
+            $tipoArchivo=="xlsx" || $tipoArchivo=="ppt" || $tipoArchivo=="pptx" || $tipoArchivo=="pptm" || $tipoArchivo=="pdf" || $tipoArchivo=="xml" ||
+            $tipoArchivo=="mp4" || $tipoArchivo=="txt" || $tipoArchivo=="wmv" || $tipoArchivo=="zip" || $tipoArchivo=="rar"){
+              $this->sql="UPDATE plan_mejoramiento SET `ruta_evidencia`=? WHERE `id_plan_mejoramiento` = ?";
+              $this->statement= $this->conexion->prepare($this->sql);
+              $this->resultset=$this->statement->execute(
+                array(
+                    $archivo,
+                    $id
+                )
+              );
+              $anexos= new PlanMejoramientom();
+              $data = $anexos->uAnexos($idAnexo,$archivo);
+              if(move_uploaded_file($valida,$archivo)){
+                return $this->resultset;
+              }
+            }  
+            }else{
+             
+          
+        
+            if($validaArchivo != false){
+                $size = $size;
+              if($size > 21000000){
+                  return 1;
+              }else{
+                if($tipoArchivo=="jpg" || $tipoArchivo=="jpeg" || $tipoArchivo=="png" || $tipoArchivo=="doc" || $tipoArchivo=="docx" || $tipoArchivo=="xls" ||
+                $tipoArchivo=="xlsx" || $tipoArchivo=="ppt" || $tipoArchivo=="pptx" || $tipoArchivo=="pptm" || $tipoArchivo=="pdf" || $tipoArchivo=="xml" ||
+                $tipoArchivo=="mp4" || $tipoArchivo=="txt" || $tipoArchivo=="wmv" || $tipoArchivo=="zip" || $tipoArchivo=="rar"){
+                  $this->sql="UPDATE plan_mejoramiento SET `ruta_evidencia`=? WHERE `id_plan_mejoramiento` = ?";
+                  $this->statement= $this->conexion->prepare($this->sql);
+                  $this->resultset=$this->statement->execute(
+                    array(
+                        $archivo,
+                        $id
+                    )
+                  );
+                  $anexos= new PlanMejoramientom();
+                  $data=$anexos->anexos($planMejoramiento,$idEjecucion,$nombreArchivo,$archivo);
+                  if(move_uploaded_file($valida,$archivo)){
+                    return $this->resultset;
+                  }
+                }else{
+                return 2;
+                }
+              }
+            }else{
+            return 0;
+            }
+            return 3;
           }
         }
       } catch (Exception $e) {
@@ -206,7 +260,7 @@
           return  $e;
         } 
     }
-    public function vAuditoria($id){
+    public function vAuditoria($id,$ruta){
         try {
           $this->sql="SELECT auditoria_programacion.id_auditoria,ejecucion_auditoria.id_ejecucion_auditoria 
           FROM ejecucion_auditoria 
@@ -223,15 +277,9 @@
           $date=$this->resultset = $this->statement->fetchAll(PDO::FETCH_NUM);
           $auditoriaProgamacion=$date[0][0];
           $ejecucionAuditoria=$date[0][1];
-          $this->sql="SELECT anexos.id_anexo,anexos.nombre_anexo 
-          FROM anexos 
-          INNER JOIN ejecucion_auditoria 
-          ON anexos.id_ejecucion_auditoria=ejecucion_auditoria.id_ejecucion_auditoria 
-          INNER JOIN auditoria_programacion 
-          ON ejecucion_auditoria.id_auditoria_programada=auditoria_programacion.id_auditoria 
-          WHERE auditoria_programacion.id_auditoria=?";
+          $this->sql="SELECT anexos.id_anexo,anexos.nombre_anexo FROM anexos WHERE anexos.nombre_anexo=?";
           $this->statement = $this->conexion->prepare($this->sql);
-          $this->statement->execute(array($auditoriaProgamacion));
+          $this->statement->execute(array($ruta));
 
           $data=$this->resultset = $this->statement->fetchAll(PDO::FETCH_NUM);
           if($data==true){
@@ -307,6 +355,16 @@
         $this->resultset=$this->statament->execute(array($id));
         return $this->resultset;
       } catch (Exception $e) {
+        return $e;
+      }
+    }
+    public function fechaProrroga($id){
+      try{
+        $this->sql="SELECT fecha_adicional FROM `prorroga_mejoramiento` WHERE id_plan_mejoramiento=?";
+        $this->statement= $this->conexion->prepare($this->sql);
+        $this->resultset=$this->statement->execute(array($id));
+        return $this->resultset = $this->statement->fetchAll(PDO::FETCH_NUM);
+      }catch(Exception $e){
         return $e;
       }
     }
