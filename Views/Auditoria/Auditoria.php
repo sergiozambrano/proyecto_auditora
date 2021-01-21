@@ -93,24 +93,24 @@ $sesion->autenticacion();
       <div class="modal-body">
         <table>
           <tdoby>
-          <tr class="row">
-            <td class="col-7 my-2">
-              <label class="form-label" for="tipoAuditoria">Tipo Auditoria</label>
-              <input class="form-control" type="text" id="tipoAuditoria" disabled>
-            </td>
-            <td class="col-5 my-2">
-              <label class="form-label" for="fecha">Fecha</label>
-              <input class="form-control" type="text" id="fecha" disabled>
-            </td>
-            <td class="col-6 my-2">
-              <label class="form-label" for="encargadoArea">Encargado del área</label>
-              <input class="form-control" type="text" id="encargadoArea" disabled>
-            </td>
-            <td class="col-6 my-2">
-              <label class="form-label" for="observacion">Observación</label>
-              <input class="form-control" type="text" id="observacion" disabled>
-            </td>
-          </tr>
+            <tr class="row">
+              <td class="col-7 my-2">
+                <label class="form-label" for="tipoAuditoria">Tipo Auditoria</label>
+                <input class="form-control" type="text" id="tipoAuditoria" disabled>
+              </td>
+              <td class="col-5 my-2">
+                <label class="form-label" for="fecha">Fecha</label>
+                <input class="form-control" type="text" id="fecha" disabled>
+              </td>
+              <td class="col-6 my-2">
+                <label class="form-label" for="encargadoArea">Encargado del área</label>
+                <input class="form-control" type="text" id="encargadoArea" disabled>
+              </td>
+              <td class="col-6 my-2">
+                <label class="form-label" for="observacion">Observación</label>
+                <input class="form-control" type="text" id="observacion" disabled>
+              </td>
+            </tr>
           </tdoby>
         </table>
       </div>

@@ -238,16 +238,21 @@ function ValidarEditar(id){
     });
 
 }
-/*function editar(){
+
+var contador=0;
+function editar(){
     $('#formEdit').submit(function(e){
         e.preventDefault();
-            let data={
-                'aspecto_edit':$.trim($('#aspecto_edit').val()),
-                'accionesPlan_edit':$.trim($('#accionesPlan_edit').val()),
-                'estado_edit':$.trim($('#estado_edit').val()),
-                'id':$.trim($('#id').val()),
-                'accion': "editar"
-            }
+        contador++;
+
+  if (contador == 1) {
+
+    let data={
+        'fechaImplementacion':$.trim($('#fecha_edit').val()),
+        'id':$.trim($('#id').val()),
+        'accion': "editar"
+    }
+
     $.ajax({
         url:"../../Controller/PlanMejoramiento/PlanMejoramiento.C.php",
         type:"POST",
@@ -270,14 +275,13 @@ function ValidarEditar(id){
                   });
 
             }
-            $('#tbody').empty();
+            contador = 0;
             leer();
         }
-
-
     });
+  }
 });
-}*/
+}
 function validarProrroga(id){
 
 
@@ -428,7 +432,6 @@ function hallazgo(id){
 
 function leer(){
 
-
     $('#tbody').empty();
     $.ajax({
         url:"../../Controller/PlanMejoramiento/PlanMejoramiento.C.php",
@@ -438,36 +441,35 @@ function leer(){
         success:function(data){
             data = JSON.parse(data);
 
-
+            var tabla;
             for (let index = 0; index < data.length; index++) {
                 if(data[index][5]=="Abierto"){
                 ruta = nombreArchivo(data[index][3]);
 
-                $('#tbody').append("<tr>"+
-                                "<td>"+(index+1)+"</td>"+
-                                "<td><a data-toggle='modal' data-target='#staticBackdrop4' onclick='hallazgo("+data[index][0]+")'>"+data[index][2]+"</a></td>"+
-                                "<td>"+data[index][4]+"</td>"+
-                                "<td>"+data[index][5]+"</td>"+
-                                "<td>"+
-                                "<button type='button'  data-toggle='modal' data-target='#staticBackdrop1'  onclick='ValidarEditar("+data[index][1]+");validarEvidencia("+data[index][1]+",`"+ruta+"`)' class='btn btn-primary btn-sm'>Editar</button>"+
-                                "<button type='button' class='btn btn-info   btn-sm' data-toggle='modal' data-target='#staticBackdrop2' onclick='validarProrroga("+data[index][1]+");'>Crear Prorroga</button>"+
-                                "</tr>"
-                                );
+                tabla += "<tr>"+
+                        "<td>"+(index+1)+"</td>"+
+                        "<td><a data-toggle='modal' data-target='#staticBackdrop4' onclick='hallazgo("+data[index][0]+")'>"+data[index][2]+"</a></td>"+
+                        "<td>"+data[index][4]+"</td>"+
+                        "<td>"+data[index][5]+"</td>"+
+                        "<td>"+
+                        "<button type='button'  data-toggle='modal' data-target='#staticBackdrop1'  onclick='ValidarEditar("+data[index][1]+");validarEvidencia("+data[index][1]+",`"+ruta+"`)' class='btn btn-primary btn-sm'>Editar</button>"+
+                        "<button type='button' class='btn btn-info   btn-sm' data-toggle='modal' data-target='#staticBackdrop2' onclick='validarProrroga("+data[index][1]+");'>Crear Prorroga</button>"+
+                        "</tr>";
+
                     fechaProrroga(data[index][0]);
                     }else if(data[index][5]=="Cerrado"||data[index][5]=="Vencido"){
-                        $('#tbody').append("<tr>"+
+                        tabla += "<tr>"+
                         "<td>"+(index+1)+"</td>"+
                         "<td><a data-toggle='modal' data-target='#staticBackdrop4' onclick='hallazgo("+data[index][0]+")'>"+data[index][2]+"</a></td>"+
                         "<td>"+data[index][4]+"</td>"+
                         "<td>"+data[index][5]+"</td>"+
                         "<td>"+
                         "<button type='button' class='btn btn-info   btn-sm' data-toggle='modal' data-target='#staticBackdrop2' onclick='validarProrroga("+data[index][1]+");'>Crear Prorroga</button>"+
-                        "</tr>"
-                        );
+                        "</tr>";
                         fechaProrroga(data[index][0]);
                     }
             }
-
+            $('#tbody').html(tabla);
 
         }
     });

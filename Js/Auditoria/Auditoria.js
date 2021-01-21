@@ -242,7 +242,6 @@ $('#formArchivo').submit(function (e) {
   e.preventDefault();
 
   var archivo = $("#subirArchivo")[0].files[0];
-  fileType = archivo.type;
   fileSize = archivo.size;
   fileName = archivo.name;
 
@@ -254,7 +253,6 @@ $('#formArchivo').submit(function (e) {
   /**
    * Valido la extencion del archivo
    */
-
   var exten = fileName.substring(fileName.lastIndexOf("."));
   if(exten=='.jpg' || exten=='.jpeg' || exten=='.png' || exten=='.doc' || exten=='.docx' || exten=='.xls' ||
     exten=='.xlsx' || exten=='.ppt' || exten=='.pptx' || exten=='.pptm' || exten=='.pdf' || exten=='.xml' ||
@@ -332,8 +330,6 @@ $('#valorBuscador').keyup(function() {
   }else{
     mostrar(data, 'buscador');
   }
-
-
 });
 
 function info(){
@@ -351,8 +347,6 @@ function info(){
     data: data,
     success: function(data) {
       data = JSON.parse(data);
-
-      console.log(data);
 
       $('#tipoAuditoria').val(data[0][0]);
       $('#fecha').val(data[0][1]);

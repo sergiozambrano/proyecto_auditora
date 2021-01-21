@@ -55,7 +55,7 @@ $sesion->autenticacion();
         </form>
       </div>
     </div>
-    
+
     <div class="modal fade" id="staticBackdrop1" tabindex="-1" aria-labelledby="exampleModalLabel1" aria-hidden="true">
       <div class="modal-dialog modal-dialog modal-dialog-scrollable">
         <div class="modal-content">
@@ -88,7 +88,7 @@ $sesion->autenticacion();
                         </div>
                       <div class="col-md-6 mb-3">
                         <label for="validationDefault02">Fecha Entregable</label>
-                        <input type="date" class="form-control" id="fecha_edit" name="fecha_edit" disabled>
+                        <input type="date" class="form-control" id="fecha_edit" name="fecha_edit">
                         <input type="hidden" id="idAuditoria">
                         <input type="hidden" id="idEjecucion">
                         <input type="hidden" id="idAnexo">
@@ -96,7 +96,7 @@ $sesion->autenticacion();
                       </div>
                     </div>
                     <div class="col-md-12 mb-3">
-                        <button class="btn btn-primary" type="submit" id="id" onclick="/*editar();*/ evidencia()">Editar</button>
+                        <button class="btn btn-primary" type="submit" id="id" onclick="editar(); evidencia()">Editar</button>
                     </div>
 
             </div>
@@ -189,7 +189,7 @@ $sesion->autenticacion();
         </div>
       </div>
   </div>
-  
+
   <div class="modal fade" id="staticBackdrop4" tabindex="-1" aria-labelledby="exampleModalLabel4" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog modal-dialog-scrollable">
       <div class="modal-content">

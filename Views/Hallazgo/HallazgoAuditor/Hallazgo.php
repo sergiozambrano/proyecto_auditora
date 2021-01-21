@@ -26,13 +26,13 @@
         </button>
       </div>
 
-      <div class="col">
+      <div class="d-flex justify-content-end col">
         <div class="d-inline">
-          <button type="button" class="btn btn-primary" onclick="crearHallazgo()">Crear Hallazgo</button>
+          <button type="button" class="btn btn-primary" onclick="abrirModalCrearHallazgo()">Crear Hallazgo</button>
         </div>
       </div>
 
-      <div class="d-flex justify-content-end ">
+      <!-- <div class="d-flex justify-content-end ">
         <form class="form-inline mx-2">
           <div>
             <select class="form-control" id="selecBuscador">
@@ -44,7 +44,7 @@
             <input class="form-control" id="valorBuscador">
           </div>
         </form>
-      </div>
+      </div> -->
     </article>
 
     <article>
@@ -54,13 +54,12 @@
             <th scope="col">#</th>
             <th scope="col">Hallazgo</th>
             <th scope="col">Fecha</th>
-            <th scope="col">Estado</th>
             <th scope="col">Evidencia</th>
+            <th scope="col">Estado</th>
             <th scope="col">Opciones</th>
           </tr>
         </thead>
         <tbody id="tbodyHallazgo">
-
         </tbody>
       </table>
     </article>
@@ -68,17 +67,36 @@
 
   <!-- Modal ver Hallazgo-->
   <div class="modal fade" id="verHallazgoModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+    <div class="modal-dialog modal-dialog-scrollable">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">Hallazgo</h5>
         </div>
         <div class="modal-body">
           <table class="table">
-            <thead class="thead-dark">
-            </thead>
             <tbody id="verHallazgo">
-
+              <tr class="row">
+                <td class="col-6 my-2">
+                  <label class="form-label" for="temaHallazgo">Tema</label>
+                  <textarea class="form-control" id="temaHallazgo"></textarea>
+                </td>
+                <td class="col-6 my-2">
+                  <label class="form-label" for="fecha">Fecha</label>
+                  <textarea class="form-control" id="fecha"></textarea>
+                </td>
+                <td class="col-6 my-2">
+                  <label class="form-label" for="aspectoMejora">Observación</label>
+                  <textarea class="form-control" id="aspectoMejora"></textarea>
+                </td>
+                <td class="col-6 my-2">
+                  <label class="form-label" for="acciones">Accion planeada</label>
+                  <textarea class="form-control" id="acciones"></textarea>
+                </td>
+                <td class="col-12 my-2">
+                <label class="form-label" for="">Evidencia</label>
+                  <a href="" download="" id="ruta"><i class='fas fa-arrow-down'></i></a>
+                </td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -91,7 +109,7 @@
 
   <!-- Modal validar Plan mejoramiento-->
   <div class="modal fade" id="planMejoramientoModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+    <div class="modal-dialog modal-dialog-scrollable">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">Valida plan mejoramiento</h5>
@@ -101,7 +119,14 @@
             <thead class="thead-dark">
             </thead>
             <tbody id="planMejoramiento">
-
+              <tr>
+                <td><select id="estadoPlanMejoramiento" class="form-control col-12">
+                  <option value="Abierto">Abierto</option>
+                  <option value="Sin avance">Sin avance</option>
+                  <option value="Cerrado">Cerrado</option>
+                  <option value="Vencido">Vencido</option>
+                </select></td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -124,7 +149,7 @@
             <thead class="thead-dark">
               <tr>
                 <th scope="col">#</th>
-                <th scope="col">Plan mejoramiento</th>
+                <th scope="col">Tema hallazgo</th>
                 <th scope="col">Fecha</th>
                 <th scope="col">Estado</th>
                 <th scope="col">Observacion</th>
@@ -145,29 +170,33 @@
 
   <!-- Modal de crear hallazgos-->
   <div class="modal fade" id="hallazgoModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+    <div class="modal-dialog modal-dialog-scrollable">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">Crear Hallazgo</h5>
         </div>
         <div class="modal-body">
-          <table class="table">
-            <thead class="thead-dark">
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">Plan mejoramiento</th>
-                <th scope="col">Fecha</th>
-                <th scope="col">Estado</th>
-                <th scope="col">Observacion</th>
-                <th scope="col">Opciones</th>
-              </tr>
-            </thead>
-            <tbody id="tbodyHallazgo">
-
-            </tbody>
-          </table>
+          <form class="row"  enctype="multipart/form-data">
+            <div class="col-6 my-2">
+              <label class="form-label" for="crearTemaHallazgo">Tema</label>
+              <textarea class="form-control" id="crearTemaHallazgo"></textarea>
+            </div>
+            <div class="col-6 my-2">
+              <label class="form-label" for="crearAspectoHallazgo">Aspecto a mejorar</label>
+              <textarea class="form-control" id="crearAspectoHallazgo"></textarea>
+            </div>
+            <div class="col-6 my-2">
+              <label class="form-label" for="crearAccionHAllazgo">Accion planeada</label>
+              <textarea class="form-control" id="crearAccionHAllazgo"></textarea>
+            </div>
+            <div class="col-12 my-2">
+              <label class="form-label" for="">Evidencia</label>
+              <input class="form-control" type="file" id="evidenciaHallazgo">
+            </div>
+          </form>
         </div>
         <div class="modal-footer">
+          <button type="button" class="btn btn-primary" onclick="crearHallazgo()">Crear</button>
           <button type="button" class="btn btn-secondary" onclick="cerrarModal()">Cerrar</button>
         </div>
       </div>
@@ -181,5 +210,6 @@
 
   <!-- Código propio JavaScript-->
   <script src="../../../Js/Hallazgo/HallazgoAuditor/Hallazgo.js"></script>
+  <script src="../../../Js/ProgramacionAuditoria/Services.js"></script>
 </body>
 </html>

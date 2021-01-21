@@ -12,7 +12,7 @@
     }
     public function read(){
       try {
-        $this->sql = "SELECT id_hallazgo,tema_hallazgo 
+        $this->sql = "SELECT id_hallazgo,tema_hallazgo
         FROM hallazgo GROUP BY hallazgo.id_hallazgo";
 
         $this->statement = $this->conexion->prepare($this->sql);
@@ -27,7 +27,7 @@
     public function readA($nombreHallazgo){
       try {
           $this->sql = "SELECT hallazgo.id_hallazgo,plan_mejoramiento.id_plan_mejoramiento,hallazgo.tema_hallazgo,plan_mejoramiento.ruta_evidencia,plan_mejoramiento.fecha_evidencia,plan_mejoramiento.estado_plaMejor
-            FROM hallazgo 
+            FROM hallazgo
             INNER JOIN plan_mejoramiento
             ON plan_mejoramiento.id_hallazgo=hallazgo.id_hallazgo
             WHERE hallazgo.id_hallazgo= ?";
@@ -59,7 +59,7 @@
         $this->resultset=$this->statement->execute(array($id));
         $data=$this->resultset = $this->statement->fetchAll(PDO::FETCH_NUM);
         $cont=$data[0][0];
-        
+
         if($cont>0){
           if($copia==$nombreArchivo){
             if($tipoArchivo=="jpg" || $tipoArchivo=="jpeg" || $tipoArchivo=="png" || $tipoArchivo=="doc" || $tipoArchivo=="docx" || $tipoArchivo=="xls" ||
@@ -78,11 +78,11 @@
               if(move_uploaded_file($valida,$archivo)){
                 return $this->resultset;
               }
-            }  
+            }
             }else{
-             
-          
-        
+
+
+
             if($validaArchivo != false){
                 $size = $size;
               if($size > 21000000){
@@ -131,11 +131,11 @@
               if(move_uploaded_file($valida,$archivo)){
                 return $this->resultset;
               }
-            }  
+            }
             }else{
-             
-          
-        
+
+
+
             if($validaArchivo != false){
                 $size = $size;
               if($size > 21000000){
@@ -173,13 +173,11 @@
     }
     public function update($planMejoramiento, $id){
       try {
-          $this->sql= "UPDATE plan_mejoramiento SET `aspecto_mejora` = ?, `acciones_planteadas` = ?,`estado_plaMejor` = ?, `id_usuario_creacion` = ? WHERE `id_plan_mejoramiento` = ?";
+          $this->sql= "UPDATE plan_mejoramiento SET `fecha_evidencia` = ?, `id_usuario_creacion` = ? WHERE `id_plan_mejoramiento` = ?";
           $this->statement= $this->conexion->prepare($this->sql);
           $this->resultset=$this->statement->execute(
               array(
-                  $planMejoramiento->aspectoMejorar,
-                  $planMejoramiento->accionesPlan,
-                  $planMejoramiento->estado,
+                  $planMejoramiento->fechaImplementacion,
                   $planMejoramiento->idUsuarioCrea,
                   $id
               )
@@ -193,9 +191,9 @@
     }
     public function vProrroga(){
        try {
-         $this->sql="SELECT prorroga_mejoramiento.id_prorroga_mejoramiento,prorroga_mejoramiento.fecha_adicional,prorroga_mejoramiento.observacion,prorroga_mejoramiento.estado_prorroga 
-                      FROM plan_mejoramiento 
-                      INNER JOIN prorroga_mejoramiento 
+         $this->sql="SELECT prorroga_mejoramiento.id_prorroga_mejoramiento,prorroga_mejoramiento.fecha_adicional,prorroga_mejoramiento.observacion,prorroga_mejoramiento.estado_prorroga
+                      FROM plan_mejoramiento
+                      INNER JOIN prorroga_mejoramiento
                       ON plan_mejoramiento.id_plan_mejoramiento=prorroga_mejoramiento.id_plan_mejoramiento";
          $this->statement=$this->conexion->prepare($this->sql);
          $this->resultset=$this->statement->execute();
@@ -210,9 +208,9 @@
           $this->statement= $this->conexion->prepare($this->sql);
           $this->resultset=$this->statement->execute(array($id));
           $data=$this->resultset = $this->statement->fetchAll(PDO::FETCH_NUM);
-                      
+
           $cont=$data[0][0];
-          
+
           if($cont>0){
           return 2;
           }else{
@@ -226,7 +224,7 @@
                     $estado,
                     $observacion,
                     $planMejoramiento->idUsuarioCrea
-                    
+
                 )
             );
             return $this->resultset;
@@ -238,7 +236,7 @@
     }
     public function hallazgo($id){
         $this->sql="SELECT id_hallazgo,fecha_hallazgo,tema_hallazgo,acciones_planteadas,aspecto_mejora,ruta_evidencia
-                    FROM hallazgo  
+                    FROM hallazgo
                     WHERE id_hallazgo=?";
         $this->statement = $this->conexion->prepare($this->sql);
         $this->statement->execute(array($id));
@@ -249,27 +247,27 @@
     public function leer(){
         try {
             $this->sql="SELECT hallazgo.id_hallazgo,plan_mejoramiento.id_plan_mejoramiento,hallazgo.tema_hallazgo,plan_mejoramiento.ruta_evidencia,plan_mejoramiento.fecha_evidencia,plan_mejoramiento.estado_plaMejor
-            FROM hallazgo 
+            FROM hallazgo
             INNER JOIN plan_mejoramiento
             ON plan_mejoramiento.id_hallazgo=hallazgo.id_hallazgo";
             $this->statement = $this->conexion->prepare($this->sql);
             $this->statement->execute();
-  
+
             return $this->resultset = $this->statement->fetchAll(PDO::FETCH_NUM);
         } catch (Exception $e) {
           return  $e;
-        } 
+        }
     }
     public function vAuditoria($id,$ruta){
         try {
-          $this->sql="SELECT auditoria_programacion.id_auditoria,ejecucion_auditoria.id_ejecucion_auditoria 
-          FROM ejecucion_auditoria 
-          INNER JOIN auditoria_programacion 
-          ON ejecucion_auditoria.id_auditoria_programada=auditoria_programacion.id_auditoria 
-          INNER JOIN hallazgo 
-          ON ejecucion_auditoria.id_ejecucion_auditoria=hallazgo.id_ejecucion_auditoria 
-          INNER JOIN plan_mejoramiento 
-          ON hallazgo.id_hallazgo=plan_mejoramiento.id_hallazgo 
+          $this->sql="SELECT auditoria_programacion.id_auditoria,ejecucion_auditoria.id_ejecucion_auditoria
+          FROM ejecucion_auditoria
+          INNER JOIN auditoria_programacion
+          ON ejecucion_auditoria.id_auditoria_programada=auditoria_programacion.id_auditoria
+          INNER JOIN hallazgo
+          ON ejecucion_auditoria.id_ejecucion_auditoria=hallazgo.id_ejecucion_auditoria
+          INNER JOIN plan_mejoramiento
+          ON hallazgo.id_hallazgo=plan_mejoramiento.id_hallazgo
           WHERE plan_mejoramiento.id_plan_mejoramiento= ?";
           $this->statement = $this->conexion->prepare($this->sql);
           $this->statement->execute(array($id));
@@ -289,7 +287,7 @@
           }else{
           return array($auditoriaProgamacion,$ejecucionAuditoria);
           }
-          
+
         } catch (Exception $e) {
           return $e;
         }
@@ -321,7 +319,7 @@
                $estado="0",
                $archivo,
                $planMejoramiento->idUsuarioCrea
-               
+
            )
        );
        return $this->resultset;
@@ -369,6 +367,6 @@
       }
     }
   }
-    
+
 
 ?>

@@ -4,7 +4,7 @@
 
     if(!isset($_SESSION)) {
         session_start();
-        
+
     }
     $accion = $_POST["accion"];
     $data;
@@ -21,13 +21,10 @@
             $data = $planMejoramientom->vEdit();
             break;
         case 'editar':
-            $aspectoMejorar=$_POST['aspecto_edit'];
-            $accionesPlan=$_POST['accionesPlan_edit'];
-            $estado=$_POST['estado_edit'];
-
             $idPlanMejoramiento=$_POST['id'];
+            $fechaImplementacion=$_POST['fechaImplementacion'];
 
-            $planMejoramientod = new PlanMejoramientod(null,$aspectoMejorar,$accionesPlan,null,null,$estado,$idUsuarioCrea = $_SESSION['id']);
+            $planMejoramientod = new PlanMejoramientod(null,null,$fechaImplementacion,null,$idUsuarioCrea = $_SESSION['id']);
 
             $data=$planMejoramientom->update($planMejoramientod, $idPlanMejoramiento);
 
@@ -37,14 +34,14 @@
             $fechaImplementacion=$_POST['fechaProrroga'];
             $fechaActual = date("y-m-d");
             $fecha= strtotime($fechaActual."+ 6 month");
-            $fechaImplemen = strtotime($fechaImplementacion); 
+            $fechaImplemen = strtotime($fechaImplementacion);
             if($fechaImplemen>$fecha){
                 $data=-0;
             }else{
                 $observacion=$_POST['observacionProrro'];
                 $idPlanMejoramiento=$_POST['id'];
-                $planMejoramientod = new PlanMejoramientod(null,null,null,null,$fechaImplementacion,null,$idUsuarioCrea = $_SESSION['id']);
-            
+                $planMejoramientod = new PlanMejoramientod(null,null,$fechaImplementacion,null,$idUsuarioCrea = $_SESSION['id']);
+
                 $data=$planMejoramientom->prorroga($planMejoramientod,$observacion,$estado,$idPlanMejoramiento);
             }
             break;
@@ -64,7 +61,7 @@
             $size = $_FILES['entregable_edit']['size'];
             $idEjecucion = $_POST['idEjecucion'];
             $idPlanMejoramiento=$_POST['id'];
-            $planMejoramientod = new PlanMejoramientod(null,null,null,null,null,null,$idUsuarioCrea = $_SESSION['id']);
+            $planMejoramientod = new PlanMejoramientod(null,null,null,null,$idUsuarioCrea = $_SESSION['id']);
             $data=$planMejoramientom->evidencia($idAnexo,$copia,$planMejoramientod,$archivo,$tipoArchivo,$validaArchivo,$nombreArchivo,$valida,$size,$idPlanMejoramiento,$idEjecucion);
             break;
         case 'validarAuditoria':
@@ -80,18 +77,18 @@
             $data=$planMejoramientom->leer();
             break;
         case 'fecha':
-           
+
             $id=$_POST['id'];
-           
-            
+
+
             $data=$planMejoramientom->vFecha($id);
-            
+
             break;
         case 'fechaProrroga':
             $id_plan_mejoramiento = $_POST['idPlan'];
             $data=$planMejoramientom->fechaProrroga($id_plan_mejoramiento);
             break;
     }
-    
+
     print json_encode($data);
 ?>

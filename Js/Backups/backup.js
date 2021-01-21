@@ -8,7 +8,7 @@
         data = JSON.parse(data);
 
             for (let index=0; index < data[0].length; index++) {
-                var respaldo = 60000; //instaciamos esta variable que equivale a los milisegundos que hay en 24 horas
+                var respaldo = 86400000; //instaciamos esta variable que equivale a los milisegundos que hay en 24 horas
                 var tiempo = Number (respaldo) + Number (data[0][index][1]);
 
                 if (data[1]>0) {
@@ -18,6 +18,7 @@
                     alert('Se ha hecho la copia de seguridad');
                     window.location.href = '../../Views/Plantilla/Plantilla.php'; }
                 }
+
             }
         },
 });
